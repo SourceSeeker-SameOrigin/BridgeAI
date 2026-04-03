@@ -52,7 +52,7 @@ const DOCS: Record<string, string> = {
 
 ---
 
-> 如需帮助，请联系 support@bridgeai.com
+> 如需帮助，请联系 1178672658@qq.com
 `,
 
   api: `# API 文档

@@ -513,6 +513,7 @@ export default function LandingPage() {
             <a href="mailto:1178672658@qq.com" style={{ fontSize: 13, color: '#64748b', textDecoration: 'none' }}>
               {t('landing.footerContact')}
             </a>
+            <span style={{ fontSize: 13, color: '#64748b' }}>Tel: 15249689141</span>
           </div>
         </div>
       </footer>

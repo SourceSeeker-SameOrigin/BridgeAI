@@ -84,7 +84,7 @@ X-Tenant-Id: <tenant_id>
 ```json
 {
   "username": "admin",
-  "email": "admin@example.com",
+  "email": "1178672658@qq.com",
   "password": "your_password"
 }
 ```
@@ -97,7 +97,7 @@ X-Tenant-Id: <tenant_id>
   "data": {
     "id": "uuid",
     "username": "admin",
-    "email": "admin@example.com",
+    "email": "1178672658@qq.com",
     "role": "user",
     "tenant_id": "uuid"
   }
