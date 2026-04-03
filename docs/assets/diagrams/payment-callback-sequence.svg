@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" width="1100" height="600" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="pcs-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="pcs-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="pcs-arr" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#6366f1"/>
+    </marker>
+    <marker id="pcs-arr-g" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#22c55e"/>
+    </marker>
+    <marker id="pcs-arr-o" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="600" fill="url(#pcs-bg)"/>
+
+  <text x="550" y="36" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="700">支付回调时序图</text>
+  <text x="550" y="56" text-anchor="middle" fill="#94a3b8" font-size="13">Payment Callback Sequence (WeChat / Alipay)</text>
+
+  <!-- Participants -->
+  <g transform="translate(90, 85)">
+    <rect x="-60" y="-16" width="120" height="32" rx="10" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#pcs-shadow)"/>
+    <text x="0" y="5" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="600">支付平台</text>
+  </g>
+  <line x1="90" y1="101" x2="90" y2="555" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
+
+  <g transform="translate(310, 85)">
+    <rect x="-65" y="-16" width="130" height="32" rx="10" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#pcs-shadow)"/>
+    <text x="0" y="5" text-anchor="middle" fill="#6366f1" font-size="12" font-weight="600">Callback API</text>
+  </g>
+  <line x1="310" y1="101" x2="310" y2="555" stroke="#6366f1" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
+
+  <g transform="translate(540, 85)">
+    <rect x="-65" y="-16" width="130" height="32" rx="10" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#pcs-shadow)"/>
+    <text x="0" y="5" text-anchor="middle" fill="#8b5cf6" font-size="12" font-weight="600">PaymentService</text>
+  </g>
+  <line x1="540" y1="101" x2="540" y2="555" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
+
+  <g transform="translate(770, 85)">
+    <rect x="-55" y="-16" width="110" height="32" rx="10" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#pcs-shadow)"/>
+    <text x="0" y="5" text-anchor="middle" fill="#3b82f6" font-size="12" font-weight="600">OrderService</text>
+  </g>
+  <line x1="770" y1="101" x2="770" y2="555" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
+
+  <g transform="translate(980, 85)">
+    <rect x="-55" y="-16" width="110" height="32" rx="10" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#pcs-shadow)"/>
+    <text x="0" y="5" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="600">TenantService</text>
+  </g>
+  <line x1="980" y1="101" x2="980" y2="555" stroke="#22c55e" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
+
+  <!-- 1. POST callback -->
+  <line x1="95" y1="140" x2="305" y2="140" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#pcs-arr-o)"/>
+  <text x="200" y="133" text-anchor="middle" fill="#f59e0b" font-size="11">POST /callback</text>
+
+  <!-- 2. verify signature -->
+  <rect x="305" y="155" width="10" height="30" rx="2" fill="#6366f1" opacity="0.4"/>
+  <text x="330" y="174" fill="#94a3b8" font-size="10">verify_signature()</text>
+
+  <!-- 3. decrypt / verify -->
+  <line x1="315" y1="200" x2="535" y2="200" stroke="#6366f1" stroke-width="1.5" marker-end="url(#pcs-arr)"/>
+  <text x="425" y="193" text-anchor="middle" fill="#6366f1" font-size="11">decrypt(微信) / verify(支付宝)</text>
+
+  <!-- 4. handle_payment_success -->
+  <rect x="535" y="215" width="10" height="25" rx="2" fill="#8b5cf6" opacity="0.4"/>
+  <text x="560" y="232" fill="#94a3b8" font-size="10">handle_payment_success()</text>
+
+  <!-- 5. check idempotent -->
+  <g transform="translate(540, 260)">
+    <rect x="-85" y="-15" width="170" height="40" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="0" y="-1" text-anchor="middle" fill="#f59e0b" font-size="10">&#128274; Check Idempotent</text>
+    <text x="0" y="14" text-anchor="middle" fill="#94a3b8" font-size="9">已处理? → 直接返回 success</text>
+  </g>
+
+  <!-- 6. update order -->
+  <line x1="545" y1="310" x2="765" y2="310" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#pcs-arr)"/>
+  <text x="655" y="303" text-anchor="middle" fill="#8b5cf6" font-size="11">update_order_status(PAID)</text>
+
+  <!-- 7. order updated -->
+  <line x1="765" y1="340" x2="545" y2="340" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#pcs-arr-g)"/>
+  <text x="655" y="333" text-anchor="middle" fill="#22c55e" font-size="10">order updated</text>
+
+  <!-- 8. upgrade tenant plan -->
+  <line x1="545" y1="370" x2="975" y2="370" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#pcs-arr)"/>
+  <text x="760" y="363" text-anchor="middle" fill="#8b5cf6" font-size="11">upgrade_tenant_plan(plan_id)</text>
+
+  <!-- 9. plan upgraded -->
+  <line x1="975" y1="400" x2="545" y2="400" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#pcs-arr-g)"/>
+  <text x="760" y="393" text-anchor="middle" fill="#22c55e" font-size="10">plan upgraded</text>
+
+  <!-- 10. return success -->
+  <line x1="535" y1="435" x2="315" y2="435" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#pcs-arr-g)"/>
+  <text x="425" y="428" text-anchor="middle" fill="#22c55e" font-size="10">payment handled</text>
+
+  <!-- 11. return "success" -->
+  <line x1="305" y1="470" x2="95" y2="470" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#pcs-arr-g)"/>
+  <rect x="140" y="454" width="120" height="22" rx="6" fill="#1e293b"/>
+  <text x="200" y="469" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">return "success"</text>
+
+  <!-- Legend -->
+  <g transform="translate(60, 520)">
+    <rect x="0" y="-12" width="260" height="28" rx="8" fill="#111827" stroke="rgba(148,163,184,0.15)"/>
+    <line x1="12" y1="2" x2="45" y2="2" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="50" y="6" fill="#94a3b8" font-size="10">请求</text>
+    <line x1="80" y1="2" x2="113" y2="2" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4 2"/>
+    <text x="118" y="6" fill="#94a3b8" font-size="10">响应</text>
+    <rect x="148" y="-4" width="12" height="12" rx="2" fill="#1e293b" stroke="#f59e0b" stroke-width="1" stroke-dasharray="2 2"/>
+    <text x="165" y="6" fill="#94a3b8" font-size="10">幂等检查</text>
+  </g>
+</svg>

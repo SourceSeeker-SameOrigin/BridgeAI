@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="cst-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="cst-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <marker id="cst-arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1"/>
+    </marker>
+    <marker id="cst-arrow-green" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+    <marker id="cst-arrow-orange" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="500" fill="url(#cst-bg)"/>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">Chat 页面状态管理</text>
+  <text x="500" y="53" text-anchor="middle" fill="#94a3b8" font-size="12">Chat State Diagram - useState &amp; useRef Dependencies</text>
+
+  <!-- conversations[] -->
+  <rect x="40" y="80" width="190" height="50" rx="12" fill="#111827" stroke="#6366f1" stroke-width="1.5" filter="url(#cst-shadow)"/>
+  <text x="135" y="102" text-anchor="middle" fill="#6366f1" font-size="12" font-weight="700">conversations[]</text>
+  <text x="135" y="120" text-anchor="middle" fill="#64748b" font-size="9">会话列表</text>
+
+  <!-- Arrow: loadConversations -->
+  <line x1="135" y1="70" x2="135" y2="78" stroke="#6366f1" stroke-width="1.2" marker-end="url(#cst-arrow)"/>
+  <text x="135" y="68" text-anchor="middle" fill="#94a3b8" font-size="9">loadConversations()</text>
+
+  <!-- currentId -->
+  <rect x="40" y="160" width="190" height="50" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="1.5" filter="url(#cst-shadow)"/>
+  <text x="135" y="182" text-anchor="middle" fill="#8b5cf6" font-size="12" font-weight="700">currentId</text>
+  <text x="135" y="200" text-anchor="middle" fill="#64748b" font-size="9">当前会话 ID</text>
+
+  <!-- Arrow from conversations click -->
+  <line x1="135" y1="130" x2="135" y2="158" stroke="#94a3b8" stroke-width="1" opacity="0.4" marker-end="url(#cst-arrow)"/>
+  <text x="185" y="148" fill="#94a3b8" font-size="8">click / meta event</text>
+
+  <!-- messages[] -->
+  <rect x="290" y="80" width="200" height="50" rx="12" fill="#111827" stroke="#22c55e" stroke-width="1.5" filter="url(#cst-shadow)"/>
+  <text x="390" y="102" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700">messages[]</text>
+  <text x="390" y="120" text-anchor="middle" fill="#64748b" font-size="9">当前会话消息列表</text>
+
+  <!-- Arrows into messages -->
+  <line x1="230" y1="180" x2="290" y2="105" stroke="#94a3b8" stroke-width="1" opacity="0.4" marker-end="url(#cst-arrow-green)"/>
+  <text x="250" y="135" fill="#94a3b8" font-size="8" transform="rotate(-30,250,135)">loadMessages()</text>
+
+  <!-- handleSend + SSE append labels -->
+  <text x="390" y="72" text-anchor="middle" fill="#94a3b8" font-size="8">handleSend() + SSE append</text>
+
+  <!-- isStreaming -->
+  <rect x="290" y="160" width="200" height="50" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="1.5" filter="url(#cst-shadow)"/>
+  <text x="390" y="182" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="700">isStreaming</text>
+  <text x="390" y="200" text-anchor="middle" fill="#64748b" font-size="9">流式传输状态</text>
+
+  <!-- Arrow between messages and streaming -->
+  <line x1="390" y1="130" x2="390" y2="158" stroke="#f59e0b" stroke-width="1" opacity="0.4" marker-end="url(#cst-arrow-orange)"/>
+  <text x="430" y="148" fill="#94a3b8" font-size="8">SSE start/done</text>
+
+  <!-- agents[] -->
+  <rect x="550" y="80" width="180" height="50" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="1.5" filter="url(#cst-shadow)"/>
+  <text x="640" y="102" text-anchor="middle" fill="#3b82f6" font-size="12" font-weight="700">agents[]</text>
+  <text x="640" y="120" text-anchor="middle" fill="#64748b" font-size="9">可用智能体列表</text>
+  <text x="640" y="72" text-anchor="middle" fill="#94a3b8" font-size="8">getAgents()</text>
+
+  <!-- selectedAgent -->
+  <rect x="550" y="160" width="180" height="50" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="1.5" filter="url(#cst-shadow)"/>
+  <text x="640" y="182" text-anchor="middle" fill="#8b5cf6" font-size="12" font-weight="700">selectedAgent</text>
+  <text x="640" y="200" text-anchor="middle" fill="#64748b" font-size="9">当前选中智能体</text>
+
+  <line x1="640" y1="130" x2="640" y2="158" stroke="#94a3b8" stroke-width="1" opacity="0.4" marker-end="url(#cst-arrow)"/>
+  <text x="685" y="148" fill="#94a3b8" font-size="8">user selection</text>
+
+  <!-- showContext -->
+  <rect x="790" y="80" width="170" height="50" rx="12" fill="#111827" stroke="#ef4444" stroke-width="1.5" filter="url(#cst-shadow)"/>
+  <text x="875" y="102" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="700">showContext</text>
+  <text x="875" y="120" text-anchor="middle" fill="#64748b" font-size="9">上下文面板开关</text>
+  <text x="875" y="72" text-anchor="middle" fill="#94a3b8" font-size="8">toggle button</text>
+
+  <!-- Refs Section -->
+  <rect x="40" y="250" width="920" height="100" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" opacity="0.7"/>
+  <text x="70" y="278" fill="#f1f5f9" font-size="13" font-weight="600">useRef (不触发重渲染)</text>
+
+  <!-- abortRef -->
+  <rect x="70" y="290" width="200" height="42" rx="10" fill="#0a0e1a" stroke="#ef4444" stroke-width="1"/>
+  <text x="170" y="310" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="600">abortRef</text>
+  <text x="170" y="325" text-anchor="middle" fill="#64748b" font-size="9">SSE AbortController 取消流</text>
+
+  <!-- realConvIdRef -->
+  <rect x="300" y="290" width="240" height="42" rx="10" fill="#0a0e1a" stroke="#f59e0b" stroke-width="1"/>
+  <text x="420" y="310" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="600">realConvIdRef</text>
+  <text x="420" y="325" text-anchor="middle" fill="#64748b" font-size="9">后端真实会话 ID 映射 (新建会话场景)</text>
+
+  <!-- messagesEndRef -->
+  <rect x="570" y="290" width="200" height="42" rx="10" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="670" y="310" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="600">messagesEndRef</text>
+  <text x="670" y="325" text-anchor="middle" fill="#64748b" font-size="9">消息列表自动滚动锚点</text>
+
+  <!-- Dependency flow section -->
+  <rect x="40" y="375" width="920" height="100" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" opacity="0.6"/>
+  <text x="70" y="400" fill="#f1f5f9" font-size="13" font-weight="600">依赖链路</text>
+
+  <!-- Flow arrows -->
+  <text x="70" y="425" fill="#6366f1" font-size="11" font-weight="600">用户点击会话</text>
+  <text x="190" y="425" fill="#94a3b8" font-size="11">→</text>
+  <text x="210" y="425" fill="#8b5cf6" font-size="11" font-weight="600">setCurrentId</text>
+  <text x="320" y="425" fill="#94a3b8" font-size="11">→</text>
+  <text x="340" y="425" fill="#22c55e" font-size="11" font-weight="600">loadMessages(id)</text>
+  <text x="490" y="425" fill="#94a3b8" font-size="11">→</text>
+  <text x="510" y="425" fill="#f1f5f9" font-size="11">消息列表更新</text>
+
+  <text x="70" y="450" fill="#6366f1" font-size="11" font-weight="600">发送消息</text>
+  <text x="155" y="450" fill="#94a3b8" font-size="11">→</text>
+  <text x="175" y="450" fill="#f59e0b" font-size="11" font-weight="600">isStreaming=true</text>
+  <text x="320" y="450" fill="#94a3b8" font-size="11">→</text>
+  <text x="340" y="450" fill="#22c55e" font-size="11" font-weight="600">SSE 逐字追加 messages</text>
+  <text x="530" y="450" fill="#94a3b8" font-size="11">→</text>
+  <text x="550" y="450" fill="#f59e0b" font-size="11" font-weight="600">done → isStreaming=false</text>
+</svg>

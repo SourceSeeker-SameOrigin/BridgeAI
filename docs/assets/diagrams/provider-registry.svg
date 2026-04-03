@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="pr-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <linearGradient id="pr-header" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="pr-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="pr-glow">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="500" fill="url(#pr-bg)"/>
+
+  <text x="500" y="38" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="700">Provider Registry 自动发现</text>
+  <text x="500" y="58" text-anchor="middle" fill="#94a3b8" font-size="13">ProviderRegistry Auto-Discovery via Environment Variables</text>
+
+  <!-- Central Registry -->
+  <g transform="translate(500, 120)">
+    <rect x="-160" y="-35" width="320" height="70" rx="12" fill="url(#pr-header)" filter="url(#pr-shadow)"/>
+    <text x="0" y="-5" text-anchor="middle" fill="#fff" font-size="18" font-weight="700">ProviderRegistry</text>
+    <text x="0" y="16" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="11">Check env vars → Auto-register available providers</text>
+  </g>
+
+  <!-- Lines down -->
+  <line x1="250" y1="155" x2="150" y2="200" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/>
+  <line x1="400" y1="155" x2="375" y2="200" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="600" y1="155" x2="625" y2="200" stroke="#3b82f6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="750" y1="155" x2="850" y2="200" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Anthropic Provider -->
+  <g transform="translate(40, 200)">
+    <rect x="0" y="0" width="220" height="160" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#pr-shadow)"/>
+    <rect x="0" y="0" width="220" height="36" rx="12" fill="#6366f1" fill-opacity="0.15"/>
+    <rect x="0" y="24" width="220" height="12" fill="#111827"/>
+    <text x="110" y="24" text-anchor="middle" fill="#6366f1" font-size="13" font-weight="700">AnthropicProvider</text>
+    <rect x="14" y="46" width="192" height="24" rx="6" fill="#0a0e1a" stroke="#6366f1" stroke-width="1"/>
+    <text x="110" y="62" text-anchor="middle" fill="#6366f1" font-size="10" font-family="monospace">ANTHROPIC_API_KEY</text>
+    <text x="110" y="92" text-anchor="middle" fill="#f59e0b" font-size="11">proxy: required</text>
+    <rect x="14" y="100" width="192" height="18" rx="4" fill="#1e293b"/>
+    <text x="110" y="113" text-anchor="middle" fill="#94a3b8" font-size="9">http://127.0.0.1:1087</text>
+    <text x="110" y="135" text-anchor="middle" fill="#94a3b8" font-size="10">claude-sonnet-4, haiku</text>
+    <text x="110" y="150" text-anchor="middle" fill="#64748b" font-size="9">Overseas API</text>
+  </g>
+
+  <!-- DeepSeek Provider -->
+  <g transform="translate(280, 200)">
+    <rect x="0" y="0" width="220" height="160" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#pr-shadow)"/>
+    <rect x="0" y="0" width="220" height="36" rx="12" fill="#8b5cf6" fill-opacity="0.15"/>
+    <rect x="0" y="24" width="220" height="12" fill="#111827"/>
+    <text x="110" y="24" text-anchor="middle" fill="#8b5cf6" font-size="13" font-weight="700">DeepSeekProvider</text>
+    <rect x="14" y="46" width="192" height="24" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="110" y="62" text-anchor="middle" fill="#8b5cf6" font-size="10" font-family="monospace">DEEPSEEK_API_KEY</text>
+    <text x="110" y="92" text-anchor="middle" fill="#f59e0b" font-size="11">proxy: system</text>
+    <rect x="14" y="100" width="192" height="18" rx="4" fill="#1e293b"/>
+    <text x="110" y="113" text-anchor="middle" fill="#94a3b8" font-size="9">uses system HTTP_PROXY</text>
+    <text x="110" y="135" text-anchor="middle" fill="#94a3b8" font-size="10">deepseek-chat, reasoner</text>
+    <text x="110" y="150" text-anchor="middle" fill="#64748b" font-size="9">Overseas API</text>
+  </g>
+
+  <!-- Qwen Provider -->
+  <g transform="translate(520, 200)">
+    <rect x="0" y="0" width="220" height="160" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#pr-shadow)"/>
+    <rect x="0" y="0" width="220" height="36" rx="12" fill="#3b82f6" fill-opacity="0.15"/>
+    <rect x="0" y="24" width="220" height="12" fill="#111827"/>
+    <text x="110" y="24" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700">QwenProvider</text>
+    <rect x="14" y="46" width="192" height="24" rx="6" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="110" y="62" text-anchor="middle" fill="#3b82f6" font-size="10" font-family="monospace">QWEN_API_KEY</text>
+    <text x="110" y="92" text-anchor="middle" fill="#22c55e" font-size="11">proxy: none (China)</text>
+    <rect x="14" y="100" width="192" height="18" rx="4" fill="#1e293b"/>
+    <text x="110" y="113" text-anchor="middle" fill="#94a3b8" font-size="9">DashScope direct connect</text>
+    <text x="110" y="135" text-anchor="middle" fill="#94a3b8" font-size="10">qwen-max, plus, turbo</text>
+    <text x="110" y="150" text-anchor="middle" fill="#64748b" font-size="9">China Mainland API</text>
+  </g>
+
+  <!-- Ollama Provider -->
+  <g transform="translate(760, 200)">
+    <rect x="0" y="0" width="220" height="160" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#pr-shadow)"/>
+    <rect x="0" y="0" width="220" height="36" rx="12" fill="#22c55e" fill-opacity="0.15"/>
+    <rect x="0" y="24" width="220" height="12" fill="#111827"/>
+    <text x="110" y="24" text-anchor="middle" fill="#22c55e" font-size="13" font-weight="700">OllamaProvider</text>
+    <rect x="14" y="46" width="192" height="24" rx="6" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+    <text x="110" y="62" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">OLLAMA_BASE_URL</text>
+    <text x="110" y="92" text-anchor="middle" fill="#22c55e" font-size="11">proxy: none (local)</text>
+    <rect x="14" y="100" width="192" height="18" rx="4" fill="#1e293b"/>
+    <text x="110" y="113" text-anchor="middle" fill="#94a3b8" font-size="9">localhost:11434</text>
+    <text x="110" y="135" text-anchor="middle" fill="#94a3b8" font-size="10">llama3, qwen2, mistral</text>
+    <text x="110" y="150" text-anchor="middle" fill="#64748b" font-size="9">Local Model</text>
+  </g>
+
+  <!-- Registered providers list -->
+  <g transform="translate(500, 420)">
+    <rect x="-420" y="-30" width="840" height="60" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="-390" y="-8" fill="#f1f5f9" font-size="12" font-weight="600">Registered Providers:</text>
+    <text x="-390" y="12" fill="#94a3b8" font-size="10">registry = {</text>
+    <text x="-280" y="12" fill="#6366f1" font-size="10" font-family="monospace">"anthropic": AnthropicProvider</text>
+    <text x="-40" y="12" fill="#8b5cf6" font-size="10" font-family="monospace">"deepseek": DeepSeekProvider</text>
+    <text x="190" y="12" fill="#3b82f6" font-size="10" font-family="monospace">"qwen": QwenProvider</text>
+    <text x="370" y="12" fill="#94a3b8" font-size="10">}</text>
+
+    <!-- Status indicators -->
+    <circle cx="-295" cy="9" r="4" fill="#22c55e">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="-55" cy="9" r="4" fill="#22c55e">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+    </circle>
+    <circle cx="175" cy="9" r="4" fill="#22c55e">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" begin="0.6s"/>
+    </circle>
+  </g>
+
+  <!-- Bottom note -->
+  <text x="500" y="480" text-anchor="middle" fill="#64748b" font-size="10">Missing env var → provider skipped with log.info("XXX not configured")</text>
+</svg>

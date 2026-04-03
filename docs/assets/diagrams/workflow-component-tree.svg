@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="wct-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="wct-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="500" fill="url(#wct-bg)"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">Workflow 页面组件树</text>
+  <text x="450" y="53" text-anchor="middle" fill="#94a3b8" font-size="12">Workflow Page Component Hierarchy</text>
+
+  <!-- WorkflowsPage (root) -->
+  <rect x="335" y="70" width="230" height="40" rx="12" fill="#6366f1" filter="url(#wct-shadow)"/>
+  <text x="450" y="95" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">WorkflowsPage</text>
+
+  <!-- Lines from root -->
+  <line x1="380" y1="110" x2="120" y2="155" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="430" y1="110" x2="370" y2="155" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="500" y1="110" x2="620" y2="155" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+
+  <!-- WorkflowList (sidebar) -->
+  <rect x="30" y="155" width="180" height="38" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="1.5" filter="url(#wct-shadow)"/>
+  <text x="120" y="179" text-anchor="middle" fill="#8b5cf6" font-size="13" font-weight="600">WorkflowList</text>
+  <text x="120" y="208" text-anchor="middle" fill="#94a3b8" font-size="10">侧栏 - 工作流列表</text>
+
+  <!-- NodePalette -->
+  <rect x="270" y="155" width="200" height="38" rx="12" fill="#111827" stroke="#22c55e" stroke-width="1.5" filter="url(#wct-shadow)"/>
+  <text x="370" y="179" text-anchor="middle" fill="#22c55e" font-size="13" font-weight="600">NodePalette</text>
+  <text x="370" y="208" text-anchor="middle" fill="#94a3b8" font-size="10">节点面板 - 7种节点类型</text>
+
+  <!-- ReactFlow Canvas -->
+  <rect x="530" y="155" width="180" height="38" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="1.5" filter="url(#wct-shadow)"/>
+  <text x="620" y="179" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="600">ReactFlow Canvas</text>
+  <text x="620" y="208" text-anchor="middle" fill="#94a3b8" font-size="10">流程画布</text>
+
+  <!-- 7 Node Types inside NodePalette area -->
+  <rect x="245" y="230" width="250" height="95" rx="10" fill="#0a0e1a" stroke="rgba(148,163,184,0.1)" stroke-width="1"/>
+  <text x="370" y="250" text-anchor="middle" fill="#64748b" font-size="10">7 Node Types</text>
+
+  <circle cx="285" cy="275" r="10" fill="#6366f1"/>
+  <text x="285" y="298" text-anchor="middle" fill="#94a3b8" font-size="8">LLM</text>
+
+  <circle cx="325" cy="275" r="10" fill="#8b5cf6"/>
+  <text x="325" y="298" text-anchor="middle" fill="#94a3b8" font-size="8">Tool</text>
+
+  <circle cx="365" cy="275" r="10" fill="#22c55e"/>
+  <text x="365" y="298" text-anchor="middle" fill="#94a3b8" font-size="8">条件</text>
+
+  <circle cx="405" cy="275" r="10" fill="#f59e0b"/>
+  <text x="405" y="298" text-anchor="middle" fill="#94a3b8" font-size="8">输入</text>
+
+  <circle cx="445" cy="275" r="10" fill="#3b82f6"/>
+  <text x="445" y="298" text-anchor="middle" fill="#94a3b8" font-size="8">输出</text>
+
+  <circle cx="305" cy="310" r="10" fill="#ef4444"/>
+  <text x="305" y="316" text-anchor="middle" fill="#fff" font-size="7">K</text>
+
+  <circle cx="345" cy="310" r="10" fill="#94a3b8"/>
+  <text x="345" y="316" text-anchor="middle" fill="#0a0e1a" font-size="7">T</text>
+
+  <text x="305" y="332" text-anchor="middle" fill="#94a3b8" font-size="8">知识库</text>
+  <text x="345" y="332" text-anchor="middle" fill="#94a3b8" font-size="8">转换</text>
+
+  <!-- ReactFlow children -->
+  <line x1="590" y1="193" x2="560" y2="260" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="650" y1="193" x2="730" y2="260" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+
+  <!-- FlowNode -->
+  <rect x="510" y="260" width="160" height="36" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="1.5" filter="url(#wct-shadow)"/>
+  <text x="590" y="283" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="600">FlowNode (custom)</text>
+
+  <!-- NodeConfigPanel -->
+  <rect x="690" y="260" width="180" height="36" rx="12" fill="#111827" stroke="#ef4444" stroke-width="1.5" filter="url(#wct-shadow)"/>
+  <text x="780" y="283" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="600">NodeConfigPanel</text>
+  <text x="780" y="310" text-anchor="middle" fill="#94a3b8" font-size="10">底部配置面板</text>
+
+  <!-- Legend -->
+  <rect x="30" y="380" width="840" height="90" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" opacity="0.6"/>
+  <text x="60" y="408" fill="#f1f5f9" font-size="12" font-weight="600">数据流</text>
+  <text x="60" y="430" fill="#94a3b8" font-size="10">WorkflowList 选中 → 加载 workflow → ReactFlow 渲染节点和边 → 点击节点 → NodeConfigPanel 展示配置</text>
+  <text x="60" y="452" fill="#94a3b8" font-size="10">NodePalette 拖出节点 → onDrop 创建新节点 → ReactFlow Canvas 添加 → 可拖拽连线</text>
+</svg>

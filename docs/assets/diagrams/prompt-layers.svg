@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="pl-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="pl-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="700" fill="url(#pl-bg)"/>
+
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">5 层 Prompt 融合架构</text>
+  <text x="500" y="60" text-anchor="middle" fill="#94a3b8" font-size="13">Prompt Layered Architecture - From Static to Dynamic</text>
+
+  <!-- Layer 5 (top - lightest) -->
+  <g transform="translate(160, 90)">
+    <rect width="580" height="95" rx="12" fill="#111827" stroke="#c4b5fd" stroke-width="2" filter="url(#pl-shadow)"/>
+    <rect width="580" height="95" rx="12" fill="#c4b5fd" opacity="0.08"/>
+    <rect x="0" y="0" width="8" height="95" rx="4" fill="#c4b5fd"/>
+    <text x="30" y="28" fill="#c4b5fd" font-size="12" font-weight="700" opacity="0.6">LAYER 5</text>
+    <text x="30" y="50" fill="#f1f5f9" font-size="16" font-weight="700">Analysis Instruction</text>
+    <text x="30" y="72" fill="#94a3b8" font-size="13">&lt;analysis&gt; JSON 输出指令 — 结构化分析要求</text>
+    <rect x="430" y="10" width="130" height="24" rx="12" fill="#c4b5fd" opacity="0.15" stroke="#c4b5fd" stroke-width="0.5"/>
+    <text x="495" y="27" text-anchor="middle" fill="#c4b5fd" font-size="11">最动态</text>
+  </g>
+
+  <!-- Layer 4 -->
+  <g transform="translate(160, 200)">
+    <rect width="580" height="95" rx="12" fill="#111827" stroke="#a78bfa" stroke-width="2" filter="url(#pl-shadow)"/>
+    <rect width="580" height="95" rx="12" fill="#a78bfa" opacity="0.08"/>
+    <rect x="0" y="0" width="8" height="95" rx="4" fill="#a78bfa"/>
+    <text x="30" y="28" fill="#a78bfa" font-size="12" font-weight="700" opacity="0.6">LAYER 4</text>
+    <text x="30" y="50" fill="#f1f5f9" font-size="16" font-weight="700">Context Hints</text>
+    <text x="30" y="72" fill="#94a3b8" font-size="13">意图识别 / 复杂度提示词 — 动态注入上下文</text>
+  </g>
+
+  <!-- Layer 3 -->
+  <g transform="translate(160, 310)">
+    <rect width="580" height="95" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#pl-shadow)"/>
+    <rect width="580" height="95" rx="12" fill="#8b5cf6" opacity="0.08"/>
+    <rect x="0" y="0" width="8" height="95" rx="4" fill="#8b5cf6"/>
+    <text x="30" y="28" fill="#8b5cf6" font-size="12" font-weight="700" opacity="0.6">LAYER 3</text>
+    <text x="30" y="50" fill="#f1f5f9" font-size="16" font-weight="700">Few-shot Examples</text>
+    <text x="30" y="72" fill="#94a3b8" font-size="13">高评分历史对话 (Redis ZSET Top-3) — 示范回答质量</text>
+  </g>
+
+  <!-- Layer 2 -->
+  <g transform="translate(160, 420)">
+    <rect width="580" height="95" rx="12" fill="#111827" stroke="#7c3aed" stroke-width="2" filter="url(#pl-shadow)"/>
+    <rect width="580" height="95" rx="12" fill="#7c3aed" opacity="0.08"/>
+    <rect x="0" y="0" width="8" height="95" rx="4" fill="#7c3aed"/>
+    <text x="30" y="28" fill="#7c3aed" font-size="12" font-weight="700" opacity="0.6">LAYER 2</text>
+    <text x="30" y="50" fill="#f1f5f9" font-size="16" font-weight="700">Agent Prompt</text>
+    <text x="30" y="72" fill="#94a3b8" font-size="13">Agent 专属人设 / 角色定义 / 专业领域指令</text>
+  </g>
+
+  <!-- Layer 1 (bottom - darkest) -->
+  <g transform="translate(160, 530)">
+    <rect width="580" height="95" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#pl-shadow)"/>
+    <rect width="580" height="95" rx="12" fill="#6366f1" opacity="0.08"/>
+    <rect x="0" y="0" width="8" height="95" rx="4" fill="#6366f1"/>
+    <text x="30" y="28" fill="#6366f1" font-size="12" font-weight="700" opacity="0.6">LAYER 1</text>
+    <text x="30" y="50" fill="#f1f5f9" font-size="16" font-weight="700">Base System Prompt</text>
+    <text x="30" y="72" fill="#94a3b8" font-size="13">BridgeAI 基础行为规范 — 全局通用指令</text>
+    <rect x="430" y="10" width="130" height="24" rx="12" fill="#6366f1" opacity="0.15" stroke="#6366f1" stroke-width="0.5"/>
+    <text x="495" y="27" text-anchor="middle" fill="#6366f1" font-size="11">最稳定</text>
+  </g>
+
+  <!-- Right arrow: 越上层越动态 -->
+  <g transform="translate(800, 90)">
+    <line x1="0" y1="530" x2="0" y2="10" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#pl-arrowup)"/>
+    <polygon points="0,5 -6,20 6,20" fill="#94a3b8"/>
+    <text x="20" y="270" fill="#94a3b8" font-size="13" font-weight="600" transform="rotate(90, 20, 270)">越上层越动态</text>
+  </g>
+
+  <!-- Left arrow: 越下层越稳定 -->
+  <g transform="translate(110, 90)">
+    <line x1="0" y1="5" x2="0" y2="525" stroke="#94a3b8" stroke-width="1.5"/>
+    <polygon points="0,530 -6,515 6,515" fill="#94a3b8"/>
+    <text x="-20" y="270" fill="#94a3b8" font-size="13" font-weight="600" transform="rotate(-90, -20, 270)">越下层越稳定</text>
+  </g>
+
+  <!-- Merge indicator at top -->
+  <g transform="translate(160, 645)">
+    <rect width="580" height="36" rx="12" fill="#6366f1" opacity="0.12" stroke="#6366f1" stroke-width="1"/>
+    <text x="290" y="23" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="600">合并输出 → Final System Prompt</text>
+  </g>
+</svg>

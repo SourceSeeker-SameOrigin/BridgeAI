@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
+  <defs>
+    <linearGradient id="pipe1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e"/>
+      <stop offset="100%" style="stop-color:#16a34a"/>
+    </linearGradient>
+    <linearGradient id="pipe2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="pipe3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+    <linearGradient id="pipe4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="pipe5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <linearGradient id="pipe6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#14b8a6"/>
+      <stop offset="100%" style="stop-color:#0d9488"/>
+    </linearGradient>
+    <linearGradient id="arrowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <filter id="pipeShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="rgba(0,0,0,0.4)"/>
+    </filter>
+    <filter id="pipeGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="600" fill="#0a0e1a"/>
+
+  <!-- Title -->
+  <text x="600" y="38" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="22" font-weight="700">BridgeAI 6 阶段对话处理管线</text>
+  <text x="600" y="58" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="13">一次调用 = 回答 + 上下文分析，省掉额外模型调用</text>
+
+  <!-- Stage 1: 请求接入 -->
+  <g transform="translate(30,90)">
+    <rect x="0" y="0" width="165" height="200" rx="12" fill="#111827" stroke="url(#pipe1)" stroke-width="2" filter="url(#pipeShadow)"/>
+    <!-- Header -->
+    <rect x="0" y="0" width="165" height="44" rx="12" fill="url(#pipe1)" opacity="0.2"/>
+    <rect x="0" y="30" width="165" height="14" fill="url(#pipe1)" opacity="0.2"/>
+    <circle cx="25" cy="22" r="14" fill="url(#pipe1)" opacity="0.8"/>
+    <text x="25" y="27" text-anchor="middle" fill="#0a0e1a" font-family="system-ui" font-size="13" font-weight="800">1</text>
+    <text x="50" y="28" fill="#f1f5f9" font-family="system-ui" font-size="14" font-weight="700">请求接入</text>
+    <!-- Content -->
+    <text x="15" y="65" fill="#22c55e" font-family="system-ui" font-size="10" font-weight="600">Key Actions:</text>
+    <text x="15" y="82" fill="#94a3b8" font-family="system-ui" font-size="9">- 统一消息格式转换</text>
+    <text x="15" y="97" fill="#94a3b8" font-family="system-ui" font-size="9">- 提取 tenant/user/session</text>
+    <text x="15" y="112" fill="#94a3b8" font-family="system-ui" font-size="9">- DFA 内容过滤</text>
+    <text x="15" y="127" fill="#94a3b8" font-family="system-ui" font-size="9">- 设置 TenantContext</text>
+    <line x1="15" y1="140" x2="150" y2="140" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="15" y="157" fill="#22c55e" font-family="system-ui" font-size="10" font-weight="600">Components:</text>
+    <text x="15" y="174" fill="#94a3b8" font-family="system-ui" font-size="9">Channel, Middleware</text>
+    <text x="15" y="189" fill="#94a3b8" font-family="system-ui" font-size="9">ContentFilter</text>
+  </g>
+
+  <!-- Arrow 1→2 -->
+  <g transform="translate(195,175)">
+    <polygon points="0,5 25,15 0,25" fill="url(#arrowGrad)" opacity="0.8"/>
+    <text x="8" y="48" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">messages</text>
+    <text x="8" y="59" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">context</text>
+  </g>
+
+  <!-- Stage 2: Prompt融合 -->
+  <g transform="translate(222,90)">
+    <rect x="0" y="0" width="165" height="200" rx="12" fill="#111827" stroke="url(#pipe2)" stroke-width="2" filter="url(#pipeShadow)"/>
+    <rect x="0" y="0" width="165" height="44" rx="12" fill="url(#pipe2)" opacity="0.2"/>
+    <rect x="0" y="30" width="165" height="14" fill="url(#pipe2)" opacity="0.2"/>
+    <circle cx="25" cy="22" r="14" fill="url(#pipe2)" opacity="0.8"/>
+    <text x="25" y="27" text-anchor="middle" fill="#0a0e1a" font-family="system-ui" font-size="13" font-weight="800">2</text>
+    <text x="50" y="28" fill="#f1f5f9" font-family="system-ui" font-size="14" font-weight="700">Prompt融合</text>
+    <text x="15" y="65" fill="#8b5cf6" font-family="system-ui" font-size="10" font-weight="600">4 Layer Merge:</text>
+    <text x="15" y="82" fill="#94a3b8" font-family="system-ui" font-size="9">L1: Agent System Prompt</text>
+    <text x="15" y="97" fill="#94a3b8" font-family="system-ui" font-size="9">L2: 记忆 + RAG 结果</text>
+    <text x="15" y="112" fill="#94a3b8" font-family="system-ui" font-size="9">L3: Few-shot 高评分案例</text>
+    <text x="15" y="127" fill="#94a3b8" font-family="system-ui" font-size="9">L4: 分析指令注入</text>
+    <line x1="15" y1="140" x2="150" y2="140" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="15" y="157" fill="#8b5cf6" font-family="system-ui" font-size="10" font-weight="600">Components:</text>
+    <text x="15" y="174" fill="#94a3b8" font-family="system-ui" font-size="9">PromptOptimizer</text>
+    <text x="15" y="189" fill="#94a3b8" font-family="system-ui" font-size="9">RAG Engine, Redis</text>
+  </g>
+
+  <!-- Arrow 2→3 -->
+  <g transform="translate(387,175)">
+    <polygon points="0,5 25,15 0,25" fill="url(#arrowGrad)" opacity="0.8"/>
+    <text x="8" y="48" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">optimized</text>
+    <text x="8" y="59" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">prompt</text>
+  </g>
+
+  <!-- Stage 3: 模型路由 -->
+  <g transform="translate(414,90)">
+    <rect x="0" y="0" width="165" height="200" rx="12" fill="#111827" stroke="url(#pipe3)" stroke-width="2" filter="url(#pipeShadow)"/>
+    <rect x="0" y="0" width="165" height="44" rx="12" fill="url(#pipe3)" opacity="0.2"/>
+    <rect x="0" y="30" width="165" height="14" fill="url(#pipe3)" opacity="0.2"/>
+    <circle cx="25" cy="22" r="14" fill="url(#pipe3)" opacity="0.8"/>
+    <text x="25" y="27" text-anchor="middle" fill="#0a0e1a" font-family="system-ui" font-size="13" font-weight="800">3</text>
+    <text x="50" y="28" fill="#f1f5f9" font-family="system-ui" font-size="14" font-weight="700">模型路由</text>
+    <text x="15" y="65" fill="#3b82f6" font-family="system-ui" font-size="10" font-weight="600">5-Layer Decision:</text>
+    <text x="15" y="82" fill="#94a3b8" font-family="system-ui" font-size="9">L1: Agent 默认模型</text>
+    <text x="15" y="97" fill="#94a3b8" font-family="system-ui" font-size="9">L2: 意图匹配调整</text>
+    <text x="15" y="112" fill="#94a3b8" font-family="system-ui" font-size="9">L3: 用户等级限制</text>
+    <text x="15" y="127" fill="#94a3b8" font-family="system-ui" font-size="9">L4: 性能优化</text>
+    <text x="15" y="142" fill="#94a3b8" font-family="system-ui" font-size="9">L5: 成本控制</text>
+    <line x1="15" y1="155" x2="150" y2="155" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="15" y="172" fill="#3b82f6" font-family="system-ui" font-size="10" font-weight="600">Components:</text>
+    <text x="15" y="189" fill="#94a3b8" font-family="system-ui" font-size="9">ModelRouter</text>
+  </g>
+
+  <!-- Arrow 3→4 -->
+  <g transform="translate(579,175)">
+    <polygon points="0,5 25,15 0,25" fill="url(#arrowGrad)" opacity="0.8"/>
+    <text x="8" y="48" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">model +</text>
+    <text x="8" y="59" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">params</text>
+  </g>
+
+  <!-- Stage 4: AI调用+工具 -->
+  <g transform="translate(606,90)">
+    <rect x="0" y="0" width="165" height="200" rx="12" fill="#111827" stroke="url(#pipe4)" stroke-width="2" filter="url(#pipeShadow)"/>
+    <rect x="0" y="0" width="165" height="44" rx="12" fill="url(#pipe4)" opacity="0.2"/>
+    <rect x="0" y="30" width="165" height="14" fill="url(#pipe4)" opacity="0.2"/>
+    <circle cx="25" cy="22" r="14" fill="url(#pipe4)" opacity="0.8"/>
+    <text x="25" y="27" text-anchor="middle" fill="#0a0e1a" font-family="system-ui" font-size="13" font-weight="800">4</text>
+    <text x="50" y="28" fill="#f1f5f9" font-family="system-ui" font-size="13" font-weight="700">AI调用+工具</text>
+    <text x="15" y="65" fill="#6366f1" font-family="system-ui" font-size="10" font-weight="600">Key Actions:</text>
+    <text x="15" y="82" fill="#94a3b8" font-family="system-ui" font-size="9">- 熔断降级链调用</text>
+    <text x="15" y="97" fill="#94a3b8" font-family="system-ui" font-size="9">- 流式 SSE 输出</text>
+    <text x="15" y="112" fill="#94a3b8" font-family="system-ui" font-size="9">- 工具调用循环(5轮)</text>
+    <text x="15" y="127" fill="#94a3b8" font-family="system-ui" font-size="9">- MCP/Plugin/Delegate</text>
+    <line x1="15" y1="140" x2="150" y2="140" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="15" y="157" fill="#6366f1" font-family="system-ui" font-size="10" font-weight="600">Components:</text>
+    <text x="15" y="174" fill="#94a3b8" font-family="system-ui" font-size="9">CircuitBreaker</text>
+    <text x="15" y="189" fill="#94a3b8" font-family="system-ui" font-size="9">MCP Gateway, Plugins</text>
+  </g>
+
+  <!-- Arrow 4→5 -->
+  <g transform="translate(771,175)">
+    <polygon points="0,5 25,15 0,25" fill="url(#arrowGrad)" opacity="0.8"/>
+    <text x="8" y="48" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">raw</text>
+    <text x="8" y="59" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">response</text>
+  </g>
+
+  <!-- Stage 5: 响应解析 -->
+  <g transform="translate(798,90)">
+    <rect x="0" y="0" width="165" height="200" rx="12" fill="#111827" stroke="url(#pipe5)" stroke-width="2" filter="url(#pipeShadow)"/>
+    <rect x="0" y="0" width="165" height="44" rx="12" fill="url(#pipe5)" opacity="0.2"/>
+    <rect x="0" y="30" width="165" height="14" fill="url(#pipe5)" opacity="0.2"/>
+    <circle cx="25" cy="22" r="14" fill="url(#pipe5)" opacity="0.8"/>
+    <text x="25" y="27" text-anchor="middle" fill="#0a0e1a" font-family="system-ui" font-size="13" font-weight="800">5</text>
+    <text x="50" y="28" fill="#f1f5f9" font-family="system-ui" font-size="14" font-weight="700">响应解析</text>
+    <text x="15" y="65" fill="#f59e0b" font-family="system-ui" font-size="10" font-weight="600">Key Actions:</text>
+    <text x="15" y="82" fill="#94a3b8" font-family="system-ui" font-size="9">- 分离内容和 &lt;analysis&gt;</text>
+    <text x="15" y="97" fill="#94a3b8" font-family="system-ui" font-size="9">- 解析 JSON 分析结果</text>
+    <text x="15" y="112" fill="#94a3b8" font-family="system-ui" font-size="9">- 持久化消息/意图/情绪</text>
+    <text x="15" y="127" fill="#94a3b8" font-family="system-ui" font-size="9">- 写入记忆系统</text>
+    <line x1="15" y1="140" x2="150" y2="140" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="15" y="157" fill="#f59e0b" font-family="system-ui" font-size="10" font-weight="600">Components:</text>
+    <text x="15" y="174" fill="#94a3b8" font-family="system-ui" font-size="9">ContextParser</text>
+    <text x="15" y="189" fill="#94a3b8" font-family="system-ui" font-size="9">MemoryManager, DB</text>
+  </g>
+
+  <!-- Arrow 5→6 -->
+  <g transform="translate(963,175)">
+    <polygon points="0,5 25,15 0,25" fill="url(#arrowGrad)" opacity="0.8"/>
+    <text x="8" y="48" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">analysis</text>
+    <text x="8" y="59" fill="#94a3b8" font-family="system-ui" font-size="8" text-anchor="middle">+ rating</text>
+  </g>
+
+  <!-- Stage 6: 反馈学习 -->
+  <g transform="translate(990,90)">
+    <rect x="0" y="0" width="175" height="200" rx="12" fill="#111827" stroke="url(#pipe6)" stroke-width="2" filter="url(#pipeShadow)"/>
+    <rect x="0" y="0" width="175" height="44" rx="12" fill="url(#pipe6)" opacity="0.2"/>
+    <rect x="0" y="30" width="175" height="14" fill="url(#pipe6)" opacity="0.2"/>
+    <circle cx="25" cy="22" r="14" fill="url(#pipe6)" opacity="0.8"/>
+    <text x="25" y="27" text-anchor="middle" fill="#0a0e1a" font-family="system-ui" font-size="13" font-weight="800">6</text>
+    <text x="50" y="28" fill="#f1f5f9" font-family="system-ui" font-size="14" font-weight="700">反馈学习</text>
+    <text x="15" y="65" fill="#14b8a6" font-family="system-ui" font-size="10" font-weight="600">Key Actions:</text>
+    <text x="15" y="82" fill="#94a3b8" font-family="system-ui" font-size="9">- 用户评分收集(1-5星)</text>
+    <text x="15" y="97" fill="#94a3b8" font-family="system-ui" font-size="9">- 评分&gt;=4 存入候选池</text>
+    <text x="15" y="112" fill="#94a3b8" font-family="system-ui" font-size="9">- Redis ZSET 排序存储</text>
+    <text x="15" y="127" fill="#94a3b8" font-family="system-ui" font-size="9">- 下次注入 Layer 3</text>
+    <line x1="15" y1="140" x2="160" y2="140" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="15" y="157" fill="#14b8a6" font-family="system-ui" font-size="10" font-weight="600">Components:</text>
+    <text x="15" y="174" fill="#94a3b8" font-family="system-ui" font-size="9">FeedbackLoop</text>
+    <text x="15" y="189" fill="#94a3b8" font-family="system-ui" font-size="9">Redis ZSET</text>
+  </g>
+
+  <!-- Feedback loop arrow (stage 6 back to stage 2) -->
+  <path d="M 1078,295 L 1078,320 Q 1078,340 1058,340 L 315,340 Q 295,340 295,320 L 295,295"
+        fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#seqArrowReturn)"/>
+  <text x="686" y="356" text-anchor="middle" fill="#14b8a6" font-family="system-ui" font-size="10" font-weight="600">Feedback Loop: 高评分案例自动注入 Prompt Layer 3</text>
+
+  <!-- Data flow bottom section -->
+  <rect x="30" y="390" width="1140" height="170" rx="12" fill="rgba(17,24,39,0.6)" stroke="rgba(148,163,184,0.1)" stroke-width="1"/>
+  <text x="600" y="415" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="14" font-weight="700">数据流转示意</text>
+
+  <!-- Data flow items -->
+  <g transform="translate(50,430)">
+    <rect x="0" y="0" width="160" height="50" rx="8" fill="rgba(34,197,94,0.08)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+    <text x="80" y="20" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="10" font-weight="600">输入</text>
+    <text x="80" y="38" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">原始消息 + 用户上下文</text>
+  </g>
+  <text x="225" y="458" fill="#6366f1" font-family="system-ui" font-size="16">→</text>
+  <g transform="translate(240,430)">
+    <rect x="0" y="0" width="160" height="50" rx="8" fill="rgba(139,92,246,0.08)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+    <text x="80" y="20" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10" font-weight="600">优化后 Prompt</text>
+    <text x="80" y="38" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">4层融合 + 历史消息</text>
+  </g>
+  <text x="415" y="458" fill="#6366f1" font-family="system-ui" font-size="16">→</text>
+  <g transform="translate(430,430)">
+    <rect x="0" y="0" width="160" height="50" rx="8" fill="rgba(59,130,246,0.08)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+    <text x="80" y="20" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="10" font-weight="600">ModelSelection</text>
+    <text x="80" y="38" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">model_id + params + chain</text>
+  </g>
+  <text x="605" y="458" fill="#6366f1" font-family="system-ui" font-size="16">→</text>
+  <g transform="translate(620,430)">
+    <rect x="0" y="0" width="160" height="50" rx="8" fill="rgba(99,102,241,0.08)" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+    <text x="80" y="20" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="10" font-weight="600">Raw Response</text>
+    <text x="80" y="38" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">content + &lt;analysis&gt;</text>
+  </g>
+  <text x="795" y="458" fill="#6366f1" font-family="system-ui" font-size="16">→</text>
+  <g transform="translate(810,430)">
+    <rect x="0" y="0" width="160" height="50" rx="8" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+    <text x="80" y="20" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="10" font-weight="600">Parsed Output</text>
+    <text x="80" y="38" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">clean_text + ContextAnalysis</text>
+  </g>
+  <text x="985" y="458" fill="#6366f1" font-family="system-ui" font-size="16">→</text>
+  <g transform="translate(1000,430)">
+    <rect x="0" y="0" width="160" height="50" rx="8" fill="rgba(20,184,166,0.08)" stroke="rgba(20,184,166,0.3)" stroke-width="1"/>
+    <text x="80" y="20" text-anchor="middle" fill="#14b8a6" font-family="system-ui" font-size="10" font-weight="600">学习数据</text>
+    <text x="80" y="38" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">few-shot ZSET + memory</text>
+  </g>
+
+  <!-- Storage icons bottom -->
+  <g transform="translate(50,500)">
+    <rect x="0" y="0" width="100" height="30" rx="6" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+    <text x="50" y="20" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="9">PostgreSQL</text>
+  </g>
+  <g transform="translate(170,500)">
+    <rect x="0" y="0" width="100" height="30" rx="6" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.3)" stroke-width="1"/>
+    <text x="50" y="20" text-anchor="middle" fill="#ef4444" font-family="system-ui" font-size="9">Redis</text>
+  </g>
+  <g transform="translate(290,500)">
+    <rect x="0" y="0" width="100" height="30" rx="6" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+    <text x="50" y="20" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="9">LLM APIs</text>
+  </g>
+  <g transform="translate(410,500)">
+    <rect x="0" y="0" width="100" height="30" rx="6" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+    <text x="50" y="20" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="9">MCP Gateway</text>
+  </g>
+  <g transform="translate(530,500)">
+    <rect x="0" y="0" width="100" height="30" rx="6" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+    <text x="50" y="20" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="9">RAG Engine</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="600" y="575" text-anchor="middle" fill="#475569" font-family="system-ui" font-size="11">BridgeAI 6-Stage Pipeline | LangGraph State Machine</text>
+</svg>

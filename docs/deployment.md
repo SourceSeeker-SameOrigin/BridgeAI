@@ -11,6 +11,12 @@
 | Docker Compose | v2.20+ | 最新版 |
 | 操作系统 | Linux / macOS | Ubuntu 22.04 LTS |
 
+## 部署脚本流程
+
+<p align="center">
+  <img src="assets/diagrams/deploy-script-flow.svg" width="800" alt="部署脚本流程" />
+</p>
+
 ## 快速开始
 
 ### 一键部署
@@ -46,6 +52,32 @@ docker compose --env-file .env \
   -f docker/docker-compose.prod.yml \
   up -d --build
 ```
+
+## 部署架构
+
+### 开发环境
+
+<p align="center">
+  <img src="assets/diagrams/docker-dev.svg" width="800" alt="开发环境" />
+</p>
+
+### 生产部署
+
+<p align="center">
+  <img src="assets/diagrams/docker-prod.svg" width="800" alt="生产部署" />
+</p>
+
+### Kubernetes 部署
+
+<p align="center">
+  <img src="assets/diagrams/k8s-helm.svg" width="800" alt="Kubernetes部署" />
+</p>
+
+### 监控体系
+
+<p align="center">
+  <img src="assets/diagrams/monitoring.svg" width="800" alt="监控体系" />
+</p>
 
 ## 部署模式对比
 

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="af-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="af-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <marker id="af-arrow" viewBox="0 0 10 8" refX="10" refY="4" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#6366f1"/>
+    </marker>
+    <marker id="af-arrow-green" viewBox="0 0 10 8" refX="10" refY="4" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#22c55e"/>
+    </marker>
+    <marker id="af-arrow-red" viewBox="0 0 10 8" refX="10" refY="4" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="500" fill="url(#af-bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="35" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">API 请求全链路数据流</text>
+  <text x="600" y="55" text-anchor="middle" fill="#94a3b8" font-size="13">Frontend API Flow - Request / Response Lifecycle</text>
+
+  <!-- Main flow line (request) -->
+  <!-- Page Component -->
+  <rect x="25" y="110" width="130" height="55" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#af-shadow)"/>
+  <text x="90" y="133" text-anchor="middle" fill="#6366f1" font-size="12" font-weight="700">Page</text>
+  <text x="90" y="150" text-anchor="middle" fill="#94a3b8" font-size="10">Component</text>
+
+  <line x1="155" y1="137" x2="185" y2="137" stroke="#6366f1" stroke-width="1.5" marker-end="url(#af-arrow)"/>
+
+  <!-- api/*.ts -->
+  <rect x="195" y="110" width="120" height="55" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1.5" filter="url(#af-shadow)"/>
+  <text x="255" y="133" text-anchor="middle" fill="#f1f5f9" font-size="12" font-weight="600">api/*.ts</text>
+  <text x="255" y="150" text-anchor="middle" fill="#94a3b8" font-size="10">API 模块</text>
+
+  <line x1="315" y1="137" x2="345" y2="137" stroke="#6366f1" stroke-width="1.5" marker-end="url(#af-arrow)"/>
+
+  <!-- client.ts -->
+  <rect x="355" y="110" width="135" height="55" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="1.5" filter="url(#af-shadow)"/>
+  <text x="423" y="133" text-anchor="middle" fill="#8b5cf6" font-size="12" font-weight="700">client.ts</text>
+  <text x="423" y="150" text-anchor="middle" fill="#94a3b8" font-size="10">axios instance</text>
+
+  <line x1="490" y1="137" x2="520" y2="137" stroke="#6366f1" stroke-width="1.5" marker-end="url(#af-arrow)"/>
+
+  <!-- Request Interceptor -->
+  <rect x="530" y="100" width="150" height="75" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="1.5" filter="url(#af-shadow)"/>
+  <text x="605" y="123" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="700">请求拦截器</text>
+  <line x1="545" y1="132" x2="665" y2="132" stroke="rgba(148,163,184,0.1)"/>
+  <text x="605" y="148" text-anchor="middle" fill="#94a3b8" font-size="10">注入 Authorization</text>
+  <text x="605" y="163" text-anchor="middle" fill="#94a3b8" font-size="10">Bearer Token</text>
+
+  <line x1="680" y1="137" x2="710" y2="137" stroke="#6366f1" stroke-width="1.5" marker-end="url(#af-arrow)"/>
+
+  <!-- HTTP Request -->
+  <rect x="720" y="115" width="110" height="45" rx="12" fill="#6366f1" opacity="0.2" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="775" y="143" text-anchor="middle" fill="#6366f1" font-size="12" font-weight="700">HTTP Request</text>
+
+  <line x1="830" y1="137" x2="870" y2="137" stroke="#6366f1" stroke-width="1.5" marker-end="url(#af-arrow)"/>
+
+  <!-- Backend -->
+  <rect x="880" y="105" width="160" height="65" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#af-shadow)"/>
+  <text x="960" y="131" text-anchor="middle" fill="#22c55e" font-size="13" font-weight="700">Backend</text>
+  <text x="960" y="150" text-anchor="middle" fill="#94a3b8" font-size="11">/api/v1/*</text>
+
+  <!-- Response flow (below, going left) -->
+  <path d="M960,170 L960,210 L775,210" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#af-arrow-green)"/>
+
+  <!-- HTTP Response -->
+  <rect x="665" y="193" width="110" height="35" rx="10" fill="#22c55e" opacity="0.1" stroke="#22c55e" stroke-width="1"/>
+  <text x="720" y="215" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="600">HTTP Response</text>
+
+  <line x1="665" y1="210" x2="640" y2="210" stroke="#22c55e" stroke-width="1.5" marker-end="url(#af-arrow-green)"/>
+
+  <!-- Response Interceptor -->
+  <rect x="480" y="190" width="160" height="75" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="1.5" filter="url(#af-shadow)"/>
+  <text x="560" y="213" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="700">响应拦截器</text>
+  <line x1="495" y1="222" x2="625" y2="222" stroke="rgba(148,163,184,0.1)"/>
+  <text x="560" y="240" text-anchor="middle" fill="#94a3b8" font-size="10">解包 {code, data}</text>
+  <text x="560" y="255" text-anchor="middle" fill="#94a3b8" font-size="10">返回 data 部分</text>
+
+  <line x1="480" y1="228" x2="155" y2="165" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#af-arrow-green)"/>
+  <text x="300" y="188" text-anchor="middle" fill="#22c55e" font-size="10">返回 data</text>
+
+  <!-- Error path: 401 -->
+  <g transform="translate(480, 290)">
+    <rect width="500" height="70" rx="12" fill="#ef4444" opacity="0.06" stroke="#ef4444" stroke-width="1" stroke-dasharray="6,3"/>
+    <text x="20" y="22" fill="#ef4444" font-size="13" font-weight="700">Error Path: 401 Unauthorized</text>
+    <text x="20" y="42" fill="#94a3b8" font-size="11">响应拦截器捕获 401 → localStorage.removeItem("token") → router.push("/login")</text>
+    <text x="20" y="58" fill="#94a3b8" font-size="11">清除用户状态 → 重定向登录页</text>
+  </g>
+  <line x1="560" y1="265" x2="560" y2="290" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#af-arrow-red)"/>
+
+  <!-- Loading state path -->
+  <g transform="translate(25, 290)">
+    <rect width="420" height="70" rx="12" fill="#3b82f6" opacity="0.06" stroke="#3b82f6" stroke-width="1" stroke-dasharray="6,3"/>
+    <text x="20" y="22" fill="#3b82f6" font-size="13" font-weight="700">Loading State</text>
+    <text x="20" y="42" fill="#94a3b8" font-size="11">Request Start → setLoading(true)</text>
+    <text x="20" y="58" fill="#94a3b8" font-size="11">Response / Error → setLoading(false)</text>
+  </g>
+  <line x1="90" y1="165" x2="90" y2="290" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+
+  <!-- Flow summary -->
+  <g transform="translate(25, 400)">
+    <rect width="1150" height="75" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="575" y="25" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="600">完整数据流</text>
+    <text x="575" y="48" text-anchor="middle" fill="#94a3b8" font-size="12">
+      Page → api/*.ts → client.ts (axios) → 请求拦截器 (注入Token) → HTTP → Backend → HTTP Response → 响应拦截器 (解包) → data → Page
+    </text>
+    <text x="575" y="66" text-anchor="middle" fill="#ef4444" font-size="11">异常: 401 → 清Token → /login | 网络错误 → Toast 提示 | 业务错误 → code !== 200 → 提示 message</text>
+  </g>
+</svg>

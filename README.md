@@ -1,4 +1,3 @@
-span
 
 <img src="docs/assets/logo.svg" width="120" />
 
@@ -20,7 +19,6 @@ span
 [部署指南](docs/deployment.md) |
 [贡献指南](CONTRIBUTING.md)
 
-</div>
 
 ---
 
@@ -73,6 +71,10 @@ cd frontend && npm install && npm run dev
 </table>
 
 ## Architecture
+
+<p align="center">
+  <img src="docs/assets/diagrams/system-layers.svg" width="800" alt="系统分层架构" />
+</p>
 
 <img src="docs/assets/architecture.svg" width="800" />
 

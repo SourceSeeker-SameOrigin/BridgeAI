@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/><stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#16a34a"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6"/><stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+    <marker id="arrowB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#3b82f6"/></marker>
+    <marker id="arrowG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#22c55e"/></marker>
+    <marker id="arrowP" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#6366f1"/></marker>
+    <marker id="arrowO" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#f59e0b"/></marker>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.3)"/></filter>
+  </defs>
+  <rect width="1200" height="600" fill="#0a0e1a"/>
+  <text x="600" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="20" font-weight="700">Chat 消息数据流 - 双通道架构</text>
+
+  <!-- Chat Page Component -->
+  <rect x="40" y="60" width="200" height="520" rx="12" fill="#111827" stroke="#6366f1" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="140" y="90" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="14" font-weight="700">Chat Page</text>
+  <text x="140" y="110" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">useState (local state)</text>
+
+  <!-- State boxes inside Chat Page -->
+  <rect x="55" y="125" width="170" height="30" rx="8" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="140" y="144" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">conversations: Conversation[]</text>
+
+  <rect x="55" y="165" width="170" height="30" rx="8" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="140" y="184" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">messages: Message[]</text>
+
+  <rect x="55" y="205" width="170" height="30" rx="8" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="140" y="224" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">isStreaming: boolean</text>
+
+  <rect x="55" y="245" width="170" height="30" rx="8" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="140" y="264" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">realConvIdRef: useRef</text>
+
+  <rect x="55" y="285" width="170" height="30" rx="8" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="140" y="304" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">currentAgent: Agent | null</text>
+
+  <rect x="55" y="325" width="170" height="30" rx="8" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="140" y="344" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">inputValue: string</text>
+
+  <!-- REST Channel -->
+  <text x="460" y="75" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="15" font-weight="700">REST 通道 (历史数据)</text>
+  <rect x="300" y="90" width="320" height="220" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="1.5" opacity="0.8"/>
+
+  <!-- REST APIs -->
+  <rect x="320" y="110" width="270" height="38" rx="8" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="455" y="127" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">GET /chat/conversations</text>
+  <text x="455" y="142" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">加载会话列表 → conversations[]</text>
+
+  <rect x="320" y="160" width="270" height="38" rx="8" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="455" y="177" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">GET /chat/conversations/:id/messages</text>
+  <text x="455" y="192" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">加载历史消息 → messages[]</text>
+
+  <rect x="320" y="210" width="270" height="38" rx="8" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="455" y="227" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">POST /chat/messages/:id/rate</text>
+  <text x="455" y="242" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">评分消息 → Few-shot 学习池</text>
+
+  <rect x="320" y="260" width="270" height="38" rx="8" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="455" y="277" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">DELETE /chat/conversations/:id</text>
+  <text x="455" y="292" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">删除会话 → 刷新 conversations[]</text>
+
+  <!-- Arrows from Chat to REST -->
+  <line x1="240" y1="140" x2="318" y2="129" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrowB)"/>
+  <line x1="240" y1="180" x2="318" y2="179" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrowB)"/>
+
+  <!-- SSE Channel -->
+  <text x="460" y="340" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="15" font-weight="700">SSE 通道 (流式响应)</text>
+  <rect x="300" y="355" width="320" height="220" rx="12" fill="#111827" stroke="#22c55e" stroke-width="1.5" opacity="0.8"/>
+
+  <!-- SSE Flow -->
+  <rect x="320" y="370" width="270" height="38" rx="8" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="455" y="387" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">POST /chat/completions (stream=true)</text>
+  <text x="455" y="402" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">sendMessageSSE() → EventSource</text>
+
+  <!-- SSE Events -->
+  <rect x="330" y="420" width="120" height="28" rx="6" fill="#0a0e1a" stroke="#f59e0b" stroke-width="1"/>
+  <text x="390" y="438" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="10">event: meta</text>
+
+  <rect x="460" y="420" width="120" height="28" rx="6" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="520" y="438" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="10">event: content</text>
+
+  <rect x="330" y="458" width="120" height="28" rx="6" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="390" y="476" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="10">event: tool_call</text>
+
+  <rect x="460" y="458" width="120" height="28" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="520" y="476" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">event: analysis</text>
+
+  <rect x="330" y="496" width="120" height="28" rx="6" fill="#0a0e1a" stroke="#ef4444" stroke-width="1"/>
+  <text x="390" y="514" text-anchor="middle" fill="#ef4444" font-family="system-ui" font-size="10">event: error</text>
+
+  <rect x="460" y="496" width="120" height="28" rx="6" fill="#0a0e1a" stroke="#94a3b8" stroke-width="1"/>
+  <text x="520" y="514" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">event: done</text>
+
+  <!-- State update labels -->
+  <text x="395" y="545" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">realConvIdRef.current</text>
+  <text x="520" y="545" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">messages += chunk</text>
+
+  <!-- Arrows from Chat to SSE -->
+  <line x1="200" y1="355" x2="318" y2="389" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrowG)"/>
+
+  <!-- Backend -->
+  <rect x="700" y="100" width="460" height="470" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="930" y="130" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="16" font-weight="700">Backend (FastAPI)</text>
+
+  <!-- Backend modules -->
+  <rect x="720" y="150" width="200" height="44" rx="8" fill="#0a0e1a" stroke="#6366f1" stroke-width="1"/>
+  <text x="820" y="175" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="12" font-weight="600">chat_service.py</text>
+
+  <rect x="940" y="150" width="200" height="44" rx="8" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="1040" y="175" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="12" font-weight="600">Agent Pipeline (6 stages)</text>
+
+  <rect x="720" y="220" width="200" height="44" rx="8" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="820" y="245" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="12" font-weight="600">LLM Provider + 熔断</text>
+
+  <rect x="940" y="220" width="200" height="44" rx="8" fill="#0a0e1a" stroke="#f59e0b" stroke-width="1"/>
+  <text x="1040" y="245" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="12" font-weight="600">MCP Gateway</text>
+
+  <!-- Database -->
+  <rect x="720" y="300" width="420" height="120" rx="8" fill="#0a0e1a" stroke="#94a3b8" stroke-width="1"/>
+  <text x="930" y="325" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="12" font-weight="600">PostgreSQL + Redis</text>
+  <text x="810" y="355" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">conversations 表</text>
+  <text x="930" y="355" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">messages 表</text>
+  <text x="1050" y="355" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">usage_records 表</text>
+  <text x="810" y="385" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">Redis: history</text>
+  <text x="930" y="385" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">Redis: fewshot</text>
+  <text x="1050" y="385" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">Redis: memory</text>
+
+  <!-- SSE Stream arrow -->
+  <text x="930" y="460" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">StreamingResponse (SSE)</text>
+  <rect x="720" y="470" width="420" height="40" rx="8" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="930" y="495" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">yield f"data: {json.dumps(event)}\n\n" → 逐块推送到前端</text>
+
+  <!-- Arrows REST to backend -->
+  <line x1="620" y1="200" x2="718" y2="172" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrowB)"/>
+  <!-- Arrows SSE to backend -->
+  <line x1="620" y1="420" x2="718" y2="172" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrowG)"/>
+</svg>

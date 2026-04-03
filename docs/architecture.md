@@ -4,6 +4,14 @@
 
 BridgeAI 采用分层架构设计，后端基于 FastAPI 构建，前端使用 React + TypeScript。
 
+<p align="center">
+  <img src="assets/diagrams/system-layers.svg" width="800" alt="系统分层架构" />
+</p>
+
+<p align="center">
+  <img src="assets/diagrams/backend-architecture.svg" width="800" alt="后端系统架构" />
+</p>
+
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                         渠道层 (Channel Layer)                      │
@@ -44,7 +52,15 @@ BridgeAI 采用分层架构设计，后端基于 FastAPI 构建，前端使用 R
 
 对话处理的核心是基于 LangGraph 状态机实现的 6 阶段管线。
 
+<p align="center">
+  <img src="assets/diagrams/pipeline-stages.svg" width="800" alt="管线概览" />
+</p>
+
 ### 管线流程
+
+<p align="center">
+  <img src="assets/diagrams/pipeline-detailed.svg" width="800" alt="6阶段对话管线" />
+</p>
 
 ```
 用户消息
@@ -93,6 +109,18 @@ Stage 6: 结果整合
 - **Stage 3 输出** -- `available_tools`, `mcp_connector_ids`
 - **Stage 4 输出** -- `provider_name`, `model_id`, `temperature`, `max_tokens`
 
+### 多Agent协作
+
+<p align="center">
+  <img src="assets/diagrams/multi-agent.svg" width="800" alt="多Agent协作" />
+</p>
+
+### 记忆管理
+
+<p align="center">
+  <img src="assets/diagrams/memory-levels.svg" width="800" alt="3级记忆管理" />
+</p>
+
 ### 熔断降级
 
 `CircuitBreaker` 组件保障模型调用可用性：
@@ -105,6 +133,10 @@ Stage 6: 结果整合
 ## MCP 网关
 
 MCP (Model Context Protocol) 网关负责管理外部工具连接。
+
+<p align="center">
+  <img src="assets/diagrams/mcp-gateway.svg" width="800" alt="MCP网关架构" />
+</p>
 
 ### 架构
 
@@ -178,6 +210,10 @@ class MCPConnector(ABC):
 
 行业插件以标准化接口扩展 Agent 能力。
 
+<p align="center">
+  <img src="assets/diagrams/plugin-system.svg" width="800" alt="插件系统" />
+</p>
+
 ### 插件接口
 
 ```python
@@ -202,6 +238,10 @@ class PluginBase(ABC):
 
 统一的渠道管理器连接 IM 平台与 Agent 管线。
 
+<p align="center">
+  <img src="assets/diagrams/channel-architecture.svg" width="800" alt="多渠道架构" />
+</p>
+
 ```
 企业微信/钉钉 Webhook
         │
@@ -222,7 +262,23 @@ class PluginBase(ABC):
 - **JWT 优先** -- 认证用户的 `tenant_id` 优先于请求头
 - **数据隔离** -- 所有业务表包含 `tenant_id` 字段
 
+## LLM Provider
+
+<p align="center">
+  <img src="assets/diagrams/provider-registry.svg" width="800" alt="LLM Provider" />
+</p>
+
+## 计费架构
+
+<p align="center">
+  <img src="assets/diagrams/billing-architecture.svg" width="800" alt="计费架构" />
+</p>
+
 ## 安全设计
+
+<p align="center">
+  <img src="assets/diagrams/security-architecture.svg" width="800" alt="安全架构" />
+</p>
 
 ### 认证
 
@@ -251,6 +307,10 @@ class PluginBase(ABC):
 ## 数据库设计
 
 使用 PostgreSQL 16 + pgvector 扩展：
+
+<p align="center">
+  <img src="assets/diagrams/database-er.svg" width="800" alt="数据库ER关系图" />
+</p>
 
 ### 核心表
 

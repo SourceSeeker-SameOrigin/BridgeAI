@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="cs-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <linearGradient id="cs-brand-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="cs-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="500" fill="url(#cs-bg)"/>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">设计色彩系统</text>
+  <text x="500" y="55" text-anchor="middle" fill="#94a3b8" font-size="12">BridgeAI Color System - Dark Theme Palette</text>
+
+  <!-- Row 1: 背景 -->
+  <text x="50" y="95" fill="#94a3b8" font-size="13" font-weight="600">背景</text>
+  <rect x="130" y="73" width="100" height="60" rx="10" fill="#0a0e1a" stroke="rgba(148,163,184,0.25)" stroke-width="1" filter="url(#cs-shadow)"/>
+  <text x="180" y="103" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="500">主背景</text>
+  <text x="180" y="123" text-anchor="middle" fill="#64748b" font-size="9">#0a0e1a</text>
+
+  <rect x="250" y="73" width="100" height="60" rx="10" fill="#111827" stroke="rgba(148,163,184,0.25)" stroke-width="1" filter="url(#cs-shadow)"/>
+  <text x="300" y="103" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="500">卡片</text>
+  <text x="300" y="123" text-anchor="middle" fill="#64748b" font-size="9">#111827</text>
+
+  <rect x="370" y="73" width="100" height="60" rx="10" fill="#1a2332" stroke="rgba(148,163,184,0.25)" stroke-width="1" filter="url(#cs-shadow)"/>
+  <text x="420" y="103" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="500">悬浮</text>
+  <text x="420" y="123" text-anchor="middle" fill="#64748b" font-size="9">#1a2332</text>
+
+  <!-- Row 2: 品牌 -->
+  <text x="50" y="175" fill="#94a3b8" font-size="13" font-weight="600">品牌</text>
+  <rect x="130" y="153" width="100" height="60" rx="10" fill="#6366f1" filter="url(#cs-shadow)"/>
+  <text x="180" y="183" text-anchor="middle" fill="#fff" font-size="11" font-weight="500">主色</text>
+  <text x="180" y="203" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">#6366f1</text>
+
+  <rect x="250" y="153" width="100" height="60" rx="10" fill="#8b5cf6" filter="url(#cs-shadow)"/>
+  <text x="300" y="183" text-anchor="middle" fill="#fff" font-size="11" font-weight="500">辅色</text>
+  <text x="300" y="203" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">#8b5cf6</text>
+
+  <rect x="370" y="153" width="220" height="60" rx="10" fill="url(#cs-brand-grad)" filter="url(#cs-shadow)"/>
+  <text x="480" y="183" text-anchor="middle" fill="#fff" font-size="11" font-weight="500">品牌渐变</text>
+  <text x="480" y="203" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">#6366f1 → #8b5cf6</text>
+
+  <!-- Row 3: 状态 -->
+  <text x="50" y="255" fill="#94a3b8" font-size="13" font-weight="600">状态</text>
+  <rect x="130" y="233" width="100" height="60" rx="10" fill="#22c55e" filter="url(#cs-shadow)"/>
+  <text x="180" y="263" text-anchor="middle" fill="#fff" font-size="11" font-weight="500">成功</text>
+  <text x="180" y="283" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">#22c55e</text>
+
+  <rect x="250" y="233" width="100" height="60" rx="10" fill="#f59e0b" filter="url(#cs-shadow)"/>
+  <text x="300" y="263" text-anchor="middle" fill="#fff" font-size="11" font-weight="500">警告</text>
+  <text x="300" y="283" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">#f59e0b</text>
+
+  <rect x="370" y="233" width="100" height="60" rx="10" fill="#ef4444" filter="url(#cs-shadow)"/>
+  <text x="420" y="263" text-anchor="middle" fill="#fff" font-size="11" font-weight="500">错误</text>
+  <text x="420" y="283" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">#ef4444</text>
+
+  <rect x="490" y="233" width="100" height="60" rx="10" fill="#3b82f6" filter="url(#cs-shadow)"/>
+  <text x="540" y="263" text-anchor="middle" fill="#fff" font-size="11" font-weight="500">信息</text>
+  <text x="540" y="283" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9">#3b82f6</text>
+
+  <!-- Row 4: 文字 -->
+  <text x="50" y="335" fill="#94a3b8" font-size="13" font-weight="600">文字</text>
+  <rect x="130" y="313" width="100" height="60" rx="10" fill="#1a2332" stroke="rgba(148,163,184,0.25)" stroke-width="1" filter="url(#cs-shadow)"/>
+  <text x="180" y="338" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="600">Aa 主</text>
+  <text x="180" y="363" text-anchor="middle" fill="#64748b" font-size="9">#f1f5f9</text>
+
+  <rect x="250" y="313" width="100" height="60" rx="10" fill="#1a2332" stroke="rgba(148,163,184,0.25)" stroke-width="1" filter="url(#cs-shadow)"/>
+  <text x="300" y="338" text-anchor="middle" fill="#94a3b8" font-size="14" font-weight="600">Aa 次</text>
+  <text x="300" y="363" text-anchor="middle" fill="#64748b" font-size="9">#94a3b8</text>
+
+  <rect x="370" y="313" width="100" height="60" rx="10" fill="#1a2332" stroke="rgba(148,163,184,0.25)" stroke-width="1" filter="url(#cs-shadow)"/>
+  <text x="420" y="338" text-anchor="middle" fill="#64748b" font-size="14" font-weight="600">Aa 弱</text>
+  <text x="420" y="363" text-anchor="middle" fill="#64748b" font-size="9">#64748b</text>
+
+  <!-- Row 5: 特效 -->
+  <text x="50" y="415" fill="#94a3b8" font-size="13" font-weight="600">特效</text>
+  <rect x="130" y="393" width="200" height="60" rx="10" fill="rgba(17,24,39,0.7)" stroke="rgba(148,163,184,0.25)" stroke-width="1" filter="url(#cs-shadow)"/>
+  <text x="230" y="418" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="500">Glass 毛玻璃</text>
+  <text x="230" y="438" text-anchor="middle" fill="#64748b" font-size="9">rgba(17,24,39,0.7) + blur(12px)</text>
+
+  <rect x="350" y="393" width="200" height="60" rx="10" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="2" filter="url(#cs-shadow)"/>
+  <text x="450" y="418" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="500">Border 边框</text>
+  <text x="450" y="438" text-anchor="middle" fill="#64748b" font-size="9">rgba(148,163,184,0.15)</text>
+
+  <!-- Right side: Usage examples -->
+  <rect x="650" y="73" width="310" height="380" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" opacity="0.8"/>
+  <text x="805" y="100" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="600">使用场景</text>
+
+  <circle cx="680" cy="130" r="6" fill="#6366f1"/>
+  <text x="695" y="134" fill="#94a3b8" font-size="11">按钮主色、导航高亮、链接</text>
+
+  <circle cx="680" cy="160" r="6" fill="#8b5cf6"/>
+  <text x="695" y="164" fill="#94a3b8" font-size="11">渐变辅助、图标装饰</text>
+
+  <circle cx="680" cy="190" r="6" fill="#22c55e"/>
+  <text x="695" y="194" fill="#94a3b8" font-size="11">连接成功、在线状态、完成</text>
+
+  <circle cx="680" cy="220" r="6" fill="#f59e0b"/>
+  <text x="695" y="224" fill="#94a3b8" font-size="11">警告提示、配额接近上限</text>
+
+  <circle cx="680" cy="250" r="6" fill="#ef4444"/>
+  <text x="695" y="254" fill="#94a3b8" font-size="11">错误提示、删除确认、断开</text>
+
+  <circle cx="680" cy="280" r="6" fill="#3b82f6"/>
+  <text x="695" y="284" fill="#94a3b8" font-size="11">信息提示、帮助文档链接</text>
+
+  <line x1="670" y1="305" x2="940" y2="305" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+  <text x="680" y="330" fill="#64748b" font-size="10">CSS 变量引用:</text>
+  <text x="680" y="350" fill="#8b5cf6" font-size="10" font-weight="500">--color-primary: #6366f1;</text>
+  <text x="680" y="368" fill="#8b5cf6" font-size="10" font-weight="500">--color-secondary: #8b5cf6;</text>
+  <text x="680" y="386" fill="#8b5cf6" font-size="10" font-weight="500">--bg-card: #111827;</text>
+  <text x="680" y="404" fill="#8b5cf6" font-size="10" font-weight="500">--text-primary: #f1f5f9;</text>
+  <text x="680" y="422" fill="#8b5cf6" font-size="10" font-weight="500">--glass-bg: rgba(17,24,39,0.7);</text>
+</svg>

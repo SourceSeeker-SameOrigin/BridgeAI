@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" width="1400" height="900">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e"/>
+      <stop offset="100%" style="stop-color:#16a34a"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ec4899"/>
+      <stop offset="100%" style="stop-color:#db2777"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.3)"/>
+    </filter>
+    <marker id="arrowDown" viewBox="0 0 10 10" refX="5" refY="10" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L5,10 L10,0" fill="#6366f1"/>
+    </marker>
+    <marker id="arrowRight" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10" fill="#6366f1"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1400" height="900" fill="#0a0e1a"/>
+
+  <!-- Title -->
+  <text x="700" y="38" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="22" font-weight="700">BridgeAI 后端系统架构总图</text>
+
+  <!-- ====== Layer 1: Channel Layer ====== -->
+  <text x="40" y="72" fill="#94a3b8" font-family="system-ui" font-size="13" font-weight="600">CHANNEL LAYER</text>
+  <g transform="translate(140,58)">
+    <rect x="0" y="0" width="180" height="44" rx="12" fill="#111827" stroke="url(#greenGrad)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="90" y="18" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">WeCom</text>
+    <text x="90" y="33" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">企业微信</text>
+  </g>
+  <g transform="translate(340,58)">
+    <rect x="0" y="0" width="180" height="44" rx="12" fill="#111827" stroke="url(#greenGrad)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="90" y="18" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">DingTalk</text>
+    <text x="90" y="33" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">钉钉</text>
+  </g>
+  <g transform="translate(540,58)">
+    <rect x="0" y="0" width="180" height="44" rx="12" fill="#111827" stroke="url(#greenGrad)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="90" y="18" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">Feishu</text>
+    <text x="90" y="33" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">飞书</text>
+  </g>
+  <g transform="translate(740,58)">
+    <rect x="0" y="0" width="180" height="44" rx="12" fill="#111827" stroke="url(#greenGrad)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="90" y="18" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">Web</text>
+    <text x="90" y="33" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">React 前端</text>
+  </g>
+  <g transform="translate(940,58)">
+    <rect x="0" y="0" width="180" height="44" rx="12" fill="#111827" stroke="url(#greenGrad)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="90" y="18" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">REST API</text>
+    <text x="90" y="33" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">OpenAPI 兼容</text>
+  </g>
+
+  <!-- Arrow down from channels -->
+  <line x1="630" y1="104" x2="630" y2="125" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowDown)"/>
+
+  <!-- ====== Layer 2: Middleware Chain ====== -->
+  <text x="40" y="145" fill="#94a3b8" font-family="system-ui" font-size="13" font-weight="600">MIDDLEWARE</text>
+  <rect x="140" y="128" width="1080" height="42" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#shadow)"/>
+  <g>
+    <rect x="160" y="134" width="210" height="30" rx="8" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1"/>
+    <text x="265" y="154" text-anchor="middle" fill="#a5b4fc" font-family="system-ui" font-size="11" font-weight="600">Security (JWT/API Key)</text>
+  </g>
+  <text x="385" y="154" fill="#6366f1" font-family="system-ui" font-size="14">→</text>
+  <g>
+    <rect x="405" y="134" width="180" height="30" rx="8" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1"/>
+    <text x="495" y="154" text-anchor="middle" fill="#a5b4fc" font-family="system-ui" font-size="11" font-weight="600">Tenant (4维隔离)</text>
+  </g>
+  <text x="600" y="154" fill="#6366f1" font-family="system-ui" font-size="14">→</text>
+  <g>
+    <rect x="620" y="134" width="200" height="30" rx="8" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1"/>
+    <text x="720" y="154" text-anchor="middle" fill="#a5b4fc" font-family="system-ui" font-size="11" font-weight="600">RateLimit (令牌桶)</text>
+  </g>
+  <text x="835" y="154" fill="#6366f1" font-family="system-ui" font-size="14">→</text>
+  <g>
+    <rect x="855" y="134" width="210" height="30" rx="8" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1"/>
+    <text x="960" y="154" text-anchor="middle" fill="#a5b4fc" font-family="system-ui" font-size="11" font-weight="600">ContentFilter (DFA)</text>
+  </g>
+
+  <!-- Arrow down -->
+  <line x1="630" y1="172" x2="630" y2="193" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowDown)"/>
+
+  <!-- ====== Layer 3: API Router ====== -->
+  <text x="40" y="213" fill="#94a3b8" font-family="system-ui" font-size="13" font-weight="600">API ROUTER</text>
+  <rect x="140" y="196" width="1080" height="46" rx="12" fill="#111827" stroke="url(#primaryGrad)" stroke-width="1.5" filter="url(#shadow)"/>
+  <g font-family="system-ui" font-size="11" font-weight="600" text-anchor="middle">
+    <rect x="155" y="205" width="105" height="28" rx="7" fill="rgba(99,102,241,0.2)"/>
+    <text x="208" y="224" fill="#c4b5fd">Auth</text>
+    <rect x="270" y="205" width="105" height="28" rx="7" fill="rgba(99,102,241,0.2)"/>
+    <text x="323" y="224" fill="#c4b5fd">Chat</text>
+    <rect x="385" y="205" width="105" height="28" rx="7" fill="rgba(99,102,241,0.2)"/>
+    <text x="438" y="224" fill="#c4b5fd">Agents</text>
+    <rect x="500" y="205" width="105" height="28" rx="7" fill="rgba(99,102,241,0.2)"/>
+    <text x="553" y="224" fill="#c4b5fd">MCP</text>
+    <rect x="615" y="205" width="115" height="28" rx="7" fill="rgba(99,102,241,0.2)"/>
+    <text x="673" y="224" fill="#c4b5fd">Knowledge</text>
+    <rect x="740" y="205" width="105" height="28" rx="7" fill="rgba(99,102,241,0.2)"/>
+    <text x="793" y="224" fill="#c4b5fd">Plugins</text>
+    <rect x="855" y="205" width="115" height="28" rx="7" fill="rgba(99,102,241,0.2)"/>
+    <text x="913" y="224" fill="#c4b5fd">Workflows</text>
+    <rect x="980" y="205" width="105" height="28" rx="7" fill="rgba(99,102,241,0.2)"/>
+    <text x="1033" y="224" fill="#c4b5fd">System</text>
+  </g>
+
+  <!-- Arrow down -->
+  <line x1="630" y1="244" x2="630" y2="268" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowDown)"/>
+
+  <!-- ====== Layer 4: Business Logic ====== -->
+  <text x="40" y="290" fill="#94a3b8" font-family="system-ui" font-size="13" font-weight="600">BUSINESS</text>
+  <text x="40" y="305" fill="#94a3b8" font-family="system-ui" font-size="13" font-weight="600">LOGIC</text>
+
+  <!-- Chat Service - 6-stage pipeline -->
+  <rect x="140" y="275" width="530" height="145" rx="12" fill="#111827" stroke="rgba(139,92,246,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="155" y="295" fill="#8b5cf6" font-family="system-ui" font-size="13" font-weight="700">Chat Service — 6 阶段管线</text>
+  <g transform="translate(155,305)">
+    <rect x="0" y="0" width="72" height="36" rx="6" fill="rgba(34,197,94,0.15)" stroke="#22c55e" stroke-width="1"/>
+    <text x="36" y="14" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="8" font-weight="600">① 请求</text>
+    <text x="36" y="27" text-anchor="middle" fill="#86efac" font-family="system-ui" font-size="8">接入</text>
+    <text x="82" y="20" fill="#6366f1" font-family="system-ui" font-size="12">→</text>
+    <rect x="90" y="0" width="72" height="36" rx="6" fill="rgba(139,92,246,0.15)" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="126" y="14" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="8" font-weight="600">② Prompt</text>
+    <text x="126" y="27" text-anchor="middle" fill="#c4b5fd" font-family="system-ui" font-size="8">融合</text>
+    <text x="172" y="20" fill="#6366f1" font-family="system-ui" font-size="12">→</text>
+    <rect x="180" y="0" width="72" height="36" rx="6" fill="rgba(59,130,246,0.15)" stroke="#3b82f6" stroke-width="1"/>
+    <text x="216" y="14" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="8" font-weight="600">③ 模型</text>
+    <text x="216" y="27" text-anchor="middle" fill="#93c5fd" font-family="system-ui" font-size="8">路由</text>
+    <text x="262" y="20" fill="#6366f1" font-family="system-ui" font-size="12">→</text>
+    <rect x="270" y="0" width="72" height="36" rx="6" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1"/>
+    <text x="306" y="14" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="8" font-weight="600">④ AI调用</text>
+    <text x="306" y="27" text-anchor="middle" fill="#a5b4fc" font-family="system-ui" font-size="8">+工具</text>
+    <text x="352" y="20" fill="#6366f1" font-family="system-ui" font-size="12">→</text>
+    <rect x="360" y="0" width="72" height="36" rx="6" fill="rgba(245,158,11,0.15)" stroke="#f59e0b" stroke-width="1"/>
+    <text x="396" y="14" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="8" font-weight="600">⑤ 响应</text>
+    <text x="396" y="27" text-anchor="middle" fill="#fcd34d" font-family="system-ui" font-size="8">解析</text>
+    <text x="442" y="20" fill="#6366f1" font-family="system-ui" font-size="12">→</text>
+    <rect x="450" y="0" width="72" height="36" rx="6" fill="rgba(20,184,166,0.15)" stroke="#14b8a6" stroke-width="1"/>
+    <text x="486" y="14" text-anchor="middle" fill="#14b8a6" font-family="system-ui" font-size="8" font-weight="600">⑥ 反馈</text>
+    <text x="486" y="27" text-anchor="middle" fill="#5eead4" font-family="system-ui" font-size="8">学习</text>
+  </g>
+  <!-- Sub components -->
+  <g transform="translate(155,355)">
+    <rect x="0" y="0" width="120" height="24" rx="5" fill="rgba(99,102,241,0.1)" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+    <text x="60" y="16" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">PromptOptimizer</text>
+    <rect x="130" y="0" width="120" height="24" rx="5" fill="rgba(99,102,241,0.1)" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+    <text x="190" y="16" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">ContextParser</text>
+    <rect x="260" y="0" width="120" height="24" rx="5" fill="rgba(99,102,241,0.1)" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+    <text x="320" y="16" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">FeedbackLoop</text>
+    <rect x="390" y="0" width="120" height="24" rx="5" fill="rgba(99,102,241,0.1)" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+    <text x="450" y="16" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">MemoryManager</text>
+  </g>
+
+  <!-- Agent Engine -->
+  <rect x="690" y="275" width="260" height="145" rx="12" fill="#111827" stroke="rgba(236,72,153,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="705" y="295" fill="#ec4899" font-family="system-ui" font-size="13" font-weight="700">Agent Engine</text>
+  <g transform="translate(705,305)">
+    <rect x="0" y="0" width="110" height="24" rx="5" fill="rgba(236,72,153,0.1)" stroke="rgba(236,72,153,0.3)" stroke-width="1"/>
+    <text x="55" y="16" text-anchor="middle" fill="#f9a8d4" font-family="system-ui" font-size="9">ModelRouter (5L)</text>
+    <rect x="120" y="0" width="110" height="24" rx="5" fill="rgba(236,72,153,0.1)" stroke="rgba(236,72,153,0.3)" stroke-width="1"/>
+    <text x="175" y="16" text-anchor="middle" fill="#f9a8d4" font-family="system-ui" font-size="9">CircuitBreaker</text>
+  </g>
+  <g transform="translate(705,340)">
+    <rect x="0" y="0" width="110" height="24" rx="5" fill="rgba(236,72,153,0.1)" stroke="rgba(236,72,153,0.3)" stroke-width="1"/>
+    <text x="55" y="16" text-anchor="middle" fill="#f9a8d4" font-family="system-ui" font-size="9">Memory (3级)</text>
+    <rect x="120" y="0" width="110" height="24" rx="5" fill="rgba(236,72,153,0.1)" stroke="rgba(236,72,153,0.3)" stroke-width="1"/>
+    <text x="175" y="16" text-anchor="middle" fill="#f9a8d4" font-family="system-ui" font-size="9">Collaboration</text>
+  </g>
+  <g transform="translate(705,375)">
+    <rect x="0" y="0" width="230" height="24" rx="5" fill="rgba(236,72,153,0.1)" stroke="rgba(236,72,153,0.3)" stroke-width="1"/>
+    <text x="115" y="16" text-anchor="middle" fill="#f9a8d4" font-family="system-ui" font-size="9">LangGraph State Machine</text>
+  </g>
+
+  <!-- MCP Gateway + RAG + Plugins -->
+  <rect x="970" y="275" width="250" height="145" rx="12" fill="#111827" stroke="rgba(59,130,246,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="985" y="295" fill="#3b82f6" font-family="system-ui" font-size="13" font-weight="700">能力扩展层</text>
+  <g transform="translate(985,305)">
+    <rect x="0" y="0" width="220" height="24" rx="5" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+    <text x="110" y="16" text-anchor="middle" fill="#93c5fd" font-family="system-ui" font-size="9">MCP Gateway (连接器注册中心)</text>
+  </g>
+  <g transform="translate(985,340)">
+    <rect x="0" y="0" width="220" height="24" rx="5" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+    <text x="110" y="16" text-anchor="middle" fill="#93c5fd" font-family="system-ui" font-size="9">RAG Engine (向量检索 + Reranker)</text>
+  </g>
+  <g transform="translate(985,375)">
+    <rect x="0" y="0" width="220" height="24" rx="5" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+    <text x="110" y="16" text-anchor="middle" fill="#93c5fd" font-family="system-ui" font-size="9">Plugin Registry (行业插件)</text>
+  </g>
+
+  <!-- Arrows down to infrastructure -->
+  <line x1="400" y1="422" x2="400" y2="445" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowDown)"/>
+  <line x1="820" y1="422" x2="820" y2="445" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowDown)"/>
+
+  <!-- ====== Layer 5: Infrastructure ====== -->
+  <text x="40" y="475" fill="#94a3b8" font-family="system-ui" font-size="13" font-weight="600">INFRA</text>
+
+  <!-- PostgreSQL -->
+  <rect x="140" y="455" width="240" height="70" rx="12" fill="#111827" stroke="rgba(34,197,94,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="260" y="480" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="14" font-weight="700">PostgreSQL 16</text>
+  <text x="260" y="498" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">+ pgvector | ORM 模型</text>
+  <text x="260" y="514" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">22 张数据表 | 向量存储</text>
+
+  <!-- Redis -->
+  <rect x="400" y="455" width="240" height="70" rx="12" fill="#111827" stroke="rgba(239,68,68,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="520" y="480" text-anchor="middle" fill="#ef4444" font-family="system-ui" font-size="14" font-weight="700">Redis 7</text>
+  <text x="520" y="498" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">会话缓存 | 限流计数</text>
+  <text x="520" y="514" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">Few-shot ZSET | 记忆</text>
+
+  <!-- MinIO -->
+  <rect x="660" y="455" width="240" height="70" rx="12" fill="#111827" stroke="rgba(245,158,11,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="780" y="480" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="14" font-weight="700">MinIO</text>
+  <text x="780" y="498" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">文件存储 | 文档上传</text>
+  <text x="780" y="514" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">S3 兼容 API</text>
+
+  <!-- ====== External Services ====== -->
+  <text x="40" y="560" fill="#94a3b8" font-family="system-ui" font-size="13" font-weight="600">EXTERNAL</text>
+
+  <!-- LLM Providers -->
+  <rect x="140" y="545" width="580" height="70" rx="12" fill="#111827" stroke="url(#primaryGrad)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="155" y="568" fill="#8b5cf6" font-family="system-ui" font-size="13" font-weight="700">LLM Providers (模型适配层)</text>
+  <g transform="translate(155,578)">
+    <rect x="0" y="0" width="95" height="26" rx="6" fill="rgba(139,92,246,0.15)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+    <text x="48" y="17" text-anchor="middle" fill="#c4b5fd" font-family="system-ui" font-size="10">Claude</text>
+    <rect x="110" y="0" width="95" height="26" rx="6" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+    <text x="158" y="17" text-anchor="middle" fill="#93c5fd" font-family="system-ui" font-size="10">DeepSeek</text>
+    <rect x="220" y="0" width="95" height="26" rx="6" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+    <text x="268" y="17" text-anchor="middle" fill="#86efac" font-family="system-ui" font-size="10">Qwen</text>
+    <rect x="330" y="0" width="95" height="26" rx="6" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+    <text x="378" y="17" text-anchor="middle" fill="#fcd34d" font-family="system-ui" font-size="10">Ollama</text>
+    <rect x="440" y="0" width="95" height="26" rx="6" fill="rgba(236,72,153,0.15)" stroke="rgba(236,72,153,0.3)" stroke-width="1"/>
+    <text x="488" y="17" text-anchor="middle" fill="#f9a8d4" font-family="system-ui" font-size="10">OpenAI 兼容</text>
+  </g>
+
+  <!-- Payment -->
+  <rect x="740" y="545" width="260" height="70" rx="12" fill="#111827" stroke="rgba(245,158,11,0.4)" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="755" y="568" fill="#f59e0b" font-family="system-ui" font-size="13" font-weight="700">Payment (支付通道)</text>
+  <g transform="translate(755,578)">
+    <rect x="0" y="0" width="110" height="26" rx="6" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+    <text x="55" y="17" text-anchor="middle" fill="#86efac" font-family="system-ui" font-size="10">WeChat Pay</text>
+    <rect x="120" y="0" width="110" height="26" rx="6" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+    <text x="175" y="17" text-anchor="middle" fill="#93c5fd" font-family="system-ui" font-size="10">Alipay</text>
+  </g>
+
+  <!-- Connection lines from infra -->
+  <line x1="1095" y1="422" x2="1095" y2="445" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowDown)" opacity="0.5"/>
+
+  <!-- Decorative border glow -->
+  <rect x="130" y="50" width="1100" height="580" rx="16" fill="none" stroke="rgba(99,102,241,0.08)" stroke-width="1"/>
+
+  <!-- Footer -->
+  <text x="700" y="645" text-anchor="middle" fill="#475569" font-family="system-ui" font-size="11">BridgeAI Backend Architecture | FastAPI + LangGraph + PostgreSQL + Redis</text>
+</svg>

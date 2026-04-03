@@ -2,6 +2,10 @@
 
 BridgeAI 后端 API 基于 FastAPI 构建，所有接口均以 `/api/v1` 为前缀。
 
+<p align="center">
+  <img src="assets/diagrams/api-overview.svg" width="800" alt="API全景" />
+</p>
+
 ## 通用说明
 
 ### 认证方式
@@ -132,6 +136,10 @@ X-Tenant-Id: <tenant_id>
 ---
 
 ## 对话模块 `/chat`
+
+<p align="center">
+  <img src="assets/diagrams/chat-sequence.svg" width="800" alt="聊天请求时序" />
+</p>
 
 ### POST `/api/v1/chat/completions` -- 发送消息
 

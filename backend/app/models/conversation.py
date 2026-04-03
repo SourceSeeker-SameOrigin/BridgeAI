@@ -23,7 +23,10 @@ class Conversation(BaseModel):
 
     user = relationship("User", backref="conversations", lazy="selectin")
     agent = relationship("Agent", backref="conversations", lazy="selectin")
-    messages = relationship("Message", back_populates="conversation", lazy="selectin")
+    messages = relationship(
+        "Message", back_populates="conversation", lazy="selectin",
+        cascade="all, delete-orphan", passive_deletes=True,
+    )
 
 
 class Message(BaseModelCreatedOnly):
@@ -52,9 +55,18 @@ class Message(BaseModelCreatedOnly):
     metadata_ = Column("metadata", JSONB, default=dict, nullable=False)
 
     conversation = relationship("Conversation", back_populates="messages")
-    intents = relationship("MessageIntent", back_populates="message", lazy="selectin")
-    emotions = relationship("MessageEmotion", back_populates="message", lazy="selectin")
-    ratings = relationship("MessageRating", back_populates="message", lazy="selectin")
+    intents = relationship(
+        "MessageIntent", back_populates="message", lazy="selectin",
+        cascade="all, delete-orphan", passive_deletes=True,
+    )
+    emotions = relationship(
+        "MessageEmotion", back_populates="message", lazy="selectin",
+        cascade="all, delete-orphan", passive_deletes=True,
+    )
+    ratings = relationship(
+        "MessageRating", back_populates="message", lazy="selectin",
+        cascade="all, delete-orphan", passive_deletes=True,
+    )
 
 
 class MessageIntent(BaseModelCreatedOnly):

@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="cct-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="cct-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <filter id="cct-glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="900" height="600" fill="url(#cct-bg)"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">Chat 页面组件树</text>
+  <text x="450" y="55" text-anchor="middle" fill="#94a3b8" font-size="12">Chat Page Component Hierarchy</text>
+
+  <!-- ChatPage (root) -->
+  <rect x="350" y="75" width="200" height="40" rx="12" fill="#6366f1" filter="url(#cct-shadow)"/>
+  <text x="450" y="100" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">ChatPage</text>
+
+  <!-- Lines from ChatPage to children -->
+  <line x1="390" y1="115" x2="110" y2="165" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="430" y1="115" x2="350" y2="165" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="480" y1="115" x2="560" y2="165" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="520" y1="115" x2="780" y2="165" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+
+  <!-- SessionList -->
+  <rect x="30" y="165" width="160" height="38" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="1.5" filter="url(#cct-shadow)"/>
+  <text x="110" y="189" text-anchor="middle" fill="#8b5cf6" font-size="13" font-weight="600">SessionList</text>
+  <text x="110" y="218" text-anchor="middle" fill="#94a3b8" font-size="10">会话列表侧栏</text>
+
+  <!-- MessageArea -->
+  <rect x="260" y="165" width="180" height="38" rx="12" fill="#111827" stroke="#6366f1" stroke-width="1.5" filter="url(#cct-shadow)"/>
+  <text x="350" y="189" text-anchor="middle" fill="#6366f1" font-size="13" font-weight="600">MessageArea</text>
+  <text x="350" y="218" text-anchor="middle" fill="#94a3b8" font-size="10">消息展示区域</text>
+
+  <!-- InputBar -->
+  <rect x="490" y="165" width="150" height="38" rx="12" fill="#111827" stroke="#22c55e" stroke-width="1.5" filter="url(#cct-shadow)"/>
+  <text x="565" y="189" text-anchor="middle" fill="#22c55e" font-size="13" font-weight="600">InputBar</text>
+  <text x="565" y="218" text-anchor="middle" fill="#94a3b8" font-size="10">输入栏</text>
+
+  <!-- ContextPanel -->
+  <rect x="695" y="165" width="170" height="38" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="1.5" filter="url(#cct-shadow)"/>
+  <text x="780" y="189" text-anchor="middle" fill="#f59e0b" font-size="13" font-weight="600">ContextPanel</text>
+  <text x="780" y="215" text-anchor="middle" fill="#94a3b8" font-size="10">上下文面板 (inline)</text>
+
+  <!-- MessageArea children -->
+  <line x1="350" y1="203" x2="350" y2="260" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+
+  <!-- MessageBubble x N -->
+  <rect x="260" y="260" width="180" height="38" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="1.5" filter="url(#cct-shadow)"/>
+  <text x="350" y="284" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="600">MessageBubble ×N</text>
+
+  <!-- Lines from MessageBubble to children -->
+  <line x1="300" y1="298" x2="160" y2="345" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="350" y1="298" x2="350" y2="345" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="400" y1="298" x2="540" y2="345" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+
+  <!-- MarkdownRenderer -->
+  <rect x="65" y="345" width="185" height="38" rx="12" fill="#111827" stroke="#22c55e" stroke-width="1" filter="url(#cct-shadow)"/>
+  <text x="158" y="369" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="600">MarkdownRenderer</text>
+  <text x="158" y="400" text-anchor="middle" fill="#94a3b8" font-size="10">代码高亮 + 复制按钮</text>
+
+  <!-- ToolCallCard -->
+  <rect x="270" y="345" width="160" height="38" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="1" filter="url(#cct-shadow)"/>
+  <text x="350" y="369" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="600">ToolCallCard</text>
+  <text x="350" y="400" text-anchor="middle" fill="#94a3b8" font-size="10">工具调用展示</text>
+
+  <!-- RatingStars -->
+  <rect x="460" y="345" width="160" height="38" rx="12" fill="#111827" stroke="#ef4444" stroke-width="1" filter="url(#cct-shadow)"/>
+  <text x="540" y="369" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="600">RatingStars</text>
+  <text x="540" y="400" text-anchor="middle" fill="#94a3b8" font-size="10">消息评分</text>
+
+  <!-- InputBar children -->
+  <line x1="535" y1="203" x2="500" y2="260" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+  <line x1="595" y1="203" x2="660" y2="260" stroke="#94a3b8" stroke-width="1.2" opacity="0.4"/>
+
+  <!-- File Upload -->
+  <rect x="430" y="260" width="140" height="34" rx="12" fill="#1a2332" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#cct-shadow)"/>
+  <text x="500" y="282" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="500">📎 文件上传</text>
+
+  <!-- Voice Button -->
+  <rect x="595" y="260" width="140" height="34" rx="12" fill="#1a2332" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#cct-shadow)"/>
+  <text x="665" y="282" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="500">🎙 语音输入</text>
+
+  <!-- Legend -->
+  <rect x="30" y="450" width="840" height="120" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" opacity="0.6"/>
+  <text x="60" y="478" fill="#f1f5f9" font-size="13" font-weight="600">图例</text>
+  <rect x="60" y="490" width="14" height="14" rx="3" fill="#6366f1"/>
+  <text x="82" y="502" fill="#94a3b8" font-size="11">页面根组件</text>
+  <rect x="190" y="490" width="14" height="14" rx="3" fill="#111827" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="212" y="502" fill="#94a3b8" font-size="11">侧栏组件</text>
+  <rect x="320" y="490" width="14" height="14" rx="3" fill="#111827" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="342" y="502" fill="#94a3b8" font-size="11">列表组件</text>
+  <rect x="450" y="490" width="14" height="14" rx="3" fill="#111827" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="472" y="502" fill="#94a3b8" font-size="11">渲染组件</text>
+  <rect x="580" y="490" width="14" height="14" rx="3" fill="#111827" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="602" y="502" fill="#94a3b8" font-size="11">交互组件</text>
+  <rect x="710" y="490" width="14" height="14" rx="3" fill="#111827" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="732" y="502" fill="#94a3b8" font-size="11">反馈组件</text>
+
+  <text x="60" y="540" fill="#64748b" font-size="10">* 连接线表示父子组件关系，MessageBubble 由 MessageArea 循环渲染</text>
+  <text x="60" y="556" fill="#64748b" font-size="10">* ContextPanel 为 inline 模式，可通过按钮展开/收起</text>
+</svg>

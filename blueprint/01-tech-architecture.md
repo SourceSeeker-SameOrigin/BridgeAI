@@ -210,6 +210,10 @@ BridgeAI/
 > 而是在 Prompt 中注入分析指令，大模型回答时同时输出 JSON 分析。
 > 一次调用 = 回答 + 分析，省掉一个阶段和一次模型调用。
 
+<p align="center">
+  <img src="../docs/assets/diagrams/pipeline-stages.svg" width="800" alt="管线概览" />
+</p>
+
 ```
 用户发送消息（Web/企微/钉钉/飞书/API）
     │
@@ -342,6 +346,10 @@ Agent 需要调用工具
 
 ### 3.0.1 智能模型路由器
 
+<p align="center">
+  <img src="../docs/assets/diagrams/model-router.svg" width="800" alt="模型路由" />
+</p>
+
 ```python
 class ModelRouter:
     """5 层决策树，自动选择最优模型"""
@@ -375,6 +383,10 @@ class ModelRouter:
 
 ### 3.0.2 熔断降级链
 
+<p align="center">
+  <img src="../docs/assets/diagrams/circuit-breaker.svg" width="800" alt="熔断器" />
+</p>
+
 ```python
 class CircuitBreaker:
     """模型调用熔断器，失败自动切换下一个模型"""
@@ -398,6 +410,10 @@ class CircuitBreaker:
 ```
 
 ### 3.0.3 Prompt 四层融合器（含上下文分析指令）
+
+<p align="center">
+  <img src="../docs/assets/diagrams/prompt-layers.svg" width="800" alt="Prompt融合" />
+</p>
 
 ```python
 # 上下文分析指令 — 要求大模型在回复末尾输出结构化分析
@@ -488,6 +504,18 @@ class ContextParser:
 ```
 
 ### 3.0.4 3 级记忆管理
+
+<p align="center">
+  <img src="../docs/assets/diagrams/middleware-chain.svg" width="800" alt="中间件链" />
+</p>
+
+<p align="center">
+  <img src="../docs/assets/diagrams/fewshot-loop.svg" width="800" alt="Few-shot学习" />
+</p>
+
+<p align="center">
+  <img src="../docs/assets/diagrams/rag-ingest.svg" width="800" alt="RAG摄入" />
+</p>
 
 ```python
 class MemoryManager:

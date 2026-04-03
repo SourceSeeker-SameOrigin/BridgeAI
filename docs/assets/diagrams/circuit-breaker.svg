@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="cb-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="cb-glow-green">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="cb-glow-red">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="cb-glow-yellow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="cb-shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="cb-arrow" viewBox="0 0 12 8" refX="12" refY="4" markerWidth="10" markerHeight="7" orient="auto">
+      <path d="M0,0 L12,4 L0,8 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="600" fill="url(#cb-bg)"/>
+
+  <!-- Title -->
+  <text x="450" y="42" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="700">熔断器状态机</text>
+  <text x="450" y="64" text-anchor="middle" fill="#94a3b8" font-size="14">Circuit Breaker State Machine</text>
+
+  <!-- CLOSED State -->
+  <g transform="translate(150, 300)">
+    <circle r="95" fill="#111827" stroke="#22c55e" stroke-width="2.5" filter="url(#cb-shadow)"/>
+    <circle r="105" fill="none" stroke="#22c55e" stroke-width="0.8" opacity="0.3"/>
+    <text x="0" y="-25" text-anchor="middle" fill="#22c55e" font-size="18" font-weight="700">CLOSED</text>
+    <line x1="-55" y1="-12" x2="55" y2="-12" stroke="#22c55e" stroke-opacity="0.3"/>
+    <text x="0" y="8" text-anchor="middle" fill="#94a3b8" font-size="11">正常运行</text>
+    <text x="0" y="24" text-anchor="middle" fill="#94a3b8" font-size="11">所有请求通过</text>
+    <text x="0" y="40" text-anchor="middle" fill="#94a3b8" font-size="11">记录失败次数</text>
+    <!-- Green dot indicator -->
+    <circle cx="0" cy="58" r="5" fill="#22c55e" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- OPEN State -->
+  <g transform="translate(750, 300)">
+    <circle r="95" fill="#111827" stroke="#ef4444" stroke-width="2.5" filter="url(#cb-shadow)"/>
+    <circle r="105" fill="none" stroke="#ef4444" stroke-width="0.8" opacity="0.3"/>
+    <text x="0" y="-25" text-anchor="middle" fill="#ef4444" font-size="18" font-weight="700">OPEN</text>
+    <line x1="-55" y1="-12" x2="55" y2="-12" stroke="#ef4444" stroke-opacity="0.3"/>
+    <text x="0" y="8" text-anchor="middle" fill="#94a3b8" font-size="11">熔断状态</text>
+    <text x="0" y="24" text-anchor="middle" fill="#94a3b8" font-size="11">所有请求拒绝</text>
+    <text x="0" y="40" text-anchor="middle" fill="#94a3b8" font-size="11">启动冷却计时</text>
+    <circle cx="0" cy="58" r="5" fill="#ef4444" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- HALF-OPEN State -->
+  <g transform="translate(450, 500)">
+    <circle r="85" fill="#111827" stroke="#f59e0b" stroke-width="2.5" filter="url(#cb-shadow)"/>
+    <circle r="95" fill="none" stroke="#f59e0b" stroke-width="0.8" opacity="0.3"/>
+    <text x="0" y="-20" text-anchor="middle" fill="#f59e0b" font-size="16" font-weight="700">HALF-OPEN</text>
+    <line x1="-50" y1="-7" x2="50" y2="-7" stroke="#f59e0b" stroke-opacity="0.3"/>
+    <text x="0" y="12" text-anchor="middle" fill="#94a3b8" font-size="11">试探状态</text>
+    <text x="0" y="28" text-anchor="middle" fill="#94a3b8" font-size="11">允许 1 个请求通过</text>
+    <circle cx="0" cy="46" r="5" fill="#f59e0b" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Arrow: CLOSED -> OPEN (top arc) -->
+  <path d="M245,255 Q450,90 655,255" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#cb-arrow)"/>
+  <rect x="370" y="130" width="160" height="38" rx="10" fill="#111827" stroke="#ef4444" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="450" y="147" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="600">连续失败 >= 3次</text>
+  <text x="450" y="162" text-anchor="middle" fill="#94a3b8" font-size="10">failures >= threshold</text>
+
+  <!-- Arrow: OPEN -> HALF-OPEN -->
+  <path d="M680,370 Q620,470 535,490" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#cb-arrow)"/>
+  <rect x="580" y="410" width="130" height="38" rx="10" fill="#111827" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="645" y="427" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="600">冷却 60s 后</text>
+  <text x="645" y="442" text-anchor="middle" fill="#94a3b8" font-size="10">cooldown expired</text>
+
+  <!-- Arrow: HALF-OPEN -> CLOSED -->
+  <path d="M365,490 Q280,470 220,380" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#cb-arrow)"/>
+  <rect x="220" y="420" width="140" height="38" rx="10" fill="#111827" stroke="#22c55e" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="290" y="437" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="600">测试请求成功</text>
+  <text x="290" y="452" text-anchor="middle" fill="#94a3b8" font-size="10">probe success</text>
+
+  <!-- Arrow: HALF-OPEN -> OPEN -->
+  <path d="M530,475 Q620,430 660,370" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#cb-arrow)"/>
+  <rect x="560" y="455" width="140" height="22" rx="8" fill="none"/>
+  <text x="600" y="467" text-anchor="middle" fill="#ef4444" font-size="11">测试请求失败</text>
+</svg>

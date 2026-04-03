@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="wnt-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="wnt-shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="wnt-glow-g">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="500" fill="url(#wnt-bg)"/>
+
+  <text x="600" y="38" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="700">工作流节点类型</text>
+  <text x="600" y="58" text-anchor="middle" fill="#94a3b8" font-size="13">Workflow Node Types - 7 Built-in Types</text>
+
+  <!-- Row 1: 4 cards -->
+  <!-- Start Node -->
+  <g transform="translate(80, 90)">
+    <rect x="0" y="0" width="240" height="155" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#wnt-shadow)"/>
+    <rect x="0" y="0" width="240" height="38" rx="12" fill="#22c55e" fill-opacity="0.15"/>
+    <rect x="0" y="26" width="240" height="12" fill="#111827"/>
+    <circle cx="22" cy="19" r="10" fill="#22c55e" fill-opacity="0.2" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="22" y="23" text-anchor="middle" fill="#22c55e" font-size="12">&#9654;</text>
+    <text x="42" y="24" fill="#22c55e" font-size="14" font-weight="700">Start</text>
+    <text x="14" y="55" fill="#f1f5f9" font-size="11">工作流入口节点</text>
+    <line x1="14" y1="65" x2="226" y2="65" stroke="rgba(148,163,184,0.15)"/>
+    <text x="14" y="82" fill="#94a3b8" font-size="10">config:</text>
+    <rect x="14" y="90" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="104" fill="#22c55e" font-size="9" font-family="monospace">trigger: "manual" | "webhook"</text>
+    <rect x="14" y="114" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="128" fill="#22c55e" font-size="9" font-family="monospace">input_schema: {}</text>
+    <text x="195" y="24" fill="#22c55e" font-size="9" opacity="0.7">1 output</text>
+  </g>
+
+  <!-- LLM Call Node -->
+  <g transform="translate(350, 90)">
+    <rect x="0" y="0" width="240" height="155" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#wnt-shadow)"/>
+    <rect x="0" y="0" width="240" height="38" rx="12" fill="#8b5cf6" fill-opacity="0.15"/>
+    <rect x="0" y="26" width="240" height="12" fill="#111827"/>
+    <circle cx="22" cy="19" r="10" fill="#8b5cf6" fill-opacity="0.2" stroke="#8b5cf6" stroke-width="1.5"/>
+    <text x="22" y="23" text-anchor="middle" fill="#8b5cf6" font-size="11">AI</text>
+    <text x="42" y="24" fill="#8b5cf6" font-size="14" font-weight="700">LLM Call</text>
+    <text x="14" y="55" fill="#f1f5f9" font-size="11">调用大语言模型</text>
+    <line x1="14" y1="65" x2="226" y2="65" stroke="rgba(148,163,184,0.15)"/>
+    <text x="14" y="82" fill="#94a3b8" font-size="10">config:</text>
+    <rect x="14" y="90" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="104" fill="#8b5cf6" font-size="9" font-family="monospace">prompt: string</text>
+    <rect x="14" y="114" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="128" fill="#8b5cf6" font-size="9" font-family="monospace">model: str | temperature: float</text>
+    <text x="195" y="24" fill="#8b5cf6" font-size="9" opacity="0.7">1 output</text>
+  </g>
+
+  <!-- Tool Call Node -->
+  <g transform="translate(620, 90)">
+    <rect x="0" y="0" width="240" height="155" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#wnt-shadow)"/>
+    <rect x="0" y="0" width="240" height="38" rx="12" fill="#3b82f6" fill-opacity="0.15"/>
+    <rect x="0" y="26" width="240" height="12" fill="#111827"/>
+    <circle cx="22" cy="19" r="10" fill="#3b82f6" fill-opacity="0.2" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="22" y="24" text-anchor="middle" fill="#3b82f6" font-size="13">&#9881;</text>
+    <text x="42" y="24" fill="#3b82f6" font-size="14" font-weight="700">Tool Call</text>
+    <text x="14" y="55" fill="#f1f5f9" font-size="11">调用 MCP 工具</text>
+    <line x1="14" y1="65" x2="226" y2="65" stroke="rgba(148,163,184,0.15)"/>
+    <text x="14" y="82" fill="#94a3b8" font-size="10">config:</text>
+    <rect x="14" y="90" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="104" fill="#3b82f6" font-size="9" font-family="monospace">tool_name: string</text>
+    <rect x="14" y="114" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="128" fill="#3b82f6" font-size="9" font-family="monospace">arguments: dict</text>
+    <text x="195" y="24" fill="#3b82f6" font-size="9" opacity="0.7">1 output</text>
+  </g>
+
+  <!-- Condition Node -->
+  <g transform="translate(890, 90)">
+    <rect x="0" y="0" width="240" height="155" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#wnt-shadow)"/>
+    <rect x="0" y="0" width="240" height="38" rx="12" fill="#f59e0b" fill-opacity="0.15"/>
+    <rect x="0" y="26" width="240" height="12" fill="#111827"/>
+    <circle cx="22" cy="19" r="10" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="22" y="23" text-anchor="middle" fill="#f59e0b" font-size="12">?</text>
+    <text x="42" y="24" fill="#f59e0b" font-size="14" font-weight="700">Condition</text>
+    <text x="14" y="55" fill="#f1f5f9" font-size="11">条件分支判断</text>
+    <line x1="14" y1="65" x2="226" y2="65" stroke="rgba(148,163,184,0.15)"/>
+    <text x="14" y="82" fill="#94a3b8" font-size="10">config:</text>
+    <rect x="14" y="90" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="104" fill="#f59e0b" font-size="9" font-family="monospace">expression: string</text>
+    <rect x="14" y="114" width="100" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="128" fill="#22c55e" font-size="9" font-family="monospace">true &#8594;</text>
+    <rect x="126" y="114" width="100" height="20" rx="4" fill="#1e293b"/>
+    <text x="134" y="128" fill="#ef4444" font-size="9" font-family="monospace">false &#8594;</text>
+    <text x="190" y="24" fill="#f59e0b" font-size="9" opacity="0.7">2 outputs</text>
+  </g>
+
+  <!-- Row 2: 3 cards -->
+  <!-- Loop Node -->
+  <g transform="translate(80, 280)">
+    <rect x="0" y="0" width="240" height="155" rx="12" fill="#111827" stroke="#14b8a6" stroke-width="2" filter="url(#wnt-shadow)"/>
+    <rect x="0" y="0" width="240" height="38" rx="12" fill="#14b8a6" fill-opacity="0.15"/>
+    <rect x="0" y="26" width="240" height="12" fill="#111827"/>
+    <circle cx="22" cy="19" r="10" fill="#14b8a6" fill-opacity="0.2" stroke="#14b8a6" stroke-width="1.5"/>
+    <text x="22" y="23" text-anchor="middle" fill="#14b8a6" font-size="12">&#8635;</text>
+    <text x="42" y="24" fill="#14b8a6" font-size="14" font-weight="700">Loop</text>
+    <text x="14" y="55" fill="#f1f5f9" font-size="11">循环执行子节点</text>
+    <line x1="14" y1="65" x2="226" y2="65" stroke="rgba(148,163,184,0.15)"/>
+    <text x="14" y="82" fill="#94a3b8" font-size="10">config:</text>
+    <rect x="14" y="90" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="104" fill="#14b8a6" font-size="9" font-family="monospace">max_iterations: int (default: 10)</text>
+    <rect x="14" y="114" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="128" fill="#14b8a6" font-size="9" font-family="monospace">break_condition: string</text>
+    <text x="195" y="24" fill="#14b8a6" font-size="9" opacity="0.7">1 output</text>
+  </g>
+
+  <!-- Human Input Node -->
+  <g transform="translate(350, 280)">
+    <rect x="0" y="0" width="240" height="155" rx="12" fill="#111827" stroke="#eab308" stroke-width="2" filter="url(#wnt-shadow)"/>
+    <rect x="0" y="0" width="240" height="38" rx="12" fill="#eab308" fill-opacity="0.15"/>
+    <rect x="0" y="26" width="240" height="12" fill="#111827"/>
+    <circle cx="22" cy="19" r="10" fill="#eab308" fill-opacity="0.2" stroke="#eab308" stroke-width="1.5"/>
+    <text x="22" y="24" text-anchor="middle" fill="#eab308" font-size="13">&#9997;</text>
+    <text x="42" y="24" fill="#eab308" font-size="14" font-weight="700">Human Input</text>
+    <text x="14" y="55" fill="#f1f5f9" font-size="11">等待人工输入</text>
+    <line x1="14" y1="65" x2="226" y2="65" stroke="rgba(148,163,184,0.15)"/>
+    <text x="14" y="82" fill="#94a3b8" font-size="10">config:</text>
+    <rect x="14" y="90" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="104" fill="#eab308" font-size="9" font-family="monospace">prompt: string</text>
+    <rect x="14" y="114" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="128" fill="#eab308" font-size="9" font-family="monospace">timeout: int (seconds)</text>
+    <text x="195" y="24" fill="#eab308" font-size="9" opacity="0.7">1 output</text>
+  </g>
+
+  <!-- Output Node -->
+  <g transform="translate(620, 280)">
+    <rect x="0" y="0" width="240" height="155" rx="12" fill="#111827" stroke="#94a3b8" stroke-width="2" filter="url(#wnt-shadow)"/>
+    <rect x="0" y="0" width="240" height="38" rx="12" fill="#94a3b8" fill-opacity="0.15"/>
+    <rect x="0" y="26" width="240" height="12" fill="#111827"/>
+    <circle cx="22" cy="19" r="10" fill="#94a3b8" fill-opacity="0.2" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="22" y="23" text-anchor="middle" fill="#94a3b8" font-size="12">&#9632;</text>
+    <text x="42" y="24" fill="#94a3b8" font-size="14" font-weight="700">Output</text>
+    <text x="14" y="55" fill="#f1f5f9" font-size="11">工作流输出终点</text>
+    <line x1="14" y1="65" x2="226" y2="65" stroke="rgba(148,163,184,0.15)"/>
+    <text x="14" y="82" fill="#94a3b8" font-size="10">config:</text>
+    <rect x="14" y="90" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="104" fill="#94a3b8" font-size="9" font-family="monospace">format: "text" | "json" | "md"</text>
+    <rect x="14" y="114" width="212" height="20" rx="4" fill="#1e293b"/>
+    <text x="22" y="128" fill="#94a3b8" font-size="9" font-family="monospace">template: string (optional)</text>
+    <text x="195" y="24" fill="#94a3b8" font-size="9" opacity="0.7">0 output</text>
+  </g>
+
+  <!-- Summary card -->
+  <g transform="translate(890, 280)">
+    <rect x="0" y="0" width="240" height="155" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="120" y="30" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="600">Node Connection Rules</text>
+    <line x1="14" y1="40" x2="226" y2="40" stroke="rgba(148,163,184,0.15)"/>
+    <circle cx="26" cy="62" r="4" fill="#22c55e"/>
+    <text x="38" y="66" fill="#94a3b8" font-size="10">Start: 仅出边, 无入边</text>
+    <circle cx="26" cy="84" r="4" fill="#f59e0b"/>
+    <text x="38" y="88" fill="#94a3b8" font-size="10">Condition: 2 出边 (T/F)</text>
+    <circle cx="26" cy="106" r="4" fill="#14b8a6"/>
+    <text x="38" y="110" fill="#94a3b8" font-size="10">Loop: 循环体 + 退出边</text>
+    <circle cx="26" cy="128" r="4" fill="#94a3b8"/>
+    <text x="38" y="132" fill="#94a3b8" font-size="10">Output: 仅入边, 无出边</text>
+    <circle cx="26" cy="150" r="4" fill="#8b5cf6"/>
+    <text x="38" y="154" fill="#94a3b8" font-size="10">Others: 1入 + 1出</text>
+  </g>
+
+  <!-- Bottom legend -->
+  <g transform="translate(600, 470)">
+    <rect x="-480" y="-12" width="960" height="28" rx="8" fill="#111827" stroke="rgba(148,163,184,0.15)"/>
+    <text x="-400" y="5" fill="#94a3b8" font-size="11">All nodes store output in context[node_id] for reference by downstream nodes via {{node_id.output}}</text>
+  </g>
+</svg>

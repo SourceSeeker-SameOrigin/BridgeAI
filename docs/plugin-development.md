@@ -2,6 +2,14 @@
 
 本文档介绍如何为 BridgeAI 开发行业插件，扩展 Agent 的专业能力。
 
+<p align="center">
+  <img src="assets/diagrams/plugin-system.svg" width="800" alt="插件架构" />
+</p>
+
+<p align="center">
+  <img src="assets/diagrams/plugin-lifecycle.svg" width="800" alt="开发生命周期" />
+</p>
+
 ## 插件概述
 
 BridgeAI 的插件系统允许开发者为特定行业添加：

@@ -83,6 +83,24 @@ const theme = {
 }
 ```
 
+## 四、组件树
+
+<p align="center">
+  <img src="../docs/assets/diagrams/frontend-component-tree.svg" width="800" alt="组件树" />
+</p>
+
+## 四-b、路由架构
+
+<p align="center">
+  <img src="../docs/assets/diagrams/routing.svg" width="800" alt="路由架构" />
+</p>
+
+## 四-c、认证流程
+
+<p align="center">
+  <img src="../docs/assets/diagrams/auth-flow.svg" width="800" alt="认证流程" />
+</p>
+
 ## 四、页面布局
 
 ### 4.1 整体布局
@@ -431,6 +449,18 @@ const theme = {
 └──────────────────────────────────────────────────────────┘
 ```
 
+## 五-b、状态管理
+
+<p align="center">
+  <img src="../docs/assets/diagrams/zustand-stores.svg" width="800" alt="状态管理" />
+</p>
+
+## 五-c、API 请求流
+
+<p align="center">
+  <img src="../docs/assets/diagrams/frontend-api-flow.svg" width="800" alt="API请求流" />
+</p>
+
 ## 六、前端目录结构
 
 ```
@@ -539,6 +569,14 @@ frontend/
 ```
 
 ## 七、关键交互细节
+
+<p align="center">
+  <img src="../docs/assets/diagrams/sse-sequence.svg" width="800" alt="SSE流式时序" />
+</p>
+
+<p align="center">
+  <img src="../docs/assets/diagrams/chat-data-flow.svg" width="800" alt="Chat数据流" />
+</p>
 
 ### 7.1 流式对话（SSE）
 

@@ -2,6 +2,18 @@
 
 本文档介绍如何为 BridgeAI 开发自定义 MCP (Model Context Protocol) 连接器，将外部系统接入 Agent 工具链。
 
+<p align="center">
+  <img src="assets/diagrams/mcp-gateway.svg" width="800" alt="MCP网关" />
+</p>
+
+<p align="center">
+  <img src="assets/diagrams/mcp-tool-chain.svg" width="800" alt="工具调用链路" />
+</p>
+
+<p align="center">
+  <img src="assets/diagrams/mcp-lifecycle.svg" width="800" alt="开发生命周期" />
+</p>
+
 ## 概述
 
 MCP 连接器是 BridgeAI 连接外部系统的桥梁。Agent 在对话过程中可以通过 MCP 网关调用连接器提供的工具，实现数据库查询、API 调用、IM 消息推送等操作。

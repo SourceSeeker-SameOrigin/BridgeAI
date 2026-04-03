@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.3)"/></filter>
+  </defs>
+  <rect width="1200" height="700" fill="#0a0e1a"/>
+  <text x="600" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="20" font-weight="700">API 端点全景 - /api/v1/*</text>
+
+  <!-- Auth Module -->
+  <rect x="30" y="60" width="260" height="160" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="30" y="60" width="260" height="35" rx="12" fill="#22c55e" opacity="0.2"/>
+  <text x="160" y="83" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="14" font-weight="700">Auth (3)</text>
+  <text x="50" y="115" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /auth/register</text>
+  <text x="50" y="135" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /auth/login</text>
+  <text x="50" y="155" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /auth/me</text>
+  <rect x="228" y="108" width="44" height="16" rx="4" fill="#22c55e" opacity="0.3"/><text x="250" y="120" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="8">public</text>
+  <rect x="228" y="128" width="44" height="16" rx="4" fill="#22c55e" opacity="0.3"/><text x="250" y="140" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="8">public</text>
+
+  <!-- Chat Module -->
+  <rect x="310" y="60" width="260" height="195" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="310" y="60" width="260" height="35" rx="12" fill="#6366f1" opacity="0.2"/>
+  <text x="440" y="83" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="14" font-weight="700">Chat (5)</text>
+  <text x="330" y="115" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /chat/completions</text>
+  <text x="330" y="135" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /chat/conversations</text>
+  <text x="330" y="155" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /chat/conversations/:id/messages</text>
+  <text x="330" y="175" fill="#f1f5f9" font-family="system-ui" font-size="10">POST /chat/messages/:id/rate</text>
+  <text x="330" y="195" fill="#f1f5f9" font-family="system-ui" font-size="10">DELETE /chat/conversations/:id</text>
+  <rect x="508" y="108" width="44" height="16" rx="4" fill="#f59e0b" opacity="0.3"/><text x="530" y="120" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="8">SSE</text>
+
+  <!-- Agents Module -->
+  <rect x="590" y="60" width="260" height="195" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="590" y="60" width="260" height="35" rx="12" fill="#8b5cf6" opacity="0.2"/>
+  <text x="720" y="83" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="14" font-weight="700">Agents (6)</text>
+  <text x="610" y="115" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /agents</text>
+  <text x="610" y="135" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /agents</text>
+  <text x="610" y="155" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /agents/:id</text>
+  <text x="610" y="175" fill="#f1f5f9" font-family="system-ui" font-size="11">PUT  /agents/:id</text>
+  <text x="610" y="195" fill="#f1f5f9" font-family="system-ui" font-size="11">DELETE /agents/:id</text>
+  <text x="610" y="215" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /agents/:id/duplicate</text>
+
+  <!-- MCP Module -->
+  <rect x="870" y="60" width="300" height="215" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="870" y="60" width="300" height="35" rx="12" fill="#f59e0b" opacity="0.2"/>
+  <text x="1020" y="83" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="14" font-weight="700">MCP Connectors (7)</text>
+  <text x="890" y="115" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /mcp</text>
+  <text x="890" y="135" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /mcp</text>
+  <text x="890" y="155" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /mcp/:id</text>
+  <text x="890" y="175" fill="#f1f5f9" font-family="system-ui" font-size="11">PUT  /mcp/:id</text>
+  <text x="890" y="195" fill="#f1f5f9" font-family="system-ui" font-size="11">DELETE /mcp/:id</text>
+  <text x="890" y="215" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /mcp/:id/test</text>
+  <text x="890" y="235" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /mcp/:id/execute</text>
+
+  <!-- Knowledge Module -->
+  <rect x="30" y="280" width="260" height="215" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="30" y="280" width="260" height="35" rx="12" fill="#3b82f6" opacity="0.2"/>
+  <text x="160" y="303" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="14" font-weight="700">Knowledge (7)</text>
+  <text x="50" y="335" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /knowledge</text>
+  <text x="50" y="355" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /knowledge</text>
+  <text x="50" y="375" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /knowledge/:id</text>
+  <text x="50" y="395" fill="#f1f5f9" font-family="system-ui" font-size="11">PUT  /knowledge/:id</text>
+  <text x="50" y="415" fill="#f1f5f9" font-family="system-ui" font-size="11">DELETE /knowledge/:id</text>
+  <text x="50" y="435" fill="#f1f5f9" font-family="system-ui" font-size="10">POST /knowledge/:id/documents</text>
+  <text x="50" y="455" fill="#f1f5f9" font-family="system-ui" font-size="10">POST /knowledge/:id/search</text>
+  <rect x="225" y="428" width="48" height="16" rx="4" fill="#3b82f6" opacity="0.3"/><text x="249" y="440" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="8">upload</text>
+
+  <!-- Plugins Module -->
+  <rect x="310" y="280" width="260" height="175" rx="12" fill="#111827" stroke="#ec4899" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="310" y="280" width="260" height="35" rx="12" fill="#ec4899" opacity="0.2"/>
+  <text x="440" y="303" text-anchor="middle" fill="#ec4899" font-family="system-ui" font-size="14" font-weight="700">Plugins (4)</text>
+  <text x="330" y="335" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /plugins</text>
+  <text x="330" y="355" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /plugins/:name</text>
+  <text x="330" y="375" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /plugins/:name/enable</text>
+  <text x="330" y="395" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /plugins/:name/disable</text>
+
+  <!-- System Module -->
+  <rect x="590" y="280" width="260" height="195" rx="12" fill="#111827" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="590" y="280" width="260" height="35" rx="12" fill="#94a3b8" opacity="0.2"/>
+  <text x="720" y="303" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="14" font-weight="700">System (5)</text>
+  <text x="610" y="335" fill="#f1f5f9" font-family="system-ui" font-size="11">GET /system/health</text>
+  <text x="610" y="355" fill="#f1f5f9" font-family="system-ui" font-size="11">GET /system/models</text>
+  <text x="610" y="375" fill="#f1f5f9" font-family="system-ui" font-size="11">GET /system/stats</text>
+  <text x="610" y="395" fill="#f1f5f9" font-family="system-ui" font-size="11">GET /audit/logs</text>
+  <text x="610" y="415" fill="#f1f5f9" font-family="system-ui" font-size="11">GET /billing/usage</text>
+  <rect x="790" y="328" width="44" height="16" rx="4" fill="#22c55e" opacity="0.3"/><text x="812" y="340" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="8">public</text>
+  <rect x="790" y="348" width="44" height="16" rx="4" fill="#22c55e" opacity="0.3"/><text x="812" y="360" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="8">public</text>
+
+  <!-- Channels Module -->
+  <rect x="870" y="300" width="300" height="175" rx="12" fill="#111827" stroke="#ef4444" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="870" y="300" width="300" height="35" rx="12" fill="#ef4444" opacity="0.2"/>
+  <text x="1020" y="323" text-anchor="middle" fill="#ef4444" font-family="system-ui" font-size="14" font-weight="700">Channels + Others</text>
+  <text x="890" y="355" fill="#f1f5f9" font-family="system-ui" font-size="11">GET  /channels</text>
+  <text x="890" y="375" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /channels/wechat-work/callback</text>
+  <text x="890" y="395" fill="#f1f5f9" font-family="system-ui" font-size="11">POST /channels/dingtalk/callback</text>
+  <text x="890" y="420" fill="#94a3b8" font-family="system-ui" font-size="10" font-weight="600">Planned:</text>
+  <text x="890" y="438" fill="#64748b" font-family="system-ui" font-size="10">Billing, Payment, Users, Workflows</text>
+  <text x="890" y="455" fill="#64748b" font-family="system-ui" font-size="10">Notifications, Search, Webhooks</text>
+
+  <!-- Summary bar -->
+  <rect x="30" y="520" width="1140" height="70" rx="12" fill="#111827" stroke="#94a3b8" stroke-width="1" opacity="0.6"/>
+  <text x="600" y="545" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="13" font-weight="600">统一响应格式: {"code": 200, "message": "success", "data": {...}}  |  分页: {"items": [], "total": N, "page": P, "size": S}</text>
+  <text x="600" y="570" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="11">认证: Bearer Token (JWT) 或 X-API-Key  |  多租户: X-Tenant-Id Header  |  限流: Redis 令牌桶</text>
+
+  <!-- Stats -->
+  <rect x="30" y="600" width="1140" height="45" rx="12" fill="#111827" opacity="0.3"/>
+  <text x="200" y="628" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="12" font-weight="600">总计 ~37 个端点</text>
+  <text x="450" y="628" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="12">3 个公开端点</text>
+  <text x="700" y="628" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="12">1 个 SSE 流式端点</text>
+  <text x="950" y="628" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="12">1 个文件上传端点</text>
+</svg>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500">
+  <defs><filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.3)"/></filter></defs>
+  <rect width="1000" height="500" fill="#0a0e1a"/>
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="20" font-weight="700">插件系统架构</text>
+  <rect x="350" y="55" width="300" height="65" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="82" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="14" font-weight="700">PluginBase (ABC)</text>
+  <text x="500" y="102" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">get_tools() | execute_tool() | get_prompt_templates()</text>
+  <rect x="30" y="155" width="200" height="120" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="30" y="155" width="200" height="28" rx="12" fill="#22c55e" opacity="0.2"/>
+  <text x="130" y="174" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="12" font-weight="700">跨境电商 ecommerce</text>
+  <text x="45" y="200" fill="#94a3b8" font-family="system-ui" font-size="10">汇率查询</text>
+  <text x="45" y="216" fill="#94a3b8" font-family="system-ui" font-size="10">关税计算</text>
+  <text x="45" y="232" fill="#94a3b8" font-family="system-ui" font-size="10">物流追踪</text>
+  <text x="45" y="248" fill="#94a3b8" font-family="system-ui" font-size="10">商品翻译</text>
+  <rect x="260" y="155" width="200" height="120" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="260" y="155" width="200" height="28" rx="12" fill="#3b82f6" opacity="0.2"/>
+  <text x="360" y="174" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="12" font-weight="700">财税 finance</text>
+  <text x="275" y="200" fill="#94a3b8" font-family="system-ui" font-size="10">税费计算</text>
+  <text x="275" y="216" fill="#94a3b8" font-family="system-ui" font-size="10">发票校验</text>
+  <text x="275" y="232" fill="#94a3b8" font-family="system-ui" font-size="10">财务报表分析</text>
+  <rect x="490" y="155" width="200" height="120" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="490" y="155" width="200" height="28" rx="12" fill="#f59e0b" opacity="0.2"/>
+  <text x="590" y="174" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="12" font-weight="700">法律 legal</text>
+  <text x="505" y="200" fill="#94a3b8" font-family="system-ui" font-size="10">法规查询</text>
+  <text x="505" y="216" fill="#94a3b8" font-family="system-ui" font-size="10">合同条款分析</text>
+  <text x="505" y="232" fill="#94a3b8" font-family="system-ui" font-size="10">风险评估</text>
+  <rect x="720" y="155" width="200" height="120" rx="12" fill="#111827" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,3" filter="url(#shadow)"/>
+  <text x="820" y="195" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="12" font-weight="600">自定义插件</text>
+  <text x="820" y="215" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">继承PluginBase</text>
+  <text x="820" y="235" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">实现工具方法</text>
+  <line x1="130" y1="155" x2="400" y2="120" stroke="#22c55e" stroke-width="1" opacity="0.5"/>
+  <line x1="360" y1="155" x2="460" y2="120" stroke="#3b82f6" stroke-width="1" opacity="0.5"/>
+  <line x1="590" y1="155" x2="540" y2="120" stroke="#f59e0b" stroke-width="1" opacity="0.5"/>
+  <line x1="820" y1="155" x2="600" y2="120" stroke="#94a3b8" stroke-width="1" opacity="0.3"/>
+  <rect x="30" y="310" width="300" height="80" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="180" y="338" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="13" font-weight="700">PluginLoader</text>
+  <text x="50" y="360" fill="#94a3b8" font-family="system-ui" font-size="10">扫描 plugins/industries/ 目录</text>
+  <text x="50" y="378" fill="#94a3b8" font-family="system-ui" font-size="10">自动发现 PluginBase 子类</text>
+  <rect x="370" y="310" width="300" height="80" rx="12" fill="#111827" stroke="#ec4899" stroke-width="2" filter="url(#shadow)"/>
+  <text x="520" y="338" text-anchor="middle" fill="#ec4899" font-family="system-ui" font-size="13" font-weight="700">PluginRegistry</text>
+  <text x="390" y="360" fill="#94a3b8" font-family="system-ui" font-size="10">注册/查询/启用/禁用</text>
+  <text x="390" y="378" fill="#94a3b8" font-family="system-ui" font-size="10">get_metadata() 供插件市场展示</text>
+  <rect x="30" y="420" width="940" height="60" rx="12" fill="#111827" stroke="#94a3b8" stroke-width="1" opacity="0.5"/>
+  <text x="500" y="448" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="12" font-weight="600">运行时: Agent绑定插件 → Pipeline Stage 2注入prompt扩展 → Stage 3合并工具 → Stage 5执行plugin tool</text>
+  <text x="500" y="468" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">工具命名: plugin_{category}_{tool_name} | 返回格式: {"success": bool, "data": ...}</text>
+</svg>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/><stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e"/><stop offset="100%" style="stop-color:#16a34a"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b"/><stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.3)"/></filter>
+    <marker id="arrowG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#22c55e"/></marker>
+    <marker id="arrowO" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#f59e0b"/></marker>
+    <marker id="arrowP" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#6366f1"/></marker>
+  </defs>
+  <rect width="1000" height="500" fill="#0a0e1a"/>
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="20" font-weight="700">监控架构 - Prometheus + Grafana</text>
+
+  <!-- bridgeai-api -->
+  <rect x="50" y="100" width="220" height="300" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="160" y="130" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="15" font-weight="700">bridgeai-api</text>
+  <text x="160" y="150" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">FastAPI Application</text>
+
+  <rect x="70" y="170" width="180" height="30" rx="8" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="160" y="189" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11">/metrics endpoint</text>
+
+  <text x="80" y="225" fill="#94a3b8" font-family="system-ui" font-size="10" font-weight="600">Exposed Metrics:</text>
+  <text x="90" y="245" fill="#64748b" font-family="system-ui" font-size="10">http_requests_total</text>
+  <text x="90" y="262" fill="#64748b" font-family="system-ui" font-size="10">http_request_duration_seconds</text>
+  <text x="90" y="279" fill="#64748b" font-family="system-ui" font-size="10">http_errors_total</text>
+  <text x="90" y="296" fill="#64748b" font-family="system-ui" font-size="10">conversations_created_total</text>
+  <text x="90" y="313" fill="#64748b" font-family="system-ui" font-size="10">tokens_consumed_total</text>
+  <text x="90" y="330" fill="#64748b" font-family="system-ui" font-size="10">model_calls_total</text>
+  <text x="90" y="347" fill="#64748b" font-family="system-ui" font-size="10">circuit_breaker_state</text>
+  <text x="90" y="364" fill="#64748b" font-family="system-ui" font-size="10">mcp_tool_duration_seconds</text>
+
+  <!-- Prometheus -->
+  <rect x="370" y="130" width="240" height="240" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="490" y="160" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="16" font-weight="700">Prometheus</text>
+  <text x="490" y="180" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="11">时序数据库</text>
+
+  <rect x="390" y="200" width="200" height="30" rx="8" fill="#0a0e1a" stroke="#f59e0b" stroke-width="1"/>
+  <text x="490" y="219" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="11">scrape_interval: 15s</text>
+
+  <rect x="390" y="245" width="200" height="30" rx="8" fill="#0a0e1a" stroke="#f59e0b" stroke-width="1"/>
+  <text x="490" y="264" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="11">retention: 15d</text>
+
+  <rect x="390" y="290" width="200" height="30" rx="8" fill="#0a0e1a" stroke="#f59e0b" stroke-width="1"/>
+  <text x="490" y="309" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="11">alerting rules</text>
+
+  <text x="490" y="348" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">PromQL 查询引擎</text>
+
+  <!-- Arrow: api -> prometheus -->
+  <line x1="270" y1="185" x2="368" y2="215" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowO)"/>
+  <text x="320" y="190" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="10">scrape 15s</text>
+
+  <!-- Grafana -->
+  <rect x="710" y="70" width="260" height="400" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <text x="840" y="100" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="16" font-weight="700">Grafana Dashboards</text>
+  <text x="840" y="118" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">:3000 可视化面板</text>
+
+  <!-- 6 panels -->
+  <rect x="725" y="135" width="110" height="60" rx="8" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="780" y="158" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">RPS</text>
+  <text x="780" y="178" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">请求/秒</text>
+
+  <rect x="845" y="135" width="110" height="60" rx="8" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="900" y="158" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="11" font-weight="600">Latency</text>
+  <text x="900" y="178" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">P50/P95/P99</text>
+
+  <rect x="725" y="205" width="110" height="60" rx="8" fill="#0a0e1a" stroke="#ef4444" stroke-width="1"/>
+  <text x="780" y="228" text-anchor="middle" fill="#ef4444" font-family="system-ui" font-size="11" font-weight="600">Errors</text>
+  <text x="780" y="248" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">错误率 %</text>
+
+  <rect x="845" y="205" width="110" height="60" rx="8" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="900" y="228" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">Conversations</text>
+  <text x="900" y="248" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">对话趋势</text>
+
+  <rect x="725" y="275" width="110" height="60" rx="8" fill="#0a0e1a" stroke="#f59e0b" stroke-width="1"/>
+  <text x="780" y="298" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="11" font-weight="600">Tokens</text>
+  <text x="780" y="318" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">Token 消耗</text>
+
+  <rect x="845" y="275" width="110" height="60" rx="8" fill="#0a0e1a" stroke="#6366f1" stroke-width="1"/>
+  <text x="900" y="298" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="11" font-weight="600">Models</text>
+  <text x="900" y="318" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">模型调用分布</text>
+
+  <!-- Alert panel -->
+  <rect x="725" y="345" width="230" height="60" rx="8" fill="#0a0e1a" stroke="#ef4444" stroke-width="1"/>
+  <text x="840" y="370" text-anchor="middle" fill="#ef4444" font-family="system-ui" font-size="12" font-weight="600">Alert Rules</text>
+  <text x="840" y="390" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">error_rate > 5% | latency_p95 > 5s</text>
+
+  <rect x="725" y="415" width="230" height="40" rx="8" fill="#0a0e1a" stroke="#94a3b8" stroke-width="1"/>
+  <text x="840" y="440" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">Webhook → 飞书/钉钉/邮件通知</text>
+
+  <!-- Arrow: prometheus -> grafana -->
+  <line x1="610" y1="250" x2="708" y2="250" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowG)"/>
+  <text x="660" y="240" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="10">PromQL</text>
+</svg>

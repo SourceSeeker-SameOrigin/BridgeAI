@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="1000" height="400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="sb-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="sb-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <marker id="sb-arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1"/>
+    </marker>
+    <marker id="sb-arrow-green" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="400" fill="url(#sb-bg)"/>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">SSE 缓冲区处理管线</text>
+  <text x="500" y="53" text-anchor="middle" fill="#94a3b8" font-size="12">SSE Buffer Pipeline - Byte Stream to Event Objects</text>
+
+  <!-- Pipeline stages -->
+  <!-- Stage 1: reader.read() -->
+  <rect x="20" y="80" width="110" height="65" rx="10" fill="#111827" stroke="#6366f1" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="75" y="105" text-anchor="middle" fill="#6366f1" font-size="11" font-weight="700">reader.read()</text>
+  <text x="75" y="125" text-anchor="middle" fill="#64748b" font-size="9">ReadableStream</text>
+  <line x1="130" y1="112" x2="148" y2="112" stroke="#6366f1" stroke-width="1.5" marker-end="url(#sb-arrow)"/>
+
+  <!-- Data label -->
+  <rect x="150" y="97" width="48" height="28" rx="6" fill="#0a0e1a" stroke="#6366f1" stroke-width="1"/>
+  <text x="174" y="115" text-anchor="middle" fill="#6366f1" font-size="9" font-weight="600">[bytes]</text>
+  <line x1="198" y1="112" x2="215" y2="112" stroke="#6366f1" stroke-width="1.5" marker-end="url(#sb-arrow)"/>
+
+  <!-- Stage 2: TextDecoder -->
+  <rect x="218" y="80" width="115" height="65" rx="10" fill="#111827" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="275" y="100" text-anchor="middle" fill="#8b5cf6" font-size="10" font-weight="700">TextDecoder</text>
+  <text x="275" y="116" text-anchor="middle" fill="#8b5cf6" font-size="10" font-weight="700">.decode()</text>
+  <text x="275" y="133" text-anchor="middle" fill="#64748b" font-size="9">UTF-8 解码</text>
+  <line x1="333" y1="112" x2="350" y2="112" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#sb-arrow)"/>
+
+  <rect x="352" y="97" width="45" height="28" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="374" y="115" text-anchor="middle" fill="#8b5cf6" font-size="9" font-weight="600">[text]</text>
+  <line x1="397" y1="112" x2="415" y2="112" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#sb-arrow)"/>
+
+  <!-- Stage 3: split -->
+  <rect x="418" y="80" width="100" height="65" rx="10" fill="#111827" stroke="#22c55e" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="468" y="103" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="700">split('\n')</text>
+  <text x="468" y="120" text-anchor="middle" fill="#64748b" font-size="9">按行分割</text>
+  <text x="468" y="135" text-anchor="middle" fill="#64748b" font-size="8">+ buffer 残余</text>
+  <line x1="518" y1="112" x2="536" y2="112" stroke="#22c55e" stroke-width="1.5" marker-end="url(#sb-arrow-green)"/>
+
+  <rect x="538" y="90" width="78" height="42" rx="6" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="577" y="108" text-anchor="middle" fill="#22c55e" font-size="8" font-weight="600">[lines</text>
+  <text x="577" y="122" text-anchor="middle" fill="#22c55e" font-size="8" font-weight="600">+ buffer]</text>
+  <line x1="616" y1="112" x2="634" y2="112" stroke="#22c55e" stroke-width="1.5" marker-end="url(#sb-arrow-green)"/>
+
+  <!-- Stage 4: filter -->
+  <rect x="636" y="80" width="110" height="65" rx="10" fill="#111827" stroke="#f59e0b" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="691" y="100" text-anchor="middle" fill="#f59e0b" font-size="10" font-weight="700">filter</text>
+  <text x="691" y="116" text-anchor="middle" fill="#f59e0b" font-size="9">'data: ' prefix</text>
+  <text x="691" y="133" text-anchor="middle" fill="#64748b" font-size="8">过滤前缀</text>
+  <line x1="746" y1="112" x2="762" y2="112" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#sb-arrow)"/>
+
+  <rect x="764" y="95" width="60" height="32" rx="6" fill="#0a0e1a" stroke="#f59e0b" stroke-width="1"/>
+  <text x="794" y="115" text-anchor="middle" fill="#f59e0b" font-size="8" font-weight="600">[json str]</text>
+  <line x1="824" y1="112" x2="842" y2="112" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#sb-arrow)"/>
+
+  <!-- Stage 5: JSON.parse -->
+  <rect x="844" y="80" width="130" height="65" rx="10" fill="#111827" stroke="#ef4444" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="909" y="103" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="700">JSON.parse()</text>
+  <text x="909" y="120" text-anchor="middle" fill="#64748b" font-size="9">解析 JSON</text>
+  <text x="909" y="135" text-anchor="middle" fill="#64748b" font-size="8">try-catch 容错</text>
+
+  <!-- Arrow down to switch -->
+  <line x1="909" y1="145" x2="909" y2="175" stroke="#ef4444" stroke-width="1.5" marker-end="url(#sb-arrow)"/>
+
+  <!-- Event objects -->
+  <rect x="854" y="178" width="120" height="28" rx="6" fill="#0a0e1a" stroke="#ef4444" stroke-width="1"/>
+  <text x="914" y="196" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="600">[event objects]</text>
+
+  <!-- Arrow down to switch -->
+  <line x1="909" y1="206" x2="909" y2="230" stroke="#ef4444" stroke-width="1.5" marker-end="url(#sb-arrow)"/>
+
+  <!-- Switch dispatcher -->
+  <rect x="790" y="233" width="240" height="40" rx="12" fill="#6366f1" filter="url(#sb-shadow)"/>
+  <text x="910" y="258" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">switch(event.type)</text>
+
+  <!-- 5 callback branches -->
+  <line x1="830" y1="273" x2="120" y2="310" stroke="#94a3b8" stroke-width="1" opacity="0.4"/>
+  <line x1="860" y1="273" x2="330" y2="310" stroke="#94a3b8" stroke-width="1" opacity="0.4"/>
+  <line x1="900" y1="273" x2="530" y2="310" stroke="#94a3b8" stroke-width="1" opacity="0.4"/>
+  <line x1="940" y1="273" x2="730" y2="310" stroke="#94a3b8" stroke-width="1" opacity="0.4"/>
+  <line x1="970" y1="273" x2="910" y2="310" stroke="#94a3b8" stroke-width="1" opacity="0.4"/>
+
+  <!-- content -->
+  <rect x="40" y="310" width="160" height="55" rx="10" fill="#111827" stroke="#22c55e" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="120" y="333" text-anchor="middle" fill="#22c55e" font-size="11" font-weight="700">content</text>
+  <text x="120" y="352" text-anchor="middle" fill="#64748b" font-size="9">追加文字到 messages</text>
+
+  <!-- tool_call -->
+  <rect x="240" y="310" width="160" height="55" rx="10" fill="#111827" stroke="#f59e0b" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="320" y="333" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="700">tool_call</text>
+  <text x="320" y="352" text-anchor="middle" fill="#64748b" font-size="9">展示工具调用卡片</text>
+
+  <!-- meta -->
+  <rect x="440" y="310" width="160" height="55" rx="10" fill="#111827" stroke="#3b82f6" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="520" y="333" text-anchor="middle" fill="#3b82f6" font-size="11" font-weight="700">meta</text>
+  <text x="520" y="352" text-anchor="middle" fill="#64748b" font-size="9">更新 realConvIdRef</text>
+
+  <!-- done -->
+  <rect x="640" y="310" width="160" height="55" rx="10" fill="#111827" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="720" y="333" text-anchor="middle" fill="#8b5cf6" font-size="11" font-weight="700">done</text>
+  <text x="720" y="352" text-anchor="middle" fill="#64748b" font-size="9">isStreaming = false</text>
+
+  <!-- error -->
+  <rect x="830" y="310" width="150" height="55" rx="10" fill="#111827" stroke="#ef4444" stroke-width="1.5" filter="url(#sb-shadow)"/>
+  <text x="905" y="333" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="700">error</text>
+  <text x="905" y="352" text-anchor="middle" fill="#64748b" font-size="9">Toast 错误提示</text>
+</svg>

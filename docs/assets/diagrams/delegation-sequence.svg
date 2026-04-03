@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="ds-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <marker id="ds-arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6366f1"/>
+    </marker>
+    <marker id="ds-arr-g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#22c55e"/>
+    </marker>
+    <marker id="ds-arr-y" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f59e0b"/>
+    </marker>
+    <marker id="ds-arr-b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#3b82f6"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="700" fill="url(#ds-bg)"/>
+  <text x="600" y="40" fill="#f1f5f9" font-size="22" font-weight="700" text-anchor="middle">Agent 委派时序图</text>
+
+  <!-- Participants -->
+  <rect x="60" y="65" width="100" height="40" rx="8" fill="#6366f1" fill-opacity="0.2" stroke="#6366f1" stroke-opacity="0.5" stroke-width="1.5"/>
+  <text x="110" y="90" fill="#6366f1" font-size="13" font-weight="700" text-anchor="middle">LLM</text>
+
+  <rect x="240" y="65" width="120" height="40" rx="8" fill="#8b5cf6" fill-opacity="0.2" stroke="#8b5cf6" stroke-opacity="0.5" stroke-width="1.5"/>
+  <text x="300" y="90" fill="#8b5cf6" font-size="12" font-weight="700" text-anchor="middle">ChatService</text>
+
+  <rect x="440" y="65" width="150" height="40" rx="8" fill="#3b82f6" fill-opacity="0.2" stroke="#3b82f6" stroke-opacity="0.5" stroke-width="1.5"/>
+  <text x="515" y="90" fill="#3b82f6" font-size="12" font-weight="700" text-anchor="middle">AgentCollaborator</text>
+
+  <rect x="680" y="65" width="100" height="40" rx="8" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1.5"/>
+  <text x="730" y="90" fill="#f59e0b" font-size="12" font-weight="700" text-anchor="middle">Database</text>
+
+  <rect x="870" y="65" width="130" height="40" rx="8" fill="#22c55e" fill-opacity="0.2" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1.5"/>
+  <text x="935" y="90" fill="#22c55e" font-size="12" font-weight="700" text-anchor="middle">Child LLM</text>
+
+  <rect x="1060" y="65" width="110" height="40" rx="8" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1.5"/>
+  <text x="1115" y="90" fill="#ef4444" font-size="12" font-weight="700" text-anchor="middle">Parent Ctx</text>
+
+  <!-- Lifelines -->
+  <line x1="110" y1="105" x2="110" y2="660" stroke="#6366f1" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="300" y1="105" x2="300" y2="660" stroke="#8b5cf6" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="515" y1="105" x2="515" y2="660" stroke="#3b82f6" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="730" y1="105" x2="730" y2="660" stroke="#f59e0b" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="935" y1="105" x2="935" y2="660" stroke="#22c55e" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="1115" y1="105" x2="1115" y2="660" stroke="#ef4444" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Step 1: LLM -> ChatService -->
+  <rect x="30" y="140" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="151" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">1</text>
+  <line x1="110" y1="150" x2="290" y2="150" stroke="#6366f1" stroke-width="2" marker-end="url(#ds-arr)"/>
+  <text x="200" y="143" fill="#f1f5f9" font-size="11" text-anchor="middle">delegate_task tool call</text>
+
+  <!-- Step 2: ChatService -> AgentCollaborator -->
+  <rect x="30" y="190" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="201" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">2</text>
+  <line x1="300" y1="200" x2="505" y2="200" stroke="#8b5cf6" stroke-width="2" marker-end="url(#ds-arr)"/>
+  <text x="400" y="193" fill="#f1f5f9" font-size="11" text-anchor="middle">route to collaborator</text>
+
+  <!-- Step 3: AgentCollaborator -> DB -->
+  <rect x="30" y="240" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="251" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">3</text>
+  <line x1="515" y1="250" x2="720" y2="250" stroke="#3b82f6" stroke-width="2" marker-end="url(#ds-arr-y)"/>
+  <text x="618" y="243" fill="#f1f5f9" font-size="11" text-anchor="middle">DB lookup child agent</text>
+
+  <!-- Step 4: DB -> AgentCollaborator (return) -->
+  <rect x="30" y="290" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="301" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">4</text>
+  <line x1="720" y1="300" x2="525" y2="300" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ds-arr-b)"/>
+  <text x="618" y="293" fill="#94a3b8" font-size="11" text-anchor="middle">agent config + tools</text>
+
+  <!-- Step 5: Load config -->
+  <rect x="30" y="340" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="351" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">5</text>
+  <rect x="480" y="330" width="70" height="30" rx="4" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-opacity="0.3"/>
+  <text x="515" y="350" fill="#3b82f6" font-size="10" text-anchor="middle">load config</text>
+
+  <!-- Step 6: AgentCollaborator -> Child LLM -->
+  <rect x="30" y="390" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="401" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">6</text>
+  <line x1="515" y1="400" x2="925" y2="400" stroke="#3b82f6" stroke-width="2" marker-end="url(#ds-arr-g)"/>
+  <text x="720" y="393" fill="#f1f5f9" font-size="11" text-anchor="middle">Call Child LLM (with child system prompt + tools)</text>
+
+  <!-- Step 7: Child LLM processes -->
+  <rect x="30" y="440" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="451" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">7</text>
+  <rect x="900" y="430" width="70" height="30" rx="4" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-opacity="0.3"/>
+  <text x="935" y="450" fill="#22c55e" font-size="10" text-anchor="middle">process</text>
+
+  <!-- Step 8: Child LLM -> AgentCollaborator (return) -->
+  <rect x="30" y="490" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="501" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">8</text>
+  <line x1="925" y1="500" x2="525" y2="500" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ds-arr-b)"/>
+  <text x="720" y="493" fill="#94a3b8" font-size="11" text-anchor="middle">Return result</text>
+
+  <!-- Step 9: AgentCollaborator -> ChatService -->
+  <rect x="30" y="540" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="551" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">9</text>
+  <line x1="505" y1="550" x2="310" y2="550" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="400" y="543" fill="#94a3b8" font-size="11" text-anchor="middle">formatted result</text>
+
+  <!-- Step 10: Inject into parent context -->
+  <rect x="30" y="590" width="20" height="14" rx="3" fill="#6366f1" fill-opacity="0.3"/>
+  <text x="40" y="601" fill="#6366f1" font-size="10" text-anchor="middle" font-weight="700">10</text>
+  <line x1="300" y1="600" x2="1105" y2="600" stroke="#ef4444" stroke-width="2" marker-end="url(#ds-arr)"/>
+  <text x="700" y="593" fill="#f1f5f9" font-size="11" text-anchor="middle">Inject result into parent context as tool_result</text>
+
+  <!-- Step 11: Continue parent LLM -->
+  <line x1="1105" y1="640" x2="120" y2="640" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="600" y="633" fill="#22c55e" font-size="11" text-anchor="middle">Parent LLM continues with child result in context</text>
+</svg>

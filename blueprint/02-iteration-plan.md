@@ -5,6 +5,10 @@
 
 ## 迭代总览
 
+<p align="center">
+  <img src="../docs/assets/diagrams/roadmap.svg" width="800" alt="产品路线图" />
+</p>
+
 ```
 Phase 1 (Week 1-3)     ████░░░░░░░░░░░░░░░░  核心引擎 MVP
 Phase 2 (Week 4-6)     ░░░░████░░░░░░░░░░░░  行业插件 + 渠道
