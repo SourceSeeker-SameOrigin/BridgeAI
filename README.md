@@ -1,8 +1,6 @@
 span
 
-<!-- Logo placeholder -->
-
-<img src="docs/assets/logo-placeholder.png" alt="BridgeAI Logo" width="120" />
+<img src="docs/assets/logo.svg" width="120" />
 
 # BridgeAI
 
@@ -63,56 +61,20 @@ cd frontend && npm install && npm run dev
 
 ## Screenshots
 
-<!-- 截图占位 -->
-
-
-|                 对话界面                 |                  Agent 管理                  |               MCP 连接器               |
-| :--------------------------------------: | :------------------------------------------: | :------------------------------------: |
-| ![Chat](docs/assets/screenshot-chat.png) | ![Agents](docs/assets/screenshot-agents.png) | ![MCP](docs/assets/screenshot-mcp.png) |
-
-
-|                       知识库                       |                       仪表盘                       |                    插件市场                    |
-| :------------------------------------------------: | :------------------------------------------------: | :--------------------------------------------: |
-| ![Knowledge](docs/assets/screenshot-knowledge.png) | ![Dashboard](docs/assets/screenshot-dashboard.png) | ![Plugins](docs/assets/screenshot-plugins.png) |
+<table>
+<tr>
+<td><img src="docs/assets/screenshots/dashboard.svg" width="400" /><br/>Dashboard</td>
+<td><img src="docs/assets/screenshots/chat.svg" width="400" /><br/>AI Chat</td>
+</tr>
+<tr>
+<td><img src="docs/assets/screenshots/workflow.svg" width="400" /><br/>Workflow Editor</td>
+<td><img src="docs/assets/screenshots/knowledge.svg" width="400" /><br/>Knowledge Base</td>
+</tr>
+</table>
 
 ## Architecture
 
-```
-                          ┌─────────────────────────────────┐
-                          │         Channel Layer           │
-                          │  企业微信 / 钉钉 / 飞书 / Web   │
-                          └──────────────┬──────────────────┘
-                                         │
-                          ┌──────────────▼──────────────────┐
-                          │      FastAPI Gateway            │
-                          │  认证 / 限流 / 租户隔离 / 审计   │
-                          └──────────────┬──────────────────┘
-                                         │
-               ┌─────────────────────────┼─────────────────────────┐
-               │                         │                         │
-    ┌──────────▼──────────┐   ┌──────────▼──────────┐   ┌──────────▼──────────┐
-    │   Agent Engine      │   │    RAG Engine        │   │   Plugin System     │
-    │                     │   │                      │   │                     │
-    │  LangGraph 6-Stage  │   │  文档解析 → 切分     │   │  电商 / 财税 / 法律  │
-    │  Pipeline:          │   │  → 向量化 → pgvector │   │  行业专属工具+提示   │
-    │                     │   │  → 语义检索          │   │                     │
-    │  1. 意图理解        │   └──────────────────────┘   └─────────────────────┘
-    │  2. 上下文增强      │
-    │  3. 工具选择        │   ┌──────────────────────────────────────────────┐
-    │  4. 模型路由        │   │              MCP Gateway                     │
-    │  5. 执行(熔断降级)  │──▶│  连接器注册 → 权限校验 → 脱敏 → 审计日志    │
-    │  6. 结果整合+学习   │   │                                              │
-    └─────────────────────┘   │  ┌────────┐ ┌────────┐ ┌────────┐ ┌───────┐ │
-                              │  │ MySQL  │ │HTTP API│ │  飞书  │ │ ...   │ │
-                              │  └────────┘ └────────┘ └────────┘ └───────┘ │
-                              └──────────────────────────────────────────────┘
-               ┌─────────────────────────┼─────────────────────────┐
-               │                         │                         │
-    ┌──────────▼──────────┐   ┌──────────▼──────────┐   ┌──────────▼──────────┐
-    │  PostgreSQL 16      │   │     Redis 7         │   │     MinIO           │
-    │  + pgvector         │   │  缓存/会话/熔断状态  │   │   文件存储           │
-    └─────────────────────┘   └─────────────────────┘   └─────────────────────┘
-```
+<img src="docs/assets/architecture.svg" width="800" />
 
 ## Features
 

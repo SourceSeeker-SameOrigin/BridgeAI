@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bridgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="56" fill="#0a0e1a" stroke="url(#bridgeGrad)" stroke-width="2.5"/>
+  <!-- Bridge arch -->
+  <path d="M 22 72 Q 60 20 98 72" fill="none" stroke="url(#arcGrad)" stroke-width="4.5" stroke-linecap="round" filter="url(#glow)"/>
+  <!-- Bridge deck -->
+  <line x1="18" y1="72" x2="102" y2="72" stroke="url(#arcGrad)" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Left pillar -->
+  <rect x="34" y="56" width="4" height="16" rx="2" fill="#6366f1"/>
+  <!-- Right pillar -->
+  <rect x="82" y="56" width="4" height="16" rx="2" fill="#8b5cf6"/>
+  <!-- Left node (circle) -->
+  <circle cx="28" cy="82" r="8" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+  <circle cx="28" cy="82" r="3.5" fill="#6366f1"/>
+  <!-- Right node (circle) -->
+  <circle cx="92" cy="82" r="8" fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
+  <circle cx="92" cy="82" r="3.5" fill="#8b5cf6"/>
+  <!-- Connection lines from nodes to bridge -->
+  <line x1="28" y1="74" x2="28" y2="72" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+  <line x1="92" y1="74" x2="92" y2="72" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/>
+  <!-- Center AI dot -->
+  <circle cx="60" cy="38" r="5" fill="url(#bridgeGrad)" filter="url(#glow)"/>
+  <circle cx="60" cy="38" r="2.5" fill="#ffffff" opacity="0.9"/>
+  <!-- Cable lines -->
+  <line x1="36" y1="62" x2="36" y2="72" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/>
+  <line x1="48" y1="48" x2="48" y2="72" stroke="#7c6ef5" stroke-width="1.5" opacity="0.6"/>
+  <line x1="60" y1="43" x2="60" y2="72" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="72" y1="48" x2="72" y2="72" stroke="#7c6ef5" stroke-width="1.5" opacity="0.6"/>
+  <line x1="84" y1="62" x2="84" y2="72" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+</svg>

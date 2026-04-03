@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620">
+  <defs>
+    <linearGradient id="layer1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#312e81"/>
+      <stop offset="100%" style="stop-color:#3b0764"/>
+    </linearGradient>
+    <linearGradient id="layer2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e1b4b"/>
+      <stop offset="100%" style="stop-color:#2e1065"/>
+    </linearGradient>
+    <linearGradient id="layer3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1a1645"/>
+      <stop offset="100%" style="stop-color:#250d50"/>
+    </linearGradient>
+    <linearGradient id="layer4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#14113a"/>
+      <stop offset="100%" style="stop-color:#1c0a42"/>
+    </linearGradient>
+    <linearGradient id="layer5" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0f0d30"/>
+      <stop offset="100%" style="stop-color:#150838"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <filter id="cardShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="620" rx="12" fill="#0a0e1a"/>
+
+  <!-- Title -->
+  <text x="450" y="36" text-anchor="middle" font-family="system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9">BridgeAI Architecture</text>
+
+  <!-- ===== Layer 1: Channels ===== -->
+  <rect x="30" y="52" width="840" height="82" rx="10" fill="url(#layer1)" stroke="#6366f1" stroke-width="1" opacity="0.95" filter="url(#cardShadow)"/>
+  <text x="50" y="74" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#a5b4fc">CHANNELS</text>
+  <text x="840" y="74" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#7c7fcc">接入层</text>
+  <!-- Channel items -->
+  <g transform="translate(80, 88)">
+    <rect x="0" y="0" width="120" height="36" rx="8" fill="#1e1b4b" stroke="#4f46e5" stroke-width="0.8"/>
+    <text x="60" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16">&#x1F4AC;</text>
+    <text x="60" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">企业微信</text>
+  </g>
+  <g transform="translate(220, 88)">
+    <rect x="0" y="0" width="120" height="36" rx="8" fill="#1e1b4b" stroke="#4f46e5" stroke-width="0.8"/>
+    <text x="60" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16">&#x1F4E9;</text>
+    <text x="60" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">钉钉</text>
+  </g>
+  <g transform="translate(360, 88)">
+    <rect x="0" y="0" width="120" height="36" rx="8" fill="#1e1b4b" stroke="#4f46e5" stroke-width="0.8"/>
+    <text x="60" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16">&#x1F426;</text>
+    <text x="60" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">飞书</text>
+  </g>
+  <g transform="translate(500, 88)">
+    <rect x="0" y="0" width="120" height="36" rx="8" fill="#1e1b4b" stroke="#4f46e5" stroke-width="0.8"/>
+    <text x="60" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16">&#x1F310;</text>
+    <text x="60" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">Web Chat</text>
+  </g>
+  <g transform="translate(640, 88)">
+    <rect x="0" y="0" width="120" height="36" rx="8" fill="#1e1b4b" stroke="#4f46e5" stroke-width="0.8"/>
+    <text x="60" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16">&#x1F517;</text>
+    <text x="60" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">REST API</text>
+  </g>
+
+  <!-- Arrow down -->
+  <polygon points="450,138 445,148 455,148" fill="#6366f1" opacity="0.7"/>
+
+  <!-- ===== Layer 2: Pipeline ===== -->
+  <rect x="30" y="152" width="840" height="110" rx="10" fill="url(#layer2)" stroke="#7c3aed" stroke-width="1" opacity="0.95" filter="url(#cardShadow)"/>
+  <text x="50" y="174" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#c4b5fd">6-STAGE PIPELINE</text>
+  <text x="840" y="174" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#8b7cc8">对话处理管线</text>
+  <!-- Pipeline stages -->
+  <g transform="translate(50, 188)">
+    <rect x="0" y="0" width="115" height="56" rx="8" fill="#1a1645" stroke="#6366f1" stroke-width="0.8"/>
+    <text x="14" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="18" fill="#6366f1" font-weight="700">1</text>
+    <text x="32" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#e0e7ff">Prompt</text>
+    <text x="14" y="38" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#a5b4fc">四层融合</text>
+  </g>
+  <text x="175" y="220" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" fill="#6366f1">&#x2192;</text>
+  <g transform="translate(190, 188)">
+    <rect x="0" y="0" width="115" height="56" rx="8" fill="#1a1645" stroke="#7c3aed" stroke-width="0.8"/>
+    <text x="14" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="18" fill="#7c3aed" font-weight="700">2</text>
+    <text x="32" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#e0e7ff">模型路由</text>
+    <text x="14" y="38" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#a5b4fc">三层智能选择</text>
+  </g>
+  <text x="315" y="220" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" fill="#7c3aed">&#x2192;</text>
+  <g transform="translate(330, 188)">
+    <rect x="0" y="0" width="115" height="56" rx="8" fill="#1a1645" stroke="#8b5cf6" stroke-width="0.8"/>
+    <text x="14" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="18" fill="#8b5cf6" font-weight="700">3</text>
+    <text x="32" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#e0e7ff">AI 调用</text>
+    <text x="14" y="38" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#a5b4fc">熔断降级</text>
+  </g>
+  <text x="455" y="220" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" fill="#8b5cf6">&#x2192;</text>
+  <g transform="translate(470, 188)">
+    <rect x="0" y="0" width="115" height="56" rx="8" fill="#1a1645" stroke="#a78bfa" stroke-width="0.8"/>
+    <text x="14" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="18" fill="#a78bfa" font-weight="700">4</text>
+    <text x="32" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#e0e7ff">工具/RAG</text>
+    <text x="14" y="38" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#a5b4fc">MCP + 知识库</text>
+  </g>
+  <text x="595" y="220" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" fill="#a78bfa">&#x2192;</text>
+  <g transform="translate(610, 188)">
+    <rect x="0" y="0" width="115" height="56" rx="8" fill="#1a1645" stroke="#c4b5fd" stroke-width="0.8"/>
+    <text x="14" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="18" fill="#c4b5fd" font-weight="700">5</text>
+    <text x="32" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#e0e7ff">响应解析</text>
+    <text x="14" y="38" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#a5b4fc">格式化输出</text>
+  </g>
+  <text x="735" y="220" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" fill="#c4b5fd">&#x2192;</text>
+  <g transform="translate(750, 188)">
+    <rect x="0" y="0" width="110" height="56" rx="8" fill="#1a1645" stroke="#ddd6fe" stroke-width="0.8"/>
+    <text x="14" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="18" fill="#ddd6fe" font-weight="700">6</text>
+    <text x="32" y="20" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#e0e7ff">反馈学习</text>
+    <text x="14" y="38" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#a5b4fc">Few-shot优化</text>
+  </g>
+
+  <!-- Arrow down -->
+  <polygon points="450,266 445,276 455,276" fill="#7c3aed" opacity="0.7"/>
+
+  <!-- ===== Layer 3: Capabilities ===== -->
+  <rect x="30" y="280" width="840" height="82" rx="10" fill="url(#layer3)" stroke="#6d28d9" stroke-width="1" opacity="0.95" filter="url(#cardShadow)"/>
+  <text x="50" y="302" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#c4b5fd">CAPABILITIES</text>
+  <text x="840" y="302" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#8b7cc8">能力层</text>
+  <g transform="translate(80, 314)">
+    <rect x="0" y="0" width="155" height="36" rx="8" fill="#14113a" stroke="#6d28d9" stroke-width="0.8"/>
+    <text x="16" y="14" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F50D;</text>
+    <text x="38" y="26" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#c7d2fe">RAG 引擎</text>
+  </g>
+  <g transform="translate(260, 314)">
+    <rect x="0" y="0" width="155" height="36" rx="8" fill="#14113a" stroke="#6d28d9" stroke-width="0.8"/>
+    <text x="16" y="14" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F50C;</text>
+    <text x="38" y="26" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#c7d2fe">MCP 网关</text>
+  </g>
+  <g transform="translate(440, 314)">
+    <rect x="0" y="0" width="155" height="36" rx="8" fill="#14113a" stroke="#6d28d9" stroke-width="0.8"/>
+    <text x="16" y="14" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F3ED;</text>
+    <text x="38" y="26" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#c7d2fe">行业插件</text>
+  </g>
+  <g transform="translate(620, 314)">
+    <rect x="0" y="0" width="155" height="36" rx="8" fill="#14113a" stroke="#6d28d9" stroke-width="0.8"/>
+    <text x="16" y="14" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F6E0;</text>
+    <text x="38" y="26" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#c7d2fe">工具集</text>
+  </g>
+
+  <!-- Arrow down -->
+  <polygon points="450,366 445,376 455,376" fill="#6d28d9" opacity="0.7"/>
+
+  <!-- ===== Layer 4: Model Router ===== -->
+  <rect x="30" y="380" width="840" height="82" rx="10" fill="url(#layer4)" stroke="#5b21b6" stroke-width="1" opacity="0.95" filter="url(#cardShadow)"/>
+  <text x="50" y="402" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ddd6fe">MODEL ROUTER</text>
+  <text x="840" y="402" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#8b7cc8">模型适配层</text>
+  <g transform="translate(55, 414)">
+    <rect x="0" y="0" width="130" height="36" rx="8" fill="#0f0d30" stroke="#5b21b6" stroke-width="0.8"/>
+    <text x="65" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F9E0;</text>
+    <text x="65" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">Claude</text>
+  </g>
+  <g transform="translate(205, 414)">
+    <rect x="0" y="0" width="130" height="36" rx="8" fill="#0f0d30" stroke="#5b21b6" stroke-width="0.8"/>
+    <text x="65" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4A1;</text>
+    <text x="65" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">DeepSeek</text>
+  </g>
+  <g transform="translate(355, 414)">
+    <rect x="0" y="0" width="130" height="36" rx="8" fill="#0f0d30" stroke="#5b21b6" stroke-width="0.8"/>
+    <text x="65" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x2601;</text>
+    <text x="65" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">Qwen</text>
+  </g>
+  <g transform="translate(505, 414)">
+    <rect x="0" y="0" width="130" height="36" rx="8" fill="#0f0d30" stroke="#5b21b6" stroke-width="0.8"/>
+    <text x="65" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4BB;</text>
+    <text x="65" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">Ollama</text>
+  </g>
+  <g transform="translate(655, 414)">
+    <rect x="0" y="0" width="170" height="36" rx="8" fill="#0f0d30" stroke="#5b21b6" stroke-width="0.8"/>
+    <text x="85" y="14" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F504;</text>
+    <text x="85" y="29" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">OpenAI Compatible</text>
+  </g>
+
+  <!-- Arrow down -->
+  <polygon points="450,466 445,476 455,476" fill="#5b21b6" opacity="0.7"/>
+
+  <!-- ===== Layer 5: Infrastructure ===== -->
+  <rect x="30" y="480" width="840" height="82" rx="10" fill="url(#layer5)" stroke="#4c1d95" stroke-width="1" opacity="0.95" filter="url(#cardShadow)"/>
+  <text x="50" y="502" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ede9fe">INFRASTRUCTURE</text>
+  <text x="840" y="502" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#8b7cc8">基础设施层</text>
+  <g transform="translate(55, 514)">
+    <rect x="0" y="0" width="175" height="36" rx="8" fill="#0a0824" stroke="#4c1d95" stroke-width="0.8"/>
+    <text x="16" y="14" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F418;</text>
+    <text x="38" y="26" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">PostgreSQL + pgvector</text>
+  </g>
+  <g transform="translate(260, 514)">
+    <rect x="0" y="0" width="155" height="36" rx="8" fill="#0a0824" stroke="#4c1d95" stroke-width="0.8"/>
+    <text x="16" y="14" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x26A1;</text>
+    <text x="38" y="26" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">Redis 7</text>
+  </g>
+  <g transform="translate(440, 514)">
+    <rect x="0" y="0" width="155" height="36" rx="8" fill="#0a0824" stroke="#4c1d95" stroke-width="0.8"/>
+    <text x="16" y="14" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4E6;</text>
+    <text x="38" y="26" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">MinIO</text>
+  </g>
+  <g transform="translate(620, 514)">
+    <rect x="0" y="0" width="175" height="36" rx="8" fill="#0a0824" stroke="#4c1d95" stroke-width="0.8"/>
+    <text x="16" y="14" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F433;</text>
+    <text x="38" y="26" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#c7d2fe">Docker / K8s</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="450" y="595" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#475569">BridgeAI - Enterprise AI Agent Platform</text>
+</svg>

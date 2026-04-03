@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <!-- Window frame -->
+  <rect width="1200" height="800" rx="8" fill="#0a0e1a"/>
+  <rect width="1200" height="36" rx="8" fill="#111827"/>
+  <rect y="28" width="1200" height="8" fill="#111827"/>
+  <circle cx="20" cy="18" r="6" fill="#ef4444"/>
+  <circle cx="40" cy="18" r="6" fill="#f59e0b"/>
+  <circle cx="60" cy="18" r="6" fill="#22c55e"/>
+  <text x="600" y="22" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">BridgeAI - Knowledge Base</text>
+
+  <!-- Sidebar -->
+  <rect x="0" y="36" width="220" height="764" fill="#111827"/>
+  <circle cx="42" cy="72" r="14" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="42" y="76" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#6366f1" font-weight="700">B</text>
+  <text x="68" y="77" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9">BridgeAI</text>
+
+  <text x="36" y="131" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4CA;</text>
+  <text x="58" y="132" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">仪表盘</text>
+  <text x="36" y="169" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4AC;</text>
+  <text x="58" y="170" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">对话</text>
+  <text x="36" y="207" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F916;</text>
+  <text x="58" y="208" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">Agent 管理</text>
+  <text x="36" y="245" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F50C;</text>
+  <text x="58" y="246" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">MCP 连接器</text>
+
+  <rect x="12" y="260" width="196" height="38" rx="8" fill="#6366f1" opacity="0.15"/>
+  <rect x="16" y="260" width="3" height="38" rx="1.5" fill="#6366f1"/>
+  <text x="36" y="283" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4DA;</text>
+  <text x="58" y="284" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#c7d2fe">知识库</text>
+
+  <text x="36" y="321" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F9E9;</text>
+  <text x="58" y="322" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">工作流</text>
+
+  <!-- Main content -->
+  <text x="248" y="72" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9">知识库管理</text>
+  <text x="248" y="92" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#64748b">上传文档，构建 AI 知识检索</text>
+
+  <!-- Action buttons -->
+  <rect x="1020" y="52" width="100" height="34" rx="8" fill="#6366f1"/>
+  <text x="1070" y="74" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#ffffff">+ 新建知识库</text>
+
+  <!-- Search bar -->
+  <rect x="248" y="110" width="400" height="38" rx="8" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="270" y="134" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#475569">&#x1F50D; 搜索知识库...</text>
+
+  <!-- Knowledge base cards grid -->
+  <!-- Card 1 -->
+  <rect x="248" y="168" width="300" height="220" rx="12" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <rect x="248" y="168" width="300" height="60" rx="12" fill="#1e1b4b" opacity="0.4"/>
+  <rect x="548" y="220" width="0" height="8" fill="#1e1b4b"/>
+  <text x="276" y="192" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="22">&#x1F4D6;</text>
+  <text x="304" y="196" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">产品手册</text>
+  <rect x="430" y="182" width="48" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="454" y="196" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">就绪</text>
+
+  <text x="268" y="254" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">文档数量</text>
+  <text x="268" y="274" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">24</text>
+  <text x="380" y="254" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">向量数</text>
+  <text x="380" y="274" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">12,456</text>
+
+  <text x="268" y="304" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">Chunk 大小: 512 | Overlap: 64</text>
+
+  <rect x="268" y="322" width="260" height="6" rx="3" fill="#1e293b"/>
+  <rect x="268" y="322" width="260" height="6" rx="3" fill="#22c55e" opacity="0.7"/>
+
+  <text x="268" y="352" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">更新于 2 小时前</text>
+  <rect x="430" y="340" width="50" height="24" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="455" y="356" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">管理</text>
+  <rect x="490" y="340" width="50" height="24" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="515" y="356" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">搜索</text>
+
+  <!-- Card 2 -->
+  <rect x="568" y="168" width="300" height="220" rx="12" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <rect x="568" y="168" width="300" height="60" rx="12" fill="#312e81" opacity="0.3"/>
+  <text x="596" y="192" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="22">&#x1F4CB;</text>
+  <text x="624" y="196" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">公司制度</text>
+  <rect x="750" y="182" width="48" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="774" y="196" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">就绪</text>
+
+  <text x="588" y="254" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">文档数量</text>
+  <text x="588" y="274" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">8</text>
+  <text x="700" y="254" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">向量数</text>
+  <text x="700" y="274" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">3,892</text>
+
+  <text x="588" y="304" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">Chunk 大小: 1024 | Overlap: 128</text>
+
+  <rect x="588" y="322" width="260" height="6" rx="3" fill="#1e293b"/>
+  <rect x="588" y="322" width="260" height="6" rx="3" fill="#22c55e" opacity="0.7"/>
+
+  <text x="588" y="352" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">更新于 1 天前</text>
+  <rect x="750" y="340" width="50" height="24" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="775" y="356" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">管理</text>
+  <rect x="810" y="340" width="50" height="24" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="835" y="356" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">搜索</text>
+
+  <!-- Card 3 -->
+  <rect x="888" y="168" width="290" height="220" rx="12" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <rect x="888" y="168" width="290" height="60" rx="12" fill="#1a0d3a" opacity="0.4"/>
+  <text x="916" y="192" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="22">&#x2696;</text>
+  <text x="944" y="196" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">法律法规</text>
+  <rect x="1058" y="182" width="60" height="20" rx="10" fill="#f59e0b" opacity="0.15"/>
+  <text x="1088" y="196" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#f59e0b">处理中</text>
+
+  <text x="908" y="254" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">文档数量</text>
+  <text x="908" y="274" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">42</text>
+  <text x="1020" y="254" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">向量数</text>
+  <text x="1020" y="274" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#f1f5f9">--</text>
+
+  <text x="908" y="304" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">Chunk 大小: 768 | Overlap: 96</text>
+
+  <rect x="908" y="322" width="250" height="6" rx="3" fill="#1e293b"/>
+  <rect x="908" y="322" width="160" height="6" rx="3" fill="#f59e0b" opacity="0.7"/>
+
+  <text x="908" y="352" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#f59e0b">正在处理... 64%</text>
+
+  <!-- Document list section -->
+  <rect x="248" y="410" width="930" height="360" rx="12" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="276" y="442" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">产品手册 - 文档列表</text>
+  <rect x="1040" y="424" width="110" height="30" rx="6" fill="#6366f1" opacity="0.15" stroke="#6366f1" stroke-width="1"/>
+  <text x="1095" y="444" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#a5b4fc">+ 上传文档</text>
+
+  <!-- Table header -->
+  <line x1="268" y1="460" x2="1158" y2="460" stroke="#1e293b" stroke-width="0.5"/>
+  <text x="288" y="480" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">文件名</text>
+  <text x="580" y="480" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">格式</text>
+  <text x="680" y="480" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">大小</text>
+  <text x="780" y="480" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">Chunks</text>
+  <text x="880" y="480" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">状态</text>
+  <text x="1000" y="480" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">操作</text>
+  <line x1="268" y1="490" x2="1158" y2="490" stroke="#1e293b" stroke-width="0.5"/>
+
+  <!-- Doc row 1 -->
+  <text x="288" y="518" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x1F4C4;</text>
+  <text x="310" y="518" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#e2e8f0">产品功能介绍 v3.2.pdf</text>
+  <rect x="580" y="504" width="40" height="20" rx="4" fill="#ef4444" opacity="0.1"/>
+  <text x="600" y="518" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#ef4444">PDF</text>
+  <text x="680" y="518" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">2.4 MB</text>
+  <text x="780" y="518" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">156</text>
+  <rect x="880" y="504" width="48" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="904" y="518" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">完成</text>
+  <text x="1000" y="518" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#6366f1">预览</text>
+  <text x="1050" y="518" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#ef4444">删除</text>
+
+  <!-- Doc row 2 -->
+  <text x="288" y="554" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x1F4C3;</text>
+  <text x="310" y="554" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#e2e8f0">API 接口文档.docx</text>
+  <rect x="580" y="540" width="50" height="20" rx="4" fill="#3b82f6" opacity="0.1"/>
+  <text x="605" y="554" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#3b82f6">DOCX</text>
+  <text x="680" y="554" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">1.1 MB</text>
+  <text x="780" y="554" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">89</text>
+  <rect x="880" y="540" width="48" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="904" y="554" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">完成</text>
+  <text x="1000" y="554" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#6366f1">预览</text>
+  <text x="1050" y="554" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#ef4444">删除</text>
+
+  <!-- Doc row 3 -->
+  <text x="288" y="590" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x1F4DD;</text>
+  <text x="310" y="590" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#e2e8f0">常见问题 FAQ.md</text>
+  <rect x="580" y="576" width="36" height="20" rx="4" fill="#22c55e" opacity="0.1"/>
+  <text x="598" y="590" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">MD</text>
+  <text x="680" y="590" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">256 KB</text>
+  <text x="780" y="590" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">42</text>
+  <rect x="880" y="576" width="48" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="904" y="590" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">完成</text>
+  <text x="1000" y="590" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#6366f1">预览</text>
+  <text x="1050" y="590" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#ef4444">删除</text>
+
+  <!-- Doc row 4 -->
+  <text x="288" y="626" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x1F4C4;</text>
+  <text x="310" y="626" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#e2e8f0">部署运维指南.pdf</text>
+  <rect x="580" y="612" width="40" height="20" rx="4" fill="#ef4444" opacity="0.1"/>
+  <text x="600" y="626" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#ef4444">PDF</text>
+  <text x="680" y="626" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">5.8 MB</text>
+  <text x="780" y="626" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">312</text>
+  <rect x="880" y="612" width="48" height="20" rx="10" fill="#22c55e" opacity="0.15"/>
+  <text x="904" y="626" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">完成</text>
+  <text x="1000" y="626" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#6366f1">预览</text>
+  <text x="1050" y="626" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#ef4444">删除</text>
+
+  <!-- Pagination -->
+  <text x="700" y="740" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">显示 1-4 共 24 个文档</text>
+  <rect x="620" y="748" width="28" height="24" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="634" y="764" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#94a3b8">&lt;</text>
+  <rect x="656" y="748" width="28" height="24" rx="4" fill="#6366f1"/>
+  <text x="670" y="764" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#ffffff">1</text>
+  <rect x="692" y="748" width="28" height="24" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="706" y="764" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#94a3b8">2</text>
+  <rect x="728" y="748" width="28" height="24" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="742" y="764" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#94a3b8">3</text>
+  <rect x="764" y="748" width="28" height="24" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="778" y="764" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#94a3b8">&gt;</text>
+</svg>

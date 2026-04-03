@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="chartLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Window frame -->
+  <rect width="1200" height="800" rx="8" fill="#0a0e1a"/>
+  <!-- Title bar -->
+  <rect width="1200" height="36" rx="8" fill="#111827"/>
+  <rect y="28" width="1200" height="8" fill="#111827"/>
+  <circle cx="20" cy="18" r="6" fill="#ef4444"/>
+  <circle cx="40" cy="18" r="6" fill="#f59e0b"/>
+  <circle cx="60" cy="18" r="6" fill="#22c55e"/>
+  <text x="600" y="22" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">BridgeAI - Dashboard</text>
+
+  <!-- Sidebar -->
+  <rect x="0" y="36" width="220" height="764" fill="#111827"/>
+  <!-- Logo area -->
+  <rect x="20" y="52" width="180" height="40" rx="8" fill="transparent"/>
+  <circle cx="42" cy="72" r="14" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="42" y="76" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#6366f1" font-weight="700">B</text>
+  <text x="68" y="77" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9">BridgeAI</text>
+
+  <!-- Nav items -->
+  <rect x="12" y="108" width="196" height="38" rx="8" fill="#6366f1" opacity="0.15"/>
+  <rect x="16" y="108" width="3" height="38" rx="1.5" fill="#6366f1"/>
+  <text x="36" y="131" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4CA;</text>
+  <text x="58" y="132" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#c7d2fe">仪表盘</text>
+
+  <text x="36" y="169" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4AC;</text>
+  <text x="58" y="170" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">对话</text>
+
+  <text x="36" y="207" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F916;</text>
+  <text x="58" y="208" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">Agent 管理</text>
+
+  <text x="36" y="245" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F50C;</text>
+  <text x="58" y="246" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">MCP 连接器</text>
+
+  <text x="36" y="283" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4DA;</text>
+  <text x="58" y="284" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">知识库</text>
+
+  <text x="36" y="321" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F9E9;</text>
+  <text x="58" y="322" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">工作流</text>
+
+  <text x="36" y="359" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F50C;</text>
+  <text x="58" y="360" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">插件市场</text>
+
+  <!-- Main content area -->
+  <!-- Page title -->
+  <text x="248" y="72" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9">仪表盘</text>
+  <text x="248" y="92" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#64748b">平台运行数据概览</text>
+
+  <!-- Stat cards row -->
+  <!-- Card 1 -->
+  <rect x="248" y="110" width="220" height="100" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="268" y="138" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">今日对话量</text>
+  <text x="268" y="172" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#f1f5f9">1,284</text>
+  <text x="380" y="172" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#22c55e">+12.5%</text>
+  <rect x="268" y="186" width="180" height="4" rx="2" fill="#1e293b"/>
+  <rect x="268" y="186" width="130" height="4" rx="2" fill="#6366f1"/>
+
+  <!-- Card 2 -->
+  <rect x="488" y="110" width="220" height="100" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="508" y="138" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">Token 消耗</text>
+  <text x="508" y="172" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#f1f5f9">856K</text>
+  <text x="608" y="172" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#f59e0b">+3.2%</text>
+  <rect x="508" y="186" width="180" height="4" rx="2" fill="#1e293b"/>
+  <rect x="508" y="186" width="100" height="4" rx="2" fill="#8b5cf6"/>
+
+  <!-- Card 3 -->
+  <rect x="728" y="110" width="220" height="100" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="748" y="138" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">活跃 Agent</text>
+  <text x="748" y="172" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#f1f5f9">18</text>
+  <text x="788" y="172" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#22c55e">+2</text>
+  <rect x="748" y="186" width="180" height="4" rx="2" fill="#1e293b"/>
+  <rect x="748" y="186" width="60" height="4" rx="2" fill="#22c55e"/>
+
+  <!-- Card 4 -->
+  <rect x="968" y="110" width="210" height="100" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="988" y="138" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">MCP 调用</text>
+  <text x="988" y="172" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#f1f5f9">3,456</text>
+  <text x="1098" y="172" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#22c55e">+8.1%</text>
+  <rect x="988" y="186" width="170" height="4" rx="2" fill="#1e293b"/>
+  <rect x="988" y="186" width="120" height="4" rx="2" fill="#f59e0b"/>
+
+  <!-- Chart area - Conversation trends -->
+  <rect x="248" y="230" width="480" height="280" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="268" y="258" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">对话趋势</text>
+  <text x="700" y="258" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">最近 7 天</text>
+  <!-- Grid lines -->
+  <line x1="288" y1="280" x2="708" y2="280" stroke="#1e293b" stroke-width="0.5"/>
+  <line x1="288" y1="320" x2="708" y2="320" stroke="#1e293b" stroke-width="0.5"/>
+  <line x1="288" y1="360" x2="708" y2="360" stroke="#1e293b" stroke-width="0.5"/>
+  <line x1="288" y1="400" x2="708" y2="400" stroke="#1e293b" stroke-width="0.5"/>
+  <line x1="288" y1="440" x2="708" y2="440" stroke="#1e293b" stroke-width="0.5"/>
+  <line x1="288" y1="480" x2="708" y2="480" stroke="#1e293b" stroke-width="0.5"/>
+  <!-- Y-axis labels -->
+  <text x="278" y="284" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">1.5K</text>
+  <text x="278" y="324" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">1.2K</text>
+  <text x="278" y="364" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">900</text>
+  <text x="278" y="404" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">600</text>
+  <text x="278" y="444" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">300</text>
+  <text x="278" y="484" text-anchor="end" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">0</text>
+  <!-- Chart line -->
+  <polyline points="318,380 378,340 438,400 498,310 558,290 618,320 678,280" fill="none" stroke="url(#chartLine)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Area fill -->
+  <polygon points="318,380 378,340 438,400 498,310 558,290 618,320 678,280 678,480 318,480" fill="url(#chartLine)" opacity="0.08"/>
+  <!-- Dots -->
+  <circle cx="318" cy="380" r="4" fill="#6366f1"/>
+  <circle cx="378" cy="340" r="4" fill="#6d5ef5"/>
+  <circle cx="438" cy="400" r="4" fill="#7856f8"/>
+  <circle cx="498" cy="310" r="4" fill="#8050fa"/>
+  <circle cx="558" cy="290" r="4" fill="#8750fc"/>
+  <circle cx="618" cy="320" r="4" fill="#8b56f6"/>
+  <circle cx="678" cy="280" r="4" fill="#8b5cf6"/>
+  <!-- X-axis labels -->
+  <text x="318" y="498" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">Mon</text>
+  <text x="378" y="498" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">Tue</text>
+  <text x="438" y="498" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">Wed</text>
+  <text x="498" y="498" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">Thu</text>
+  <text x="558" y="498" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">Fri</text>
+  <text x="618" y="498" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">Sat</text>
+  <text x="678" y="498" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#64748b">Sun</text>
+
+  <!-- Pie chart - Intent distribution -->
+  <rect x="748" y="230" width="430" height="280" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="768" y="258" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">意图分布</text>
+  <!-- Donut chart -->
+  <circle cx="900" cy="390" r="70" fill="none" stroke="#1e293b" stroke-width="20"/>
+  <circle cx="900" cy="390" r="70" fill="none" stroke="#6366f1" stroke-width="20" stroke-dasharray="154 286" stroke-dashoffset="0" transform="rotate(-90 900 390)"/>
+  <circle cx="900" cy="390" r="70" fill="none" stroke="#8b5cf6" stroke-width="20" stroke-dasharray="110 330" stroke-dashoffset="-154" transform="rotate(-90 900 390)"/>
+  <circle cx="900" cy="390" r="70" fill="none" stroke="#a78bfa" stroke-width="20" stroke-dasharray="88 352" stroke-dashoffset="-264" transform="rotate(-90 900 390)"/>
+  <circle cx="900" cy="390" r="70" fill="none" stroke="#c4b5fd" stroke-width="20" stroke-dasharray="88 352" stroke-dashoffset="-352" transform="rotate(-90 900 390)"/>
+  <text x="900" y="386" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9">4</text>
+  <text x="900" y="402" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">categories</text>
+  <!-- Legend -->
+  <rect x="1020" y="330" width="10" height="10" rx="2" fill="#6366f1"/>
+  <text x="1036" y="340" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#cbd5e1">问答咨询 35%</text>
+  <rect x="1020" y="355" width="10" height="10" rx="2" fill="#8b5cf6"/>
+  <text x="1036" y="365" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#cbd5e1">数据查询 25%</text>
+  <rect x="1020" y="380" width="10" height="10" rx="2" fill="#a78bfa"/>
+  <text x="1036" y="390" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#cbd5e1">任务执行 20%</text>
+  <rect x="1020" y="405" width="10" height="10" rx="2" fill="#c4b5fd"/>
+  <text x="1036" y="415" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#cbd5e1">闲聊对话 20%</text>
+
+  <!-- Recent activity table -->
+  <rect x="248" y="530" width="930" height="240" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="268" y="558" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">最近活动</text>
+  <!-- Table header -->
+  <line x1="268" y1="572" x2="1158" y2="572" stroke="#1e293b" stroke-width="1"/>
+  <text x="288" y="592" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">时间</text>
+  <text x="428" y="592" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">Agent</text>
+  <text x="608" y="592" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">渠道</text>
+  <text x="768" y="592" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">状态</text>
+  <text x="928" y="592" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">Token</text>
+  <line x1="268" y1="600" x2="1158" y2="600" stroke="#1e293b" stroke-width="0.5"/>
+  <!-- Row 1 -->
+  <text x="288" y="624" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#cbd5e1">14:32:18</text>
+  <text x="428" y="624" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#c7d2fe">客服助手</text>
+  <text x="608" y="624" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">企业微信</text>
+  <rect x="768" y="612" width="48" height="18" rx="9" fill="#22c55e" opacity="0.15"/>
+  <text x="792" y="625" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">成功</text>
+  <text x="928" y="624" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">1,234</text>
+  <!-- Row 2 -->
+  <text x="288" y="654" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#cbd5e1">14:31:05</text>
+  <text x="428" y="654" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#c7d2fe">数据分析师</text>
+  <text x="608" y="654" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">Web Chat</text>
+  <rect x="768" y="642" width="48" height="18" rx="9" fill="#22c55e" opacity="0.15"/>
+  <text x="792" y="655" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">成功</text>
+  <text x="928" y="654" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">2,567</text>
+  <!-- Row 3 -->
+  <text x="288" y="684" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#cbd5e1">14:28:42</text>
+  <text x="428" y="684" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#c7d2fe">法律顾问</text>
+  <text x="608" y="684" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">钉钉</text>
+  <rect x="768" y="672" width="48" height="18" rx="9" fill="#f59e0b" opacity="0.15"/>
+  <text x="792" y="685" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#f59e0b">降级</text>
+  <text x="928" y="684" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">890</text>
+  <!-- Row 4 -->
+  <text x="288" y="714" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#cbd5e1">14:25:10</text>
+  <text x="428" y="714" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#c7d2fe">电商助手</text>
+  <text x="608" y="714" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">API</text>
+  <rect x="768" y="702" width="48" height="18" rx="9" fill="#22c55e" opacity="0.15"/>
+  <text x="792" y="715" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#22c55e">成功</text>
+  <text x="928" y="714" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">3,102</text>
+</svg>
