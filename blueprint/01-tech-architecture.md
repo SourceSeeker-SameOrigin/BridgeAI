@@ -214,133 +214,25 @@ BridgeAI/
   <img src="../docs/assets/diagrams/pipeline-stages.svg" width="800" alt="管线概览" />
 </p>
 
-```
-用户发送消息（Web/企微/钉钉/飞书/API）
-    │
-    ▼
-┌─── ① 请求接入 (Channel Layer) ───────────────────────────┐
-│  统一消息格式 → 提取 tenant/user/session → 内容过滤       │
-│  设置 TenantContext → 异步传播到后续所有操作               │
-└───────────────────────────────────────────────────────────┘
-    │
-    ▼
-┌─── ② Prompt 融合 (PromptOptimizer) ─────────────────────┐
-│  Layer 1: Agent System Prompt（人设/角色/专业领域）        │
-│  Layer 2: 记忆摘要 + RAG 检索结果                         │
-│  Layer 3: Few-shot 高评分案例（Redis ZSET Top-3）          │
-│  Layer 4: 上下文分析指令（要求模型输出 <analysis> JSON）    │
-│           → 情绪/意图/复杂度/关键事实 由大模型一次性判断    │
-└───────────────────────────────────────────────────────────┘
-    │
-    ▼
-┌─── ③ 智能模型路由 (ModelRouter) ─────────────────────────┐
-│  首次对话 → 使用 Agent 默认模型                            │
-│  后续对话 → 基于上一轮分析结果的 intent/complexity 调整     │
-│  用户等级调整 → 成本控制                                   │
-│  输出: 最优模型 ID + 参数配置                              │
-└───────────────────────────────────────────────────────────┘
-    │
-    ▼
-┌─── ④ AI 调用 (LLM Provider + CircuitBreaker) ───────────┐
-│                                                           │
-│  主模型调用 ──失败──▶ 降级模型1 ──失败──▶ 降级模型2 ──...  │
-│       │                                                   │
-│       ▼                                                   │
-│  [工具调用?] ──是──▶ MCP Gateway 执行工具                  │
-│       │              ├── 权限检查 → 参数校验 → 执行         │
-│       │              ├── 脱敏处理 → 结果格式化              │
-│       │              └── 审计记录                          │
-│       │                                                   │
-│  [子任务委派?] ──是──▶ 子 Agent 独立处理                   │
-│       │                                                   │
-│  [需要知识?] ──是──▶ RAG Engine 混合检索                   │
-│       │                                                   │
-│  [需要行业能力?] ──是──▶ Plugin 加载                       │
-└───────────────────────────────────────────────────────────┘
-    │
-    ▼
-┌─── ⑤ 响应解析与持久化 ──────────────────────────────────┐
-│  解析模型输出:                                             │
-│    ├── 回复内容（去掉 <analysis> 标签）→ 流式输出给用户     │
-│    └── <analysis> JSON → 解析为 ContextAnalysis 对象       │
-│        ├── emotion → 存入 message_emotions 表              │
-│        ├── intent → 存入 message_intents 表                │
-│        ├── key_facts → 写入记忆系统（Redis + DB）           │
-│        └── complexity → 缓存，供下一轮模型路由使用          │
-│  异步持久化: 消息→DB, 历史→Redis, 使用量→统计表            │
-└───────────────────────────────────────────────────────────┘
-    │
-    ▼
-┌─── ⑥ 反馈学习 (Feedback Loop) ──────────────────────────┐
-│  用户评分(1-5星) → ≥4星自动存入 Few-shot 候选池            │
-│  Redis ZSET: key="fewshot:{tenant}:{agent}", score=rating │
-│  下次对话时自动注入为 Prompt Layer 3 的示例                 │
-└───────────────────────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="../docs/assets/diagrams/pipeline-detailed.svg" width="800" alt="6阶段对话管线详细流程" />
+</p>
 
 ### 2.2 MCP 调用流程
 
-```
-Agent 需要调用工具
-    │
-    ▼
-[MCP Gateway] 接收调用请求
-    │
-    ├──▶ 权限检查：该 Agent 是否有权限调用此工具？
-    │
-    ├──▶ 参数校验：输入参数是否合法？
-    │
-    ├──▶ 路由分发：找到对应的 MCP Server
-    │
-    ├──▶ 执行调用：通过 MCP 协议调用工具
-    │
-    ├──▶ 结果处理：
-    │       ├── 脱敏（手机号、身份证等）
-    │       ├── 格式化
-    │       └── 截断（防止超长输出）
-    │
-    ├──▶ 审计记录：写入 mcp_audit_logs
-    │
-    ▼
-返回结果给 Agent
-```
+<p align="center">
+  <img src="../docs/assets/diagrams/mcp-tool-chain.svg" width="800" alt="MCP工具调用链路" />
+</p>
 
 ### 2.3 RAG 文档处理流程
 
-```
-用户上传文档
-    │
-    ▼
-[文档解析] PDF/DOCX/MD → 纯文本
-    │
-    ▼
-[文本切分] 按 chunk_size 切分，保留 overlap
-    │
-    ▼
-[向量化] 调用 Embedding 模型生成向量
-    │
-    ▼
-[存储] 写入 knowledge_chunks 表 (content + vector)
-    │
-    ▼
-[索引] IVFFlat 索引自动更新
+<p align="center">
+  <img src="../docs/assets/diagrams/rag-ingest.svg" width="800" alt="RAG摄入流程" />
+</p>
 
---- 查询时 ---
-
-用户提问
-    │
-    ▼
-[Query Embedding] 问题向量化
-    │
-    ▼
-[向量检索] cosine similarity top-K
-    │
-    ▼
-[重排序] 可选：用 Reranker 模型精排
-    │
-    ▼
-[注入上下文] 将检索结果作为 context 注入 Agent prompt
-```
+<p align="center">
+  <img src="../docs/assets/diagrams/rag-search.svg" width="800" alt="RAG检索流程" />
+</p>
 
 ## 三、从 Fortune AI Agent 借鉴的核心设计
 
@@ -661,41 +553,13 @@ LangGraph:
 
 ### 4.1 认证与授权
 
-```
-认证方式：
-  ├── JWT Token（Web 端登录）
-  │     ├── Access Token: 2h 有效期
-  │     └── Refresh Token: 7d 有效期
-  │
-  ├── API Key（第三方集成）
-  │     ├── 带权限范围（scopes）
-  │     └── 支持过期时间
-  │
-  └── 企微/钉钉/飞书 OAuth（渠道登录）
+<p align="center">
+  <img src="../docs/assets/diagrams/auth-flow.svg" width="800" alt="认证流程" />
+</p>
 
-授权模型：RBAC
-  ├── admin: 全部权限
-  ├── user: 使用 Agent + 管理自己的连接器和知识库
-  └── viewer: 只能对话，不能修改配置
-```
-
-### 4.2 数据安全
-
-```
-传输层：
-  └── 全站 HTTPS (TLS 1.3)
-
-存储层：
-  ├── MCP 连接器凭据：AES-256 加密存储
-  ├── API Key：只存 hash，不存明文
-  └── 用户密码：bcrypt hash
-
-应用层：
-  ├── SQL 注入防护：SQLAlchemy ORM（参数化查询）
-  ├── XSS 防护：React 自动转义 + CSP Header
-  ├── CSRF 防护：SameSite Cookie + CSRF Token
-  └── 限流：Redis 令牌桶，按 API Key/IP 限流
-```
+<p align="center">
+  <img src="../docs/assets/diagrams/security-architecture.svg" width="800" alt="安全架构" />
+</p>
 
 ### 4.3 敏感数据脱敏
 

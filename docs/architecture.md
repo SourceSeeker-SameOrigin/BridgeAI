@@ -12,42 +12,6 @@ BridgeAI 采用分层架构设计，后端基于 FastAPI 构建，前端使用 R
   <img src="assets/diagrams/backend-architecture.svg" width="800" alt="后端系统架构" />
 </p>
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         渠道层 (Channel Layer)                      │
-│           企业微信 │ 钉钉 │ 飞书 │ Web │ API                        │
-└─────────────────────────────────┬───────────────────────────────────┘
-                                  │
-┌─────────────────────────────────▼───────────────────────────────────┐
-│                       API 网关层 (Gateway)                          │
-│    认证(JWT/API Key) │ 租户隔离 │ 安全头 │ CORS │ 异常处理          │
-└─────────────────────────────────┬───────────────────────────────────┘
-                                  │
-┌─────────────────────────────────▼───────────────────────────────────┐
-│                       API 路由层 (api/v1/)                          │
-│   auth │ chat │ agents │ mcp │ knowledge │ plugins │ channels      │
-│                      参数校验 + 响应封装                             │
-└──────────┬──────────────────────┬────────────────────┬──────────────┘
-           │                      │                    │
-┌──────────▼──────────┐ ┌────────▼────────┐ ┌────────▼──────────┐
-│  业务逻辑层          │ │  Agent 引擎      │ │  MCP 网关          │
-│  services/           │ │  engine/         │ │  mcp/              │
-│                      │ │  agents/         │ │  connectors/       │
-│  chat_service        │ │                  │ │                    │
-│  agent_service       │ │  LangGraph       │ │  MySQL │ HTTP      │
-│  auth_service        │ │  6 阶段管线      │ │  飞书  │ ...       │
-│  ...                 │ │                  │ │                    │
-└──────────┬──────────┘ └────────┬────────┘ └────────┬──────────┘
-           │                      │                    │
-           ├──────────────────────┼────────────────────┤
-           │                      │                    │
-┌──────────▼──────────────────────▼────────────────────▼──────────────┐
-│                         数据层                                      │
-│   PostgreSQL 16 (pgvector) │ Redis 7 │ MinIO                       │
-│   ORM 模型 │ 向量存储       │ 缓存     │ 文件存储                    │
-└────────────────────────────────────────────────────────────────────┘
-```
-
 ## Agent 引擎 -- LangGraph 6 阶段管线
 
 对话处理的核心是基于 LangGraph 状态机实现的 6 阶段管线。
@@ -61,43 +25,6 @@ BridgeAI 采用分层架构设计，后端基于 FastAPI 构建，前端使用 R
 <p align="center">
   <img src="assets/diagrams/pipeline-detailed.svg" width="800" alt="6阶段对话管线" />
 </p>
-
-```
-用户消息
-   │
-   ▼
-Stage 1: 意图理解 (understand_intent)
-   │  关键词预分类：debugging / generation / question / general
-   │  利用上一轮分析结果加速判断
-   ▼
-Stage 2: 上下文增强 (enrich_context)
-   │  四层 Prompt 融合：
-   │    Layer 1: BridgeAI 基础行为
-   │    Layer 2: Agent 人设 + RAG 上下文
-   │    Layer 3: Few-shot 高评分案例
-   │    Layer 4: 分析指令（让 LLM 输出 <analysis> JSON）
-   ▼
-Stage 3: 工具选择 (select_tools)
-   │  校验 MCP 工具定义，过滤无效工具
-   ▼
-Stage 4: 模型路由 (route_model)
-   │  3 层路由决策：
-   │    Layer 1: Agent 默认模型
-   │    Layer 2: 基于意图/复杂度调整
-   │    Layer 3: 用户等级限制（预留）
-   ▼
-Stage 5: 执行 (由 chat_service 驱动)
-   │  LLM 调用（经熔断器）
-   │  工具调用循环（最多 5 轮）
-   │  流式输出
-   ▼
-Stage 6: 结果整合
-   │  解析 <analysis> JSON
-   │  剥离分析内容，返回干净回复
-   │  持久化消息和元数据
-   ▼
-返回给用户
-```
 
 ### 状态定义
 
@@ -138,32 +65,6 @@ MCP (Model Context Protocol) 网关负责管理外部工具连接。
   <img src="assets/diagrams/mcp-gateway.svg" width="800" alt="MCP网关架构" />
 </p>
 
-### 架构
-
-```
-Agent Pipeline
-     │
-     ▼
-┌─── MCP Gateway ─────────────────────────┐
-│                                          │
-│  register_connector()  -- 注册连接器      │
-│  execute_tool()        -- 执行工具        │
-│  list_tools()          -- 列出工具        │
-│  health_check()        -- 健康检查        │
-│                                          │
-│  ┌──────────┐  ┌──────────┐  ┌────────┐ │
-│  │ Database │  │ HTTP API │  │  飞书   │ │
-│  │Connector │  │Connector │  │Connector│ │
-│  └──────────┘  └──────────┘  └────────┘ │
-│                                          │
-│  安全层：                                 │
-│    - 参数校验                             │
-│    - 输出脱敏（手机号/身份证/银行卡/邮箱）  │
-│    - 审计日志记录                          │
-│    - 执行耗时统计                          │
-└──────────────────────────────────────────┘
-```
-
 ### 连接器基类
 
 所有 MCP 连接器实现 `MCPConnector` 抽象基类：
@@ -183,21 +84,13 @@ class MCPConnector(ABC):
 
 ### 处理流程
 
-```
-文档上传                          查询
-   │                               │
-   ▼                               ▼
-解析 (Parser)                  Query Embedding
-   │  PDF / DOCX / MD / TXT        │
-   ▼                               ▼
-切分 (Chunker)                 pgvector 余弦相似度搜索
-   │  chunk_size + overlap          │
-   ▼                               ▼
-向量化 (Embedding)             Top-K 结果
-   │  批量处理，每批 100             │
-   ▼                               ▼
-存储 (pgvector)                注入 Agent Prompt
-```
+<p align="center">
+  <img src="assets/diagrams/rag-ingest.svg" width="800" alt="RAG摄入流程" />
+</p>
+
+<p align="center">
+  <img src="assets/diagrams/rag-search.svg" width="800" alt="RAG检索流程" />
+</p>
 
 ### 组件
 
@@ -241,18 +134,6 @@ class PluginBase(ABC):
 <p align="center">
   <img src="assets/diagrams/channel-architecture.svg" width="800" alt="多渠道架构" />
 </p>
-
-```
-企业微信/钉钉 Webhook
-        │
-        ▼
-  ChannelManager
-        │
-        ├─ 验签 + 消息解析
-        ├─ 路由到 chat_service
-        ├─ 获取 Agent 回复
-        └─ 通过原渠道回复用户
-```
 
 ## 多租户隔离
 

@@ -9,13 +9,6 @@
   <img src="../docs/assets/diagrams/roadmap.svg" width="800" alt="产品路线图" />
 </p>
 
-```
-Phase 1 (Week 1-3)     ████░░░░░░░░░░░░░░░░  核心引擎 MVP
-Phase 2 (Week 4-6)     ░░░░████░░░░░░░░░░░░  行业插件 + 渠道
-Phase 3 (Week 7-8)     ░░░░░░░░████░░░░░░░░  私有部署 + 开源
-Phase 4 (Week 9-12)    ░░░░░░░░░░░░████████  平台化 + 商业化
-```
-
 ---
 
 ## Phase 1：核心引擎 MVP（Week 1-3）
