@@ -1,0 +1,11 @@
+# 开发环境覆盖配置 - 挂载源代码实现热重载
+# 用法: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+services:
+  bridgeai-api:
+    volumes:
+      - ../backend:/app
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  bridgeai-web:
+    volumes:
+      - ../frontend/src:/app/src

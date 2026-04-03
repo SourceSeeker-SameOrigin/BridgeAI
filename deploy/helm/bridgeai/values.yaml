@@ -1,0 +1,93 @@
+# -- BridgeAI Helm Chart Values --
+
+# API backend
+api:
+  image:
+    repository: bridgeai/backend
+    tag: "0.1.0"
+    pullPolicy: IfNotPresent
+  replicas: 2
+  port: 8000
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+  env: {}
+  # Extra environment variables (key: value pairs)
+
+# Web frontend
+web:
+  image:
+    repository: bridgeai/frontend
+    tag: "0.1.0"
+    pullPolicy: IfNotPresent
+  replicas: 2
+  port: 5173
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+
+# External database (PostgreSQL with pgvector)
+database:
+  url: "postgresql+asyncpg://bridgeai:bridgeai@postgres:5432/bridgeai"
+
+# External Redis
+redis:
+  url: "redis://redis:6379/0"
+
+# LLM API keys (stored in Secret)
+llm:
+  deepseekApiKey: ""
+  anthropicApiKey: ""
+  qwenApiKey: ""
+
+# JWT
+jwt:
+  secret: "change-me-in-production"
+  algorithm: "HS256"
+  expireMinutes: 1440
+
+# MinIO / Object Storage
+minio:
+  endpoint: "minio:9000"
+  accessKey: "bridgeai"
+  secretKey: "bridgeai_dev"
+
+# Ingress
+ingress:
+  enabled: false
+  className: nginx
+  host: bridgeai.example.com
+  tls: false
+  tlsSecretName: bridgeai-tls
+  annotations: {}
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+
+# Horizontal Pod Autoscaler
+autoscaling:
+  enabled: false
+  api:
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+  web:
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+
+# Service type
+service:
+  api:
+    type: ClusterIP
+    port: 8000
+  web:
+    type: ClusterIP
+    port: 80
