@@ -61,7 +61,7 @@ npm run dev
 ### 5. 验证
 
 - 后端 API 文档：http://localhost:8000/docs
-- 前端页面：http://localhost:3000
+- 前端页面：http://localhost:5173
 - 健康检查：`curl http://localhost:8000/api/v1/system/health`
 
 ## 代码规范
