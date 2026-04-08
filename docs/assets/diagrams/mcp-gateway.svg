@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500">
+  <defs><filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.3)"/></filter>
+  <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#6366f1"/></marker></defs>
+  <rect width="1000" height="500" fill="#0a0e1a"/>
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="20" font-weight="700">MCP 网关架构</text>
+  <rect x="30" y="60" width="180" height="50" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="120" y="90" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="14" font-weight="700">Agent Pipeline</text>
+  <line x1="210" y1="85" x2="270" y2="85" stroke="#6366f1" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="270" y="55" width="430" height="380" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="485" y="82" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="16" font-weight="700">MCP Gateway</text>
+  <rect x="290" y="100" width="390" height="28" rx="6" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="485" y="118" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11">register_connector(type, config) → 注册连接器</text>
+  <rect x="290" y="138" width="390" height="28" rx="6" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="485" y="156" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11">execute_tool(connector_id, tool_name, args) → 执行工具</text>
+  <rect x="290" y="176" width="390" height="28" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="485" y="194" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="11">list_tools(connector_id) → 列出工具</text>
+  <rect x="290" y="214" width="390" height="28" rx="6" fill="#0a0e1a" stroke="#ec4899" stroke-width="1"/>
+  <text x="485" y="232" text-anchor="middle" fill="#ec4899" font-family="system-ui" font-size="11">health_check(connector_id) → 健康检查</text>
+  <text x="485" y="268" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="12" font-weight="600">连接器实例</text>
+  <rect x="300" y="280" width="115" height="55" rx="8" fill="#0a0e1a" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="357" y="302" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">Database</text>
+  <text x="357" y="320" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">MySQL/PostgreSQL</text>
+  <rect x="430" y="280" width="100" height="55" rx="8" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="480" y="302" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">HTTP API</text>
+  <text x="480" y="320" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">RESTful</text>
+  <rect x="545" y="280" width="100" height="55" rx="8" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="595" y="302" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="11" font-weight="600">飞书</text>
+  <text x="595" y="320" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">消息/日历/文档</text>
+  <text x="485" y="360" text-anchor="middle" fill="#ef4444" font-family="system-ui" font-size="12" font-weight="600">安全层</text>
+  <text x="310" y="382" fill="#94a3b8" font-family="system-ui" font-size="10">参数校验</text>
+  <text x="410" y="382" fill="#94a3b8" font-family="system-ui" font-size="10">输出脱敏</text>
+  <text x="510" y="382" fill="#94a3b8" font-family="system-ui" font-size="10">审计日志</text>
+  <text x="610" y="382" fill="#94a3b8" font-family="system-ui" font-size="10">耗时统计</text>
+  <text x="310" y="402" fill="#64748b" font-family="system-ui" font-size="9">手机号/身份证/银行卡/邮箱 → ***</text>
+  <text x="310" y="420" fill="#64748b" font-family="system-ui" font-size="9">写入 mcp_audit_logs 表</text>
+  <rect x="740" y="60" width="230" height="380" rx="12" fill="#111827" stroke="#94a3b8" stroke-width="1" opacity="0.6"/>
+  <text x="855" y="88" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="13" font-weight="600">外部系统</text>
+  <rect x="760" y="110" width="190" height="40" rx="8" fill="#0a0e1a" stroke="#22c55e" stroke-width="1"/>
+  <text x="855" y="135" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="11">MySQL / PostgreSQL</text>
+  <rect x="760" y="165" width="190" height="40" rx="8" fill="#0a0e1a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="855" y="190" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11">RESTful APIs</text>
+  <rect x="760" y="220" width="190" height="40" rx="8" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="855" y="245" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="11">飞书 Open API</text>
+  <rect x="760" y="275" width="190" height="40" rx="8" fill="#0a0e1a" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="855" y="300" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="11">更多连接器...</text>
+  <line x1="700" y1="300" x2="758" y2="130" stroke="#22c55e" stroke-width="1" opacity="0.4"/>
+  <line x1="700" y1="300" x2="758" y2="185" stroke="#3b82f6" stroke-width="1" opacity="0.4"/>
+  <line x1="700" y1="300" x2="758" y2="240" stroke="#8b5cf6" stroke-width="1" opacity="0.4"/>
+  <rect x="30" y="450" width="940" height="35" rx="12" fill="#111827" opacity="0.3"/>
+  <text x="500" y="472" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="10">MCPConnector抽象基类: connect() | disconnect() | list_tools() | execute_tool() | health_check()</text>
+</svg>

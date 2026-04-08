@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="sc-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="sc-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <filter id="sc-glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="sc-glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(99,102,241,0.1)"/>
+      <stop offset="100%" stop-color="rgba(139,92,246,0.05)"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="500" fill="url(#sc-bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="35" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">共享组件库</text>
+  <text x="600" y="53" text-anchor="middle" fill="#94a3b8" font-size="12">Shared Components - 5 Core UI Components</text>
+
+  <!-- 1. GlassCard -->
+  <rect x="25" y="75" width="220" height="390" rx="12" fill="#111827" stroke="#6366f1" stroke-width="1.5" filter="url(#sc-shadow)"/>
+  <text x="135" y="100" text-anchor="middle" fill="#6366f1" font-size="15" font-weight="700">GlassCard</text>
+  <line x1="45" y1="110" x2="225" y2="110" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+
+  <!-- Props -->
+  <text x="45" y="132" fill="#94a3b8" font-size="11" font-weight="600">Props:</text>
+  <text x="55" y="150" fill="#22c55e" font-size="10">hoverable</text>
+  <text x="130" y="150" fill="#64748b" font-size="10">boolean</text>
+  <text x="55" y="168" fill="#22c55e" font-size="10">onClick</text>
+  <text x="130" y="168" fill="#64748b" font-size="10">() =&gt; void</text>
+  <text x="55" y="186" fill="#22c55e" font-size="10">style</text>
+  <text x="130" y="186" fill="#64748b" font-size="10">CSSProperties</text>
+  <text x="55" y="204" fill="#22c55e" font-size="10">className</text>
+  <text x="130" y="204" fill="#64748b" font-size="10">string</text>
+
+  <!-- Visual preview -->
+  <text x="45" y="232" fill="#94a3b8" font-size="11" font-weight="600">Preview:</text>
+  <rect x="45" y="242" width="170" height="100" rx="12" fill="url(#sc-glass)" stroke="rgba(148,163,184,0.15)" stroke-width="1.5" filter="url(#sc-glow)"/>
+  <rect x="45" y="242" width="170" height="100" rx="12" fill="rgba(17,24,39,0.7)" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+  <text x="130" y="280" text-anchor="middle" fill="#f1f5f9" font-size="11" font-weight="500">Glass Card</text>
+  <text x="130" y="298" text-anchor="middle" fill="#94a3b8" font-size="9">backdrop-filter: blur(12px)</text>
+  <text x="130" y="314" text-anchor="middle" fill="#94a3b8" font-size="9">border: 1px solid rgba(...)</text>
+  <text x="130" y="332" text-anchor="middle" fill="#6366f1" font-size="9">hover: border-glow</text>
+
+  <text x="45" y="370" fill="#64748b" font-size="9">使用场景:</text>
+  <text x="45" y="386" fill="#64748b" font-size="9">Agent 卡片、知识库卡片</text>
+  <text x="45" y="400" fill="#64748b" font-size="9">Dashboard 统计面板</text>
+  <text x="45" y="414" fill="#64748b" font-size="9">设置面板容器</text>
+
+  <!-- 2. StatusBadge -->
+  <rect x="265" y="75" width="220" height="390" rx="12" fill="#111827" stroke="#22c55e" stroke-width="1.5" filter="url(#sc-shadow)"/>
+  <text x="375" y="100" text-anchor="middle" fill="#22c55e" font-size="15" font-weight="700">StatusBadge</text>
+  <line x1="285" y1="110" x2="465" y2="110" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+
+  <!-- Props -->
+  <text x="285" y="132" fill="#94a3b8" font-size="11" font-weight="600">Props:</text>
+  <text x="295" y="150" fill="#22c55e" font-size="10">status</text>
+  <text x="345" y="150" fill="#64748b" font-size="10">StatusType</text>
+
+  <!-- Visual: colored dots with labels -->
+  <text x="285" y="180" fill="#94a3b8" font-size="11" font-weight="600">10 状态:</text>
+
+  <circle cx="300" cy="200" r="5" fill="#22c55e"/>
+  <text x="315" y="204" fill="#f1f5f9" font-size="10">active / online</text>
+
+  <circle cx="300" cy="222" r="5" fill="#f59e0b"/>
+  <text x="315" y="226" fill="#f1f5f9" font-size="10">warning / pending</text>
+
+  <circle cx="300" cy="244" r="5" fill="#ef4444"/>
+  <text x="315" y="248" fill="#f1f5f9" font-size="10">error / offline</text>
+
+  <circle cx="300" cy="266" r="5" fill="#3b82f6"/>
+  <text x="315" y="270" fill="#f1f5f9" font-size="10">info / processing</text>
+
+  <circle cx="300" cy="288" r="5" fill="#8b5cf6"/>
+  <text x="315" y="292" fill="#f1f5f9" font-size="10">draft</text>
+
+  <circle cx="300" cy="310" r="5" fill="#94a3b8"/>
+  <text x="315" y="314" fill="#f1f5f9" font-size="10">disabled / inactive</text>
+
+  <circle cx="300" cy="332" r="5" fill="#06b6d4"/>
+  <text x="315" y="336" fill="#f1f5f9" font-size="10">syncing</text>
+
+  <circle cx="300" cy="354" r="5" fill="#f97316"/>
+  <text x="315" y="358" fill="#f1f5f9" font-size="10">expiring</text>
+
+  <circle cx="300" cy="376" r="5" fill="#a855f7"/>
+  <text x="315" y="380" fill="#f1f5f9" font-size="10">beta</text>
+
+  <circle cx="300" cy="398" r="5" fill="#14b8a6"/>
+  <text x="315" y="402" fill="#f1f5f9" font-size="10">connected</text>
+
+  <!-- 3. MarkdownRenderer -->
+  <rect x="505" y="75" width="220" height="390" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="1.5" filter="url(#sc-shadow)"/>
+  <text x="615" y="100" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="700">MarkdownRenderer</text>
+  <line x1="525" y1="110" x2="705" y2="110" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+
+  <!-- Props -->
+  <text x="525" y="132" fill="#94a3b8" font-size="11" font-weight="600">Props:</text>
+  <text x="535" y="150" fill="#22c55e" font-size="10">content</text>
+  <text x="600" y="150" fill="#64748b" font-size="10">string</text>
+  <text x="535" y="168" fill="#22c55e" font-size="10">streaming</text>
+  <text x="600" y="168" fill="#64748b" font-size="10">boolean</text>
+
+  <!-- Visual: code block preview -->
+  <text x="525" y="196" fill="#94a3b8" font-size="11" font-weight="600">Preview:</text>
+  <rect x="535" y="206" width="180" height="120" rx="8" fill="#0a0e1a" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+  <!-- Code header -->
+  <rect x="535" y="206" width="180" height="22" rx="8" fill="#1a2332"/>
+  <text x="550" y="221" fill="#94a3b8" font-size="9">typescript</text>
+  <rect x="680" y="211" width="28" height="14" rx="4" fill="#6366f1" opacity="0.3"/>
+  <text x="694" y="221" text-anchor="middle" fill="#6366f1" font-size="7">Copy</text>
+  <!-- Code lines -->
+  <text x="545" y="245" fill="#8b5cf6" font-size="9">const</text>
+  <text x="575" y="245" fill="#f1f5f9" font-size="9">greet</text>
+  <text x="605" y="245" fill="#94a3b8" font-size="9">= () =&gt;</text>
+  <text x="555" y="260" fill="#22c55e" font-size="9">"Hello World"</text>
+  <text x="545" y="280" fill="#94a3b8" font-size="9">// streaming...</text>
+  <rect x="610" y="272" width="1.5" height="12" fill="#f1f5f9" opacity="0.8"/>
+
+  <text x="525" y="350" fill="#64748b" font-size="9">特性:</text>
+  <text x="525" y="366" fill="#64748b" font-size="9">react-markdown 渲染</text>
+  <text x="525" y="382" fill="#64748b" font-size="9">rehype-highlight 代码高亮</text>
+  <text x="525" y="398" fill="#64748b" font-size="9">流式输出光标闪烁</text>
+  <text x="525" y="414" fill="#64748b" font-size="9">一键复制代码块</text>
+
+  <!-- 4. LoadingDots -->
+  <rect x="745" y="75" width="200" height="200" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="1.5" filter="url(#sc-shadow)"/>
+  <text x="845" y="100" text-anchor="middle" fill="#3b82f6" font-size="15" font-weight="700">LoadingDots</text>
+  <line x1="765" y1="110" x2="925" y2="110" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+
+  <text x="765" y="132" fill="#94a3b8" font-size="11" font-weight="600">Props: none</text>
+
+  <!-- Visual: 3 bouncing dots -->
+  <text x="765" y="160" fill="#94a3b8" font-size="11" font-weight="600">Preview:</text>
+  <rect x="795" y="170" width="100" height="40" rx="10" fill="#0a0e1a" stroke="rgba(148,163,184,0.1)" stroke-width="1"/>
+  <circle cx="825" cy="190" r="6" fill="#3b82f6"/>
+  <circle cx="845" cy="185" r="6" fill="#3b82f6" opacity="0.7"/>
+  <circle cx="865" cy="192" r="6" fill="#3b82f6" opacity="0.4"/>
+
+  <text x="765" y="236" fill="#64748b" font-size="9">bounceDot 动画, 1.4s</text>
+  <text x="765" y="252" fill="#64748b" font-size="9">用于 AI 回复等待中...</text>
+
+  <!-- 5. AppLayout -->
+  <rect x="745" y="295" width="420" height="170" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sc-shadow)"/>
+  <text x="955" y="320" text-anchor="middle" fill="#8b5cf6" font-size="15" font-weight="700">AppLayout</text>
+  <line x1="765" y1="330" x2="1145" y2="330" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+
+  <text x="765" y="350" fill="#94a3b8" font-size="11" font-weight="600">Props:</text>
+  <text x="775" y="368" fill="#22c55e" font-size="10">children</text>
+  <text x="840" y="368" fill="#64748b" font-size="10">ReactNode</text>
+
+  <!-- Visual: layout wireframe -->
+  <rect x="950" y="340" width="200" height="110" rx="6" fill="#0a0e1a" stroke="rgba(148,163,184,0.2)" stroke-width="1"/>
+  <!-- Sidebar -->
+  <rect x="952" y="342" width="40" height="106" rx="4" fill="#1a2332" stroke="rgba(148,163,184,0.1)" stroke-width="0.5"/>
+  <rect x="958" y="350" width="28" height="4" rx="2" fill="#6366f1" opacity="0.6"/>
+  <rect x="958" y="360" width="28" height="3" rx="1" fill="#94a3b8" opacity="0.3"/>
+  <rect x="958" y="368" width="28" height="3" rx="1" fill="#94a3b8" opacity="0.3"/>
+  <rect x="958" y="376" width="28" height="3" rx="1" fill="#94a3b8" opacity="0.3"/>
+  <rect x="958" y="384" width="28" height="3" rx="1" fill="#94a3b8" opacity="0.3"/>
+
+  <!-- TopBar -->
+  <rect x="994" y="342" width="154" height="18" rx="4" fill="#1a2332" stroke="rgba(148,163,184,0.1)" stroke-width="0.5"/>
+  <rect x="1000" y="348" width="40" height="6" rx="3" fill="#94a3b8" opacity="0.2"/>
+  <circle cx="1130" cy="351" r="5" fill="#6366f1" opacity="0.4"/>
+
+  <!-- Content area -->
+  <rect x="994" y="363" width="154" height="83" rx="4" fill="#111827" stroke="rgba(148,163,184,0.05)" stroke-width="0.5"/>
+  <text x="1071" y="410" text-anchor="middle" fill="#94a3b8" font-size="10" opacity="0.5">{children}</text>
+
+  <!-- Labels -->
+  <text x="770" y="398" fill="#64748b" font-size="8">Sidebar</text>
+  <text x="770" y="412" fill="#64748b" font-size="8"> + 侧栏导航</text>
+  <text x="770" y="428" fill="#64748b" font-size="8">TopBar + 顶栏</text>
+  <text x="770" y="444" fill="#64748b" font-size="8">Content 主内容区</text>
+</svg>

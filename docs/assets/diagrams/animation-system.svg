@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="1000" height="400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="as-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="as-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <filter id="as-glow-purple">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="as-shimmer" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="40%" stop-color="#1a2332"/>
+      <stop offset="60%" stop-color="#243044"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="400" fill="url(#as-bg)"/>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">动画系统</text>
+  <text x="500" y="53" text-anchor="middle" fill="#94a3b8" font-size="12">Animation System - 8 Core Animations</text>
+
+  <!-- Row 1 -->
+  <!-- fadeIn -->
+  <rect x="30" y="75" width="220" height="130" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#as-shadow)"/>
+  <text x="140" y="100" text-anchor="middle" fill="#6366f1" font-size="13" font-weight="700">fadeIn</text>
+  <text x="140" y="116" text-anchor="middle" fill="#64748b" font-size="10">0.4s ease-out</text>
+  <!-- Visual: opacity steps -->
+  <rect x="55" y="130" width="30" height="30" rx="6" fill="#6366f1" opacity="0.15"/>
+  <rect x="95" y="130" width="30" height="30" rx="6" fill="#6366f1" opacity="0.4"/>
+  <rect x="135" y="130" width="30" height="30" rx="6" fill="#6366f1" opacity="0.7"/>
+  <rect x="175" y="130" width="30" height="30" rx="6" fill="#6366f1" opacity="1"/>
+  <text x="140" y="180" text-anchor="middle" fill="#94a3b8" font-size="9">opacity: 0 → 1</text>
+
+  <!-- slideUp -->
+  <rect x="268" y="75" width="220" height="130" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#as-shadow)"/>
+  <text x="378" y="100" text-anchor="middle" fill="#22c55e" font-size="13" font-weight="700">slideUp</text>
+  <text x="378" y="116" text-anchor="middle" fill="#64748b" font-size="10">0.5s ease-out</text>
+  <!-- Visual: arrow up -->
+  <line x1="378" y1="175" x2="378" y2="130" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  <polygon points="368,138 378,125 388,138" fill="#22c55e"/>
+  <text x="378" y="190" text-anchor="middle" fill="#94a3b8" font-size="9">translateY(20px) → 0</text>
+
+  <!-- pulse -->
+  <rect x="506" y="75" width="220" height="130" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#as-shadow)"/>
+  <text x="616" y="100" text-anchor="middle" fill="#f59e0b" font-size="13" font-weight="700">pulse</text>
+  <text x="616" y="116" text-anchor="middle" fill="#64748b" font-size="10">1s ease-in-out infinite</text>
+  <!-- Visual: scale oscillation -->
+  <circle cx="590" cy="155" r="10" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="616" cy="155" r="14" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <circle cx="642" cy="155" r="10" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.5"/>
+  <text x="616" y="190" text-anchor="middle" fill="#94a3b8" font-size="9">scale: 1 → 1.05 → 1</text>
+
+  <!-- voicePulse -->
+  <rect x="744" y="75" width="220" height="130" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#as-shadow)"/>
+  <text x="854" y="100" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="700">voicePulse</text>
+  <text x="854" y="116" text-anchor="middle" fill="#64748b" font-size="10">1.5s ease-out infinite</text>
+  <!-- Visual: ring pulse -->
+  <circle cx="854" cy="155" r="8" fill="#ef4444"/>
+  <circle cx="854" cy="155" r="16" fill="none" stroke="#ef4444" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="854" cy="155" r="24" fill="none" stroke="#ef4444" stroke-width="1" opacity="0.3"/>
+  <circle cx="854" cy="155" r="32" fill="none" stroke="#ef4444" stroke-width="0.5" opacity="0.15"/>
+  <text x="854" y="190" text-anchor="middle" fill="#94a3b8" font-size="9">ring expand + fade</text>
+
+  <!-- Row 2 -->
+  <!-- pulseGlow -->
+  <rect x="30" y="225" width="220" height="130" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#as-shadow)"/>
+  <text x="140" y="250" text-anchor="middle" fill="#8b5cf6" font-size="13" font-weight="700">pulseGlow</text>
+  <text x="140" y="266" text-anchor="middle" fill="#64748b" font-size="10">2s ease-in-out infinite</text>
+  <!-- Visual: glow -->
+  <circle cx="140" cy="305" r="12" fill="#8b5cf6" filter="url(#as-glow-purple)" opacity="0.5"/>
+  <circle cx="140" cy="305" r="8" fill="#8b5cf6"/>
+  <text x="140" y="340" text-anchor="middle" fill="#94a3b8" font-size="9">box-shadow oscillate</text>
+
+  <!-- bounceDot -->
+  <rect x="268" y="225" width="220" height="130" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#as-shadow)"/>
+  <text x="378" y="250" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700">bounceDot</text>
+  <text x="378" y="266" text-anchor="middle" fill="#64748b" font-size="10">1.4s infinite</text>
+  <!-- Visual: 3 bouncing dots -->
+  <circle cx="350" cy="305" r="6" fill="#3b82f6"/>
+  <circle cx="378" cy="298" r="6" fill="#3b82f6" opacity="0.7"/>
+  <circle cx="406" cy="310" r="6" fill="#3b82f6" opacity="0.4"/>
+  <text x="378" y="340" text-anchor="middle" fill="#94a3b8" font-size="9">3 dots staggered bounce</text>
+
+  <!-- blink -->
+  <rect x="506" y="225" width="220" height="130" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#as-shadow)"/>
+  <text x="616" y="250" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="700">blink</text>
+  <text x="616" y="266" text-anchor="middle" fill="#64748b" font-size="10">1s step-end infinite</text>
+  <!-- Visual: cursor blink -->
+  <text x="590" y="310" fill="#94a3b8" font-size="14">Hello</text>
+  <rect x="624" y="296" width="2" height="18" fill="#f1f5f9"/>
+  <rect x="636" y="296" width="2" height="18" fill="#f1f5f9" opacity="0.3"/>
+  <text x="616" y="340" text-anchor="middle" fill="#94a3b8" font-size="9">cursor visibility toggle</text>
+
+  <!-- shimmer -->
+  <rect x="744" y="225" width="220" height="130" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1" filter="url(#as-shadow)"/>
+  <text x="854" y="250" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="700">shimmer</text>
+  <text x="854" y="266" text-anchor="middle" fill="#64748b" font-size="10">1.5s infinite linear</text>
+  <!-- Visual: shimmer bar -->
+  <rect x="784" y="290" width="140" height="14" rx="7" fill="url(#as-shimmer)"/>
+  <rect x="784" y="310" width="100" height="14" rx="7" fill="url(#as-shimmer)"/>
+  <text x="854" y="340" text-anchor="middle" fill="#94a3b8" font-size="9">gradient sweep loading</text>
+</svg>

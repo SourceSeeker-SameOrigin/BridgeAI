@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="1000" height="400">
+  <defs>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.3)"/></filter>
+    <marker id="arrowP" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#6366f1"/></marker>
+    <marker id="arrowG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#22c55e"/></marker>
+    <marker id="arrowW" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#f59e0b"/></marker>
+  </defs>
+  <rect width="1000" height="400" fill="#0a0e1a"/>
+  <text x="500" y="32" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="20" font-weight="700">setup.sh 部署流程</text>
+  <text x="500" y="52" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="11">Deployment Script Flow</text>
+
+  <!-- Step 1: Check deps -->
+  <rect x="30" y="80" width="140" height="90" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="108" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="24">&#x1F50D;</text>
+  <text x="100" y="130" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="12" font-weight="600">Check Deps</text>
+  <text x="100" y="148" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">docker/compose</text>
+  <text x="100" y="160" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">git/curl/jq</text>
+
+  <line x1="170" y1="125" x2="200" y2="125" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowP)"/>
+
+  <!-- Step 2: Generate .env -->
+  <rect x="210" y="80" width="140" height="90" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="280" y="108" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="24">&#x1F4DD;</text>
+  <text x="280" y="130" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="12" font-weight="600">Generate .env</text>
+  <text x="280" y="148" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">API keys prompt</text>
+  <text x="280" y="160" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">DB/Redis config</text>
+
+  <line x1="350" y1="125" x2="380" y2="125" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowP)"/>
+
+  <!-- Step 3: Choose mode (diamond) -->
+  <polygon points="450,80 530,125 450,170 370,125" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="120" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="11" font-weight="700">Mode?</text>
+  <text x="450" y="136" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">dev/prod</text>
+
+  <!-- dev branch (up) -->
+  <line x1="450" y1="80" x2="450" y2="50" stroke="#3b82f6" stroke-width="1.5"/>
+  <line x1="450" y1="50" x2="580" y2="50" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="515" y="44" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="9" font-weight="600">dev</text>
+  <rect x="580" y="30" width="180" height="40" rx="8" fill="#111827" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="670" y="48" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="10" font-weight="600">docker-compose.dev.yml</text>
+  <text x="670" y="62" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="8">hot-reload + debug</text>
+
+  <!-- prod branch (down) -->
+  <line x1="450" y1="170" x2="450" y2="200" stroke="#22c55e" stroke-width="1.5"/>
+  <line x1="450" y1="200" x2="580" y2="200" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="515" y="195" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="9" font-weight="600">prod</text>
+  <rect x="580" y="180" width="180" height="40" rx="8" fill="#111827" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="670" y="198" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="10" font-weight="600">docker-compose.prod.yml</text>
+  <text x="670" y="212" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="8">optimized + secure</text>
+
+  <!-- Merge -->
+  <line x1="760" y1="50" x2="810" y2="125" stroke="#3b82f6" stroke-width="1.5"/>
+  <line x1="760" y1="200" x2="810" y2="125" stroke="#22c55e" stroke-width="1.5"/>
+
+  <!-- Step 4: docker compose up -->
+  <rect x="540" y="90" width="160" height="70" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="620" y="118" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="24">&#x1F433;</text>
+  <text x="620" y="140" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="11" font-weight="600">docker compose up -d</text>
+  <text x="620" y="154" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">Build + Start</text>
+
+  <line x1="700" y1="125" x2="730" y2="125" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrowP)"/>
+
+  <!-- Step 5: Health check loop -->
+  <rect x="740" y="80" width="140" height="90" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="810" y="108" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="24">&#x1F3E5;</text>
+  <text x="810" y="130" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="12" font-weight="600">Health Check</text>
+  <text x="810" y="148" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">curl /health</text>
+  <text x="810" y="160" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="9">retry 30s</text>
+  <!-- loop arrow -->
+  <path d="M860,170 Q870,190 850,190 Q830,190 830,170" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+  <text x="870" y="198" fill="#f59e0b" font-family="system-ui" font-size="8">retry</text>
+
+  <line x1="880" y1="125" x2="910" y2="125" stroke="#22c55e" stroke-width="2" marker-end="url(#arrowG)"/>
+
+  <!-- Step 6: Success -->
+  <rect x="920" y="80" width="60" height="90" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <text x="950" y="118" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="28">&#x2705;</text>
+  <text x="950" y="148" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="10" font-weight="600">Done</text>
+
+  <!-- Bottom: detailed flow -->
+  <rect x="30" y="240" width="940" height="140" rx="12" fill="#111827" stroke="#6366f1" stroke-width="1" filter="url(#shadow)"/>
+  <text x="50" y="268" fill="#6366f1" font-family="system-ui" font-size="13" font-weight="700">Detailed Steps</text>
+
+  <text x="50" y="295" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">1.</text>
+  <text x="68" y="295" fill="#f1f5f9" font-family="system-ui" font-size="11">check docker, docker compose, git, curl, jq installed</text>
+
+  <text x="50" y="315" fill="#6366f1" font-family="system-ui" font-size="11" font-weight="600">2.</text>
+  <text x="68" y="315" fill="#f1f5f9" font-family="system-ui" font-size="11">copy .env.example to .env, prompt user for API keys</text>
+
+  <text x="50" y="335" fill="#f59e0b" font-family="system-ui" font-size="11" font-weight="600">3.</text>
+  <text x="68" y="335" fill="#f1f5f9" font-family="system-ui" font-size="11">select dev (hot-reload, debug ports) or prod (optimized builds, SSL)</text>
+
+  <text x="500" y="295" fill="#8b5cf6" font-family="system-ui" font-size="11" font-weight="600">4.</text>
+  <text x="518" y="295" fill="#f1f5f9" font-family="system-ui" font-size="11">docker compose -f &lt;file&gt; up -d --build</text>
+
+  <text x="500" y="315" fill="#f59e0b" font-family="system-ui" font-size="11" font-weight="600">5.</text>
+  <text x="518" y="315" fill="#f1f5f9" font-family="system-ui" font-size="11">loop: curl http://localhost:8000/health every 5s, max 30s</text>
+
+  <text x="500" y="335" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">6.</text>
+  <text x="518" y="335" fill="#f1f5f9" font-family="system-ui" font-size="11">print URLs, credentials, and quickstart guide</text>
+
+  <text x="500" y="365" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">exit 1 on any failure with descriptive error message</text>
+</svg>

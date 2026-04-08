@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
+  <defs>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.3)"/></filter>
+  </defs>
+  <rect width="1000" height="600" fill="#0a0e1a"/>
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="20" font-weight="700">系统分层架构</text>
+  <rect x="50" y="55" width="900" height="65" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="80" fill="#22c55e" font-family="system-ui" font-size="14" font-weight="700">渠道层 Channel Layer</text>
+  <text x="100" y="100" fill="#94a3b8" font-family="system-ui" font-size="11">Web (React)  |  企业微信  |  钉钉  |  飞书  |  API (REST/SSE)  |  Webhook</text>
+  <rect x="50" y="130" width="900" height="65" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="155" fill="#f59e0b" font-family="system-ui" font-size="14" font-weight="700">网关层 Gateway</text>
+  <text x="100" y="175" fill="#94a3b8" font-family="system-ui" font-size="11">JWT/API Key 认证  |  多租户隔离  |  限流 (Redis 令牌桶)  |  安全头  |  CORS  |  内容过滤 (DFA)</text>
+  <rect x="50" y="205" width="900" height="65" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="230" fill="#6366f1" font-family="system-ui" font-size="14" font-weight="700">API 路由层 /api/v1/</text>
+  <text x="100" y="250" fill="#94a3b8" font-family="system-ui" font-size="11">auth  |  chat  |  agents  |  mcp  |  knowledge  |  plugins  |  channels  |  system  |  billing  |  audit</text>
+  <rect x="50" y="280" width="900" height="100" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="305" fill="#8b5cf6" font-family="system-ui" font-size="14" font-weight="700">业务逻辑层 Services</text>
+  <rect x="70" y="318" width="140" height="24" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="140" y="334" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">Agent Engine</text>
+  <rect x="220" y="318" width="140" height="24" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="290" y="334" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">Chat Service</text>
+  <rect x="370" y="318" width="130" height="24" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="435" y="334" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">MCP Gateway</text>
+  <rect x="510" y="318" width="130" height="24" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="575" y="334" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">RAG Engine</text>
+  <rect x="650" y="318" width="130" height="24" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="715" y="334" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">Plugin System</text>
+  <rect x="790" y="318" width="130" height="24" rx="6" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="855" y="334" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">Auth Service</text>
+  <text x="100" y="365" fill="#64748b" font-family="system-ui" font-size="10">LangGraph 6阶段管线 | Prompt四层融合 | 模型路由 | 熔断降级 | 3级记忆 | Few-shot学习</text>
+  <rect x="50" y="395" width="900" height="65" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="420" fill="#3b82f6" font-family="system-ui" font-size="14" font-weight="700">Provider 适配层</text>
+  <text x="100" y="440" fill="#94a3b8" font-family="system-ui" font-size="11">Anthropic (Claude)  |  DeepSeek  |  Qwen (通义千问)  |  Ollama (本地)  |  OpenAI 兼容层</text>
+  <rect x="50" y="470" width="900" height="65" rx="12" fill="#111827" stroke="#ef4444" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="495" fill="#ef4444" font-family="system-ui" font-size="14" font-weight="700">数据层 Data</text>
+  <text x="100" y="515" fill="#94a3b8" font-family="system-ui" font-size="11">PostgreSQL 16 (关系型) | Milvus (向量检索) | Redis 7 (缓存+会话+熔断+Few-shot) | MinIO (文件存储)</text>
+  <text x="500" y="570" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">每一层仅依赖下层，不跨层调用 - 高内聚低耦合</text>
+</svg>

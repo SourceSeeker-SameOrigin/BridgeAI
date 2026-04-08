@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="we-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="we-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="we-arr" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#94a3b8"/>
+    </marker>
+    <marker id="we-arr-p" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#6366f1"/>
+    </marker>
+    <marker id="we-arr-g" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#22c55e"/>
+    </marker>
+    <marker id="we-arr-o" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="700" fill="url(#we-bg)"/>
+
+  <text x="550" y="38" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="700">工作流执行引擎</text>
+  <text x="550" y="58" text-anchor="middle" fill="#94a3b8" font-size="13">Workflow Engine - BFS Traversal</text>
+
+  <!-- Phase 1: Parse -->
+  <g transform="translate(120, 115)">
+    <rect x="-95" y="-40" width="190" height="80" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-15" text-anchor="middle" fill="#6366f1" font-size="14" font-weight="700">Parse</text>
+    <text x="0" y="5" text-anchor="middle" fill="#f1f5f9" font-size="11">解析 nodes[] + edges[]</text>
+    <text x="0" y="22" text-anchor="middle" fill="#94a3b8" font-size="10">验证DAG结构</text>
+  </g>
+
+  <line x1="220" y1="115" x2="275" y2="115" stroke="#6366f1" stroke-width="1.5" marker-end="url(#we-arr-p)"/>
+
+  <!-- Phase 2: Build Adjacency -->
+  <g transform="translate(380, 115)">
+    <rect x="-95" y="-40" width="190" height="80" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-15" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="700">Build Adjacency</text>
+    <text x="0" y="5" text-anchor="middle" fill="#f1f5f9" font-size="11">构建邻接表</text>
+    <text x="0" y="22" text-anchor="middle" fill="#94a3b8" font-size="10">edge → adjacency map</text>
+  </g>
+
+  <line x1="480" y1="115" x2="535" y2="115" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#we-arr-p)"/>
+
+  <!-- Phase 3: Find Start -->
+  <g transform="translate(640, 115)">
+    <rect x="-95" y="-40" width="190" height="80" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-15" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="700">Find Start Nodes</text>
+    <text x="0" y="5" text-anchor="middle" fill="#f1f5f9" font-size="11">in_degree == 0</text>
+    <text x="0" y="22" text-anchor="middle" fill="#94a3b8" font-size="10">初始化 BFS 队列</text>
+  </g>
+
+  <line x1="740" y1="115" x2="795" y2="115" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#we-arr-p)"/>
+
+  <!-- Phase 4: BFS Queue -->
+  <g transform="translate(910, 115)">
+    <rect x="-100" y="-40" width="200" height="80" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-15" text-anchor="middle" fill="#22c55e" font-size="14" font-weight="700">BFS Queue</text>
+    <text x="0" y="5" text-anchor="middle" fill="#f1f5f9" font-size="11">queue = deque(start_nodes)</text>
+    <text x="0" y="22" text-anchor="middle" fill="#94a3b8" font-size="10">while queue not empty</text>
+  </g>
+
+  <!-- Arrow down from BFS to Dequeue -->
+  <line x1="910" y1="160" x2="910" y2="205" stroke="#22c55e" stroke-width="1.5" marker-end="url(#we-arr-g)"/>
+
+  <!-- Dequeue Node -->
+  <g transform="translate(910, 240)">
+    <rect x="-90" y="-30" width="180" height="60" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-8" text-anchor="middle" fill="#f59e0b" font-size="13" font-weight="700">Dequeue Node</text>
+    <text x="0" y="12" text-anchor="middle" fill="#f1f5f9" font-size="11">node = queue.popleft()</text>
+  </g>
+
+  <!-- Arrow down to switch -->
+  <line x1="910" y1="275" x2="910" y2="310" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#we-arr-o)"/>
+
+  <!-- Switch node.type diamond -->
+  <g transform="translate(910, 340)">
+    <polygon points="0,-30 100,0 0,30 -100,0" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-5" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="600">switch</text>
+    <text x="0" y="12" text-anchor="middle" fill="#f59e0b" font-size="11">node.type</text>
+  </g>
+
+  <!-- Branch: llm_call (left-most) -->
+  <line x1="810" y1="340" x2="160" y2="340" stroke="#3b82f6" stroke-width="1" opacity="0.5"/>
+  <line x1="160" y1="340" x2="160" y2="390" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#we-arr)"/>
+  <g transform="translate(160, 440)">
+    <rect x="-110" y="-42" width="220" height="84" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-20" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700">llm_call</text>
+    <line x1="-90" y1="-10" x2="90" y2="-10" stroke="rgba(148,163,184,0.15)"/>
+    <text x="0" y="6" text-anchor="middle" fill="#f1f5f9" font-size="11">调用 LLM Provider</text>
+    <text x="0" y="22" text-anchor="middle" fill="#94a3b8" font-size="10">prompt + model + temp</text>
+    <text x="0" y="36" text-anchor="middle" fill="#94a3b8" font-size="9">CircuitBreaker 保护</text>
+  </g>
+
+  <!-- Branch: tool_call -->
+  <line x1="810" y1="340" x2="390" y2="340" stroke="#22c55e" stroke-width="1" opacity="0.5"/>
+  <line x1="390" y1="340" x2="390" y2="390" stroke="#22c55e" stroke-width="1.5" marker-end="url(#we-arr)"/>
+  <g transform="translate(390, 440)">
+    <rect x="-110" y="-42" width="220" height="84" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-20" text-anchor="middle" fill="#22c55e" font-size="13" font-weight="700">tool_call</text>
+    <line x1="-90" y1="-10" x2="90" y2="-10" stroke="rgba(148,163,184,0.15)"/>
+    <text x="0" y="6" text-anchor="middle" fill="#f1f5f9" font-size="11">调用 MCP Gateway</text>
+    <text x="0" y="22" text-anchor="middle" fill="#94a3b8" font-size="10">tool_name + arguments</text>
+    <text x="0" y="36" text-anchor="middle" fill="#94a3b8" font-size="9">含审计日志</text>
+  </g>
+
+  <!-- Branch: condition -->
+  <line x1="810" y1="340" x2="620" y2="340" stroke="#f59e0b" stroke-width="1" opacity="0.5"/>
+  <line x1="620" y1="340" x2="620" y2="390" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#we-arr)"/>
+  <g transform="translate(620, 440)">
+    <rect x="-110" y="-42" width="220" height="84" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-20" text-anchor="middle" fill="#f59e0b" font-size="13" font-weight="700">condition</text>
+    <line x1="-90" y1="-10" x2="90" y2="-10" stroke="rgba(148,163,184,0.15)"/>
+    <text x="0" y="6" text-anchor="middle" fill="#f1f5f9" font-size="11">eval(expression)</text>
+    <text x="-50" y="22" fill="#22c55e" font-size="10">true →</text>
+    <text x="50" y="22" fill="#ef4444" font-size="10">false →</text>
+    <text x="0" y="36" text-anchor="middle" fill="#94a3b8" font-size="9">分支路由</text>
+  </g>
+
+  <!-- Branch: loop -->
+  <line x1="810" y1="340" x2="840" y2="340" stroke="#ec4899" stroke-width="1" opacity="0.5"/>
+  <line x1="840" y1="340" x2="840" y2="390" stroke="#ec4899" stroke-width="1.5" marker-end="url(#we-arr)"/>
+  <g transform="translate(840, 440)">
+    <rect x="-100" y="-42" width="200" height="84" rx="12" fill="#111827" stroke="#ec4899" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-20" text-anchor="middle" fill="#ec4899" font-size="13" font-weight="700">loop</text>
+    <line x1="-80" y1="-10" x2="80" y2="-10" stroke="rgba(148,163,184,0.15)"/>
+    <text x="0" y="6" text-anchor="middle" fill="#f1f5f9" font-size="11">check iterations</text>
+    <text x="0" y="22" text-anchor="middle" fill="#94a3b8" font-size="10">i &lt; max → repeat body</text>
+    <text x="0" y="36" text-anchor="middle" fill="#94a3b8" font-size="9">done → exit loop</text>
+  </g>
+
+  <!-- Branch: parallel -->
+  <line x1="1010" y1="340" x2="1040" y2="340" stroke="#14b8a6" stroke-width="1" opacity="0.5"/>
+  <line x1="1040" y1="340" x2="1040" y2="390" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#we-arr)"/>
+  <g transform="translate(1040, 440)">
+    <rect x="-55" y="-42" width="110" height="84" rx="12" fill="#111827" stroke="#14b8a6" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="0" y="-20" text-anchor="middle" fill="#14b8a6" font-size="13" font-weight="700">parallel</text>
+    <line x1="-40" y1="-10" x2="40" y2="-10" stroke="rgba(148,163,184,0.15)"/>
+    <text x="0" y="6" text-anchor="middle" fill="#f1f5f9" font-size="10">asyncio</text>
+    <text x="0" y="20" text-anchor="middle" fill="#f1f5f9" font-size="10">.gather()</text>
+    <text x="0" y="36" text-anchor="middle" fill="#94a3b8" font-size="9">并行执行</text>
+  </g>
+
+  <!-- Enqueue children + Collect results -->
+  <g transform="translate(550, 575)">
+    <rect x="-250" y="-25" width="500" height="50" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#we-shadow)"/>
+    <text x="-100" y="0" text-anchor="middle" fill="#8b5cf6" font-size="13" font-weight="600">Enqueue Children</text>
+    <line x1="0" y1="-18" x2="0" y2="18" stroke="rgba(148,163,184,0.15)"/>
+    <text x="100" y="0" text-anchor="middle" fill="#22c55e" font-size="13" font-weight="600">Collect Results</text>
+    <text x="-100" y="16" text-anchor="middle" fill="#94a3b8" font-size="9">queue.extend(adj[node_id])</text>
+    <text x="100" y="16" text-anchor="middle" fill="#94a3b8" font-size="9">context[node_id] = output</text>
+  </g>
+
+  <!-- Arrows from node types down to enqueue -->
+  <line x1="160" y1="487" x2="380" y2="550" stroke="#3b82f6" stroke-width="1" opacity="0.4"/>
+  <line x1="390" y1="487" x2="430" y2="550" stroke="#22c55e" stroke-width="1" opacity="0.4"/>
+  <line x1="620" y1="487" x2="550" y2="550" stroke="#f59e0b" stroke-width="1" opacity="0.4"/>
+  <line x1="840" y1="487" x2="680" y2="550" stroke="#ec4899" stroke-width="1" opacity="0.4"/>
+  <line x1="1040" y1="487" x2="750" y2="550" stroke="#14b8a6" stroke-width="1" opacity="0.4"/>
+
+  <!-- Loop back arrow from Enqueue to BFS Queue -->
+  <path d="M800,575 Q1080,575 1080,240 Q1080,160 910,160" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#we-arr-p)"/>
+  <text x="1070" y="400" fill="#8b5cf6" font-size="10" transform="rotate(-90, 1070, 400)">repeat until empty</text>
+
+  <!-- Bottom stats -->
+  <g transform="translate(550, 660)">
+    <rect x="-470" y="-16" width="940" height="32" rx="10" fill="#111827" stroke="rgba(148,163,184,0.15)"/>
+    <text x="-350" y="2" text-anchor="middle" fill="#6366f1" font-size="11">Max nodes: 50</text>
+    <text x="-150" y="2" text-anchor="middle" fill="#22c55e" font-size="11">Tool timeout: 30s</text>
+    <text x="50" y="2" text-anchor="middle" fill="#f59e0b" font-size="11">Loop limit: 10</text>
+    <text x="250" y="2" text-anchor="middle" fill="#14b8a6" font-size="11">Parallel limit: 5</text>
+  </g>
+
+  <!-- Phase badges -->
+  <circle cx="30" cy="88" r="14" fill="#6366f1"/>
+  <text x="30" y="93" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">1</text>
+  <circle cx="290" cy="88" r="14" fill="#8b5cf6"/>
+  <text x="290" y="93" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">2</text>
+  <circle cx="550" cy="88" r="14" fill="#3b82f6"/>
+  <text x="550" y="93" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">3</text>
+  <circle cx="815" cy="88" r="14" fill="#22c55e"/>
+  <text x="815" y="93" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">4</text>
+</svg>

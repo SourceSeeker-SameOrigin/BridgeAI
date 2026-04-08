@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="nodeGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="nodeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="nodeGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="nodeGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0.05"/>
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1" opacity="0.6"/>
+    </marker>
+  </defs>
+
+  <!-- Window frame -->
+  <rect width="1200" height="800" rx="8" fill="#0a0e1a"/>
+  <rect width="1200" height="36" rx="8" fill="#111827"/>
+  <rect y="28" width="1200" height="8" fill="#111827"/>
+  <circle cx="20" cy="18" r="6" fill="#ef4444"/>
+  <circle cx="40" cy="18" r="6" fill="#f59e0b"/>
+  <circle cx="60" cy="18" r="6" fill="#22c55e"/>
+  <text x="600" y="22" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#94a3b8">BridgeAI - Workflow Editor</text>
+
+  <!-- Sidebar -->
+  <rect x="0" y="36" width="220" height="764" fill="#111827"/>
+  <circle cx="42" cy="72" r="14" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="42" y="76" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#6366f1" font-weight="700">B</text>
+  <text x="68" y="77" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9">BridgeAI</text>
+
+  <!-- Nav -->
+  <text x="36" y="131" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4CA;</text>
+  <text x="58" y="132" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">仪表盘</text>
+  <text x="36" y="169" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4AC;</text>
+  <text x="58" y="170" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">对话</text>
+  <text x="36" y="207" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F916;</text>
+  <text x="58" y="208" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">Agent 管理</text>
+  <text x="36" y="245" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F50C;</text>
+  <text x="58" y="246" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">MCP 连接器</text>
+  <text x="36" y="283" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F4DA;</text>
+  <text x="58" y="284" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8">知识库</text>
+
+  <rect x="12" y="298" width="196" height="38" rx="8" fill="#6366f1" opacity="0.15"/>
+  <rect x="16" y="298" width="3" height="38" rx="1.5" fill="#6366f1"/>
+  <text x="36" y="321" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15">&#x1F9E9;</text>
+  <text x="58" y="322" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" fill="#c7d2fe">工作流</text>
+
+  <!-- Workflow header toolbar -->
+  <rect x="220" y="36" width="980" height="52" fill="#0f1320"/>
+  <line x1="220" y1="88" x2="1200" y2="88" stroke="#1e293b" stroke-width="1"/>
+  <text x="248" y="67" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9">客户咨询处理流程</text>
+  <!-- Toolbar buttons -->
+  <rect x="900" y="48" width="60" height="28" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="930" y="66" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#94a3b8">保存</text>
+  <rect x="970" y="48" width="60" height="28" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="1000" y="66" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#94a3b8">测试</text>
+  <rect x="1040" y="48" width="70" height="28" rx="6" fill="#6366f1"/>
+  <text x="1075" y="66" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#ffffff">发布</text>
+  <rect x="1120" y="48" width="60" height="28" rx="6" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+  <text x="1150" y="66" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#94a3b8">撤销</text>
+
+  <!-- Canvas area with dot pattern -->
+  <rect x="220" y="88" width="980" height="712" fill="#080c16"/>
+  <!-- Dot grid pattern -->
+  <g opacity="0.15">
+    <circle cx="260" cy="120" r="1" fill="#475569"/><circle cx="300" cy="120" r="1" fill="#475569"/><circle cx="340" cy="120" r="1" fill="#475569"/><circle cx="380" cy="120" r="1" fill="#475569"/><circle cx="420" cy="120" r="1" fill="#475569"/><circle cx="460" cy="120" r="1" fill="#475569"/><circle cx="500" cy="120" r="1" fill="#475569"/><circle cx="540" cy="120" r="1" fill="#475569"/><circle cx="580" cy="120" r="1" fill="#475569"/><circle cx="620" cy="120" r="1" fill="#475569"/><circle cx="660" cy="120" r="1" fill="#475569"/><circle cx="700" cy="120" r="1" fill="#475569"/><circle cx="740" cy="120" r="1" fill="#475569"/><circle cx="780" cy="120" r="1" fill="#475569"/><circle cx="820" cy="120" r="1" fill="#475569"/><circle cx="860" cy="120" r="1" fill="#475569"/><circle cx="900" cy="120" r="1" fill="#475569"/>
+    <circle cx="260" cy="160" r="1" fill="#475569"/><circle cx="300" cy="160" r="1" fill="#475569"/><circle cx="340" cy="160" r="1" fill="#475569"/><circle cx="380" cy="160" r="1" fill="#475569"/><circle cx="420" cy="160" r="1" fill="#475569"/><circle cx="460" cy="160" r="1" fill="#475569"/><circle cx="500" cy="160" r="1" fill="#475569"/><circle cx="540" cy="160" r="1" fill="#475569"/><circle cx="580" cy="160" r="1" fill="#475569"/><circle cx="620" cy="160" r="1" fill="#475569"/><circle cx="660" cy="160" r="1" fill="#475569"/><circle cx="700" cy="160" r="1" fill="#475569"/><circle cx="740" cy="160" r="1" fill="#475569"/><circle cx="780" cy="160" r="1" fill="#475569"/><circle cx="820" cy="160" r="1" fill="#475569"/><circle cx="860" cy="160" r="1" fill="#475569"/><circle cx="900" cy="160" r="1" fill="#475569"/>
+    <circle cx="260" cy="200" r="1" fill="#475569"/><circle cx="300" cy="200" r="1" fill="#475569"/><circle cx="340" cy="200" r="1" fill="#475569"/><circle cx="380" cy="200" r="1" fill="#475569"/><circle cx="420" cy="200" r="1" fill="#475569"/><circle cx="460" cy="200" r="1" fill="#475569"/><circle cx="500" cy="200" r="1" fill="#475569"/><circle cx="540" cy="200" r="1" fill="#475569"/><circle cx="580" cy="200" r="1" fill="#475569"/><circle cx="620" cy="200" r="1" fill="#475569"/><circle cx="660" cy="200" r="1" fill="#475569"/><circle cx="700" cy="200" r="1" fill="#475569"/><circle cx="740" cy="200" r="1" fill="#475569"/><circle cx="780" cy="200" r="1" fill="#475569"/><circle cx="820" cy="200" r="1" fill="#475569"/><circle cx="860" cy="200" r="1" fill="#475569"/><circle cx="900" cy="200" r="1" fill="#475569"/>
+  </g>
+
+  <!-- Flow nodes and edges -->
+
+  <!-- Node 1: Start / Trigger -->
+  <rect x="340" y="140" width="180" height="80" rx="12" fill="url(#nodeGrad1)" stroke="#6366f1" stroke-width="1.5"/>
+  <circle cx="362" cy="168" r="12" fill="#6366f1" opacity="0.3"/>
+  <text x="362" y="173" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x1F4E8;</text>
+  <text x="384" y="170" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#e0e7ff">消息接入</text>
+  <text x="362" y="196" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">多渠道消息触发</text>
+  <!-- Output handle -->
+  <circle cx="430" cy="220" r="5" fill="#0a0e1a" stroke="#6366f1" stroke-width="1.5"/>
+
+  <!-- Edge 1->2 -->
+  <path d="M 430 225 L 430 260 L 430 280" fill="none" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.6"/>
+
+  <!-- Node 2: Intent Recognition -->
+  <rect x="340" y="280" width="180" height="80" rx="12" fill="url(#nodeGrad2)" stroke="#8b5cf6" stroke-width="1.5"/>
+  <circle cx="362" cy="308" r="12" fill="#8b5cf6" opacity="0.3"/>
+  <text x="362" y="313" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x1F9E0;</text>
+  <text x="384" y="310" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#e0e7ff">意图识别</text>
+  <text x="362" y="336" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">LLM 分析用户意图</text>
+  <!-- Input handle -->
+  <circle cx="430" cy="280" r="5" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <!-- Output handles -->
+  <circle cx="340" cy="360" r="5" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <circle cx="430" cy="360" r="5" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <circle cx="520" cy="360" r="5" fill="#0a0e1a" stroke="#8b5cf6" stroke-width="1.5"/>
+
+  <!-- Branch labels -->
+  <text x="310" y="390" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="9" fill="#64748b">查询类</text>
+  <text x="430" y="390" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="9" fill="#64748b">任务类</text>
+  <text x="560" y="390" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="9" fill="#64748b">闲聊类</text>
+
+  <!-- Edge 2->3a (left branch) -->
+  <path d="M 340 365 L 280 365 L 280 420" fill="none" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.5"/>
+  <!-- Edge 2->3b (center branch) -->
+  <path d="M 430 365 L 430 420" fill="none" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.5"/>
+  <!-- Edge 2->3c (right branch) -->
+  <path d="M 520 365 L 580 365 L 580 420" fill="none" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.5"/>
+
+  <!-- Node 3a: RAG Search -->
+  <rect x="240" y="420" width="170" height="80" rx="12" fill="url(#nodeGrad3)" stroke="#22c55e" stroke-width="1.5"/>
+  <circle cx="262" cy="448" r="12" fill="#22c55e" opacity="0.3"/>
+  <text x="262" y="453" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x1F50D;</text>
+  <text x="284" y="450" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#e0e7ff">RAG 检索</text>
+  <text x="262" y="476" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">知识库语义搜索</text>
+
+  <!-- Node 3b: MCP Tool Call -->
+  <rect x="345" y="420" width="170" height="80" rx="12" fill="url(#nodeGrad4)" stroke="#f59e0b" stroke-width="1.5"/>
+  <circle cx="367" cy="448" r="12" fill="#f59e0b" opacity="0.3"/>
+  <text x="367" y="453" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x1F50C;</text>
+  <text x="389" y="450" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#e0e7ff">MCP 工具</text>
+  <text x="367" y="476" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">数据库/API 调用</text>
+
+  <!-- Node 3c: Direct Reply -->
+  <rect x="540" y="420" width="170" height="80" rx="12" fill="url(#nodeGrad1)" stroke="#6366f1" stroke-width="1.5"/>
+  <circle cx="562" cy="448" r="12" fill="#6366f1" opacity="0.3"/>
+  <text x="562" y="453" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x1F4AC;</text>
+  <text x="584" y="450" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#e0e7ff">直接回复</text>
+  <text x="562" y="476" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">LLM 生成响应</text>
+
+  <!-- Edges to merge node -->
+  <path d="M 325 500 L 325 540 L 430 560" fill="none" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.5"/>
+  <path d="M 430 500 L 430 560" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.5"/>
+  <path d="M 625 500 L 625 540 L 430 560" fill="none" stroke="#6366f1" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.5"/>
+
+  <!-- Node 4: Response Assembly -->
+  <rect x="340" y="560" width="180" height="80" rx="12" fill="url(#nodeGrad2)" stroke="#8b5cf6" stroke-width="1.5"/>
+  <circle cx="362" cy="588" r="12" fill="#8b5cf6" opacity="0.3"/>
+  <text x="362" y="593" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14">&#x2699;</text>
+  <text x="384" y="590" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#e0e7ff">响应整合</text>
+  <text x="362" y="616" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="10" fill="#94a3b8">格式化 + 脱敏</text>
+
+  <!-- Edge to output -->
+  <path d="M 430 640 L 430 680" fill="none" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.6"/>
+
+  <!-- Node 5: Output -->
+  <rect x="370" y="680" width="120" height="55" rx="12" fill="url(#nodeGrad3)" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="430" y="704" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="16">&#x2705;</text>
+  <text x="430" y="724" text-anchor="middle" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#e0e7ff">发送回复</text>
+
+  <!-- Right side panel - Node properties -->
+  <rect x="900" y="88" width="300" height="712" fill="#111827" stroke="#1e293b" stroke-width="1 0 0 1"/>
+  <text x="920" y="120" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9">节点属性</text>
+  <line x1="920" y1="132" x2="1180" y2="132" stroke="#1e293b" stroke-width="0.5"/>
+
+  <text x="920" y="158" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">节点类型</text>
+  <rect x="920" y="166" width="260" height="32" rx="6" fill="#0a0e1a" stroke="#1e293b" stroke-width="1"/>
+  <text x="934" y="186" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#cbd5e1">意图识别</text>
+
+  <text x="920" y="218" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">模型</text>
+  <rect x="920" y="226" width="260" height="32" rx="6" fill="#0a0e1a" stroke="#1e293b" stroke-width="1"/>
+  <text x="934" y="246" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#cbd5e1">DeepSeek V3</text>
+
+  <text x="920" y="278" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">温度</text>
+  <rect x="920" y="286" width="260" height="32" rx="6" fill="#0a0e1a" stroke="#1e293b" stroke-width="1"/>
+  <text x="934" y="306" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#cbd5e1">0.3</text>
+
+  <text x="920" y="340" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">超时 (秒)</text>
+  <rect x="920" y="348" width="260" height="32" rx="6" fill="#0a0e1a" stroke="#1e293b" stroke-width="1"/>
+  <text x="934" y="368" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="12" fill="#cbd5e1">30</text>
+
+  <text x="920" y="400" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">Prompt 模板</text>
+  <rect x="920" y="408" width="260" height="80" rx="6" fill="#0a0e1a" stroke="#1e293b" stroke-width="1"/>
+  <text x="934" y="430" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">请分析用户消息的意图，</text>
+  <text x="934" y="448" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">分类为: 查询、任务、闲聊</text>
+  <text x="934" y="466" font-family="system-ui, Helvetica, Arial, sans-serif" font-size="11" fill="#64748b">返回 JSON 格式...</text>
+
+  <!-- Mini map -->
+  <rect x="1080" y="680" width="100" height="70" rx="4" fill="#0a0e1a" stroke="#1e293b" stroke-width="1" opacity="0.8"/>
+  <rect x="1100" y="694" width="20" height="10" rx="2" fill="#6366f1" opacity="0.3"/>
+  <rect x="1100" y="710" width="20" height="10" rx="2" fill="#8b5cf6" opacity="0.3"/>
+  <rect x="1086" y="726" width="14" height="8" rx="1" fill="#22c55e" opacity="0.2"/>
+  <rect x="1104" y="726" width="14" height="8" rx="1" fill="#f59e0b" opacity="0.2"/>
+  <rect x="1122" y="726" width="14" height="8" rx="1" fill="#6366f1" opacity="0.2"/>
+</svg>

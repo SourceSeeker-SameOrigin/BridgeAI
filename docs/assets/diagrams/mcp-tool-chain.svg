@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="1000" height="400">
+  <defs><filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.3)"/></filter>
+  <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#6366f1"/></marker></defs>
+  <rect width="1000" height="400" fill="#0a0e1a"/>
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="20" font-weight="700">MCP 工具调用链</text>
+  <rect x="30" y="70" width="120" height="50" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="90" y="100" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="12" font-weight="600">Agent</text>
+  <line x1="150" y1="95" x2="190" y2="95" stroke="#6366f1" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="190" y="70" width="120" height="50" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="250" y="100" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="12" font-weight="600">权限检查</text>
+  <line x1="310" y1="95" x2="350" y2="95" stroke="#f59e0b" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="350" y="70" width="120" height="50" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="410" y="100" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="12" font-weight="600">参数校验</text>
+  <line x1="470" y1="95" x2="510" y2="95" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="510" y="70" width="120" height="50" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <text x="570" y="100" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="12" font-weight="600">执行工具</text>
+  <line x1="630" y1="95" x2="670" y2="95" stroke="#22c55e" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="670" y="70" width="120" height="50" rx="12" fill="#111827" stroke="#ec4899" stroke-width="2" filter="url(#shadow)"/>
+  <text x="730" y="100" text-anchor="middle" fill="#ec4899" font-family="system-ui" font-size="12" font-weight="600">脱敏处理</text>
+  <line x1="790" y1="95" x2="830" y2="95" stroke="#ec4899" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="830" y="70" width="140" height="50" rx="12" fill="#111827" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="900" y="92" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="12" font-weight="600">审计记录</text>
+  <text x="900" y="108" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">→ 返回Agent</text>
+  <rect x="30" y="155" width="940" height="220" rx="12" fill="#111827" stroke="#94a3b8" stroke-width="1" opacity="0.5"/>
+  <text x="500" y="180" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="14" font-weight="600">各环节详细说明</text>
+  <text x="60" y="210" fill="#f59e0b" font-family="system-ui" font-size="11" font-weight="600">权限检查:</text>
+  <text x="60" y="230" fill="#94a3b8" font-family="system-ui" font-size="10">Agent.tools[] 是否包含此 connector_id</text>
+  <text x="60" y="250" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">参数校验:</text>
+  <text x="60" y="270" fill="#94a3b8" font-family="system-ui" font-size="10">JSON Schema 验证 arguments 是否符合 ToolDefinition.parameters</text>
+  <text x="500" y="210" fill="#22c55e" font-family="system-ui" font-size="11" font-weight="600">执行工具:</text>
+  <text x="500" y="230" fill="#94a3b8" font-family="system-ui" font-size="10">connector.execute_tool(tool_name, arguments) → ToolResult</text>
+  <text x="500" y="250" fill="#ec4899" font-family="system-ui" font-size="11" font-weight="600">脱敏处理:</text>
+  <text x="500" y="270" fill="#94a3b8" font-family="system-ui" font-size="10">正则匹配手机号/身份证/银行卡/邮箱 → 星号替换</text>
+  <text x="500" y="290" fill="#94a3b8" font-family="system-ui" font-size="11" font-weight="600">审计记录:</text>
+  <text x="500" y="310" fill="#94a3b8" font-family="system-ui" font-size="10">写入 mcp_audit_logs: connector_id, tool_name, request, response, duration_ms, status</text>
+  <text x="60" y="340" fill="#ef4444" font-family="system-ui" font-size="11" font-weight="600">异常处理:</text>
+  <text x="60" y="360" fill="#94a3b8" font-family="system-ui" font-size="10">任何环节失败 → ToolResult(success=False, error="...") → 不抛异常，返回结构化错误给LLM</text>
+</svg>

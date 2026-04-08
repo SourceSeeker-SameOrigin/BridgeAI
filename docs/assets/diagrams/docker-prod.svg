@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="dp-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <marker id="dp-arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6366f1"/>
+    </marker>
+    <marker id="dp-arr-g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#22c55e"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="700" fill="url(#dp-bg)"/>
+  <text x="600" y="40" fill="#f1f5f9" font-size="22" font-weight="700" text-anchor="middle">生产部署架构</text>
+  <text x="600" y="62" fill="#94a3b8" font-size="13" text-anchor="middle">Production Deployment with Docker Compose</text>
+
+  <!-- Internet -->
+  <rect x="500" y="85" width="200" height="40" rx="20" fill="#6366f1" fill-opacity="0.1" stroke="#6366f1" stroke-opacity="0.4" stroke-width="1.5"/>
+  <text x="600" y="110" fill="#6366f1" font-size="13" font-weight="700" text-anchor="middle">Internet / Users</text>
+
+  <path d="M600 125 L600 160" stroke="#6366f1" stroke-width="2" marker-end="url(#dp-arr)"/>
+
+  <!-- Nginx -->
+  <rect x="350" y="165" width="500" height="120" rx="14" fill="#22c55e" fill-opacity="0.1" stroke="#22c55e" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="375" y="180" width="450" height="35" rx="6" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-opacity="0.4"/>
+  <text x="600" y="203" fill="#22c55e" font-size="16" font-weight="700" text-anchor="middle">Nginx :80 / :443</text>
+  <text x="600" y="235" fill="#f1f5f9" font-size="12" text-anchor="middle" font-weight="600">SSL Termination | Reverse Proxy | Static Files</text>
+  <rect x="390" y="248" width="200" height="24" rx="4" fill="#111827" stroke="rgba(148,163,184,0.15)"/>
+  <text x="490" y="265" fill="#22c55e" font-size="10" text-anchor="middle">serve /static/* (frontend)</text>
+  <rect x="610" y="248" width="220" height="24" rx="4" fill="#111827" stroke="rgba(148,163,184,0.15)"/>
+  <text x="720" y="265" fill="#22c55e" font-size="10" text-anchor="middle">proxy_pass /api/* --> upstream</text>
+
+  <!-- Load balance arrows to API replicas -->
+  <path d="M500 285 L400 340" stroke="#6366f1" stroke-width="2" marker-end="url(#dp-arr)" fill="none"/>
+  <path d="M600 285 L600 340" stroke="#6366f1" stroke-width="2" marker-end="url(#dp-arr)" fill="none"/>
+  <text x="550" y="318" fill="#6366f1" font-size="10" text-anchor="middle">load balance</text>
+
+  <!-- API Replica 1 -->
+  <rect x="280" y="345" width="220" height="100" rx="12" fill="#8b5cf6" fill-opacity="0.12" stroke="#8b5cf6" stroke-opacity="0.5" stroke-width="1.5"/>
+  <rect x="300" y="358" width="180" height="28" rx="6" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-opacity="0.4"/>
+  <text x="390" y="377" fill="#8b5cf6" font-size="13" font-weight="700" text-anchor="middle">API Replica 1</text>
+  <text x="390" y="405" fill="#f1f5f9" font-size="12" text-anchor="middle">bridgeai-api :8000</text>
+  <text x="390" y="425" fill="#94a3b8" font-size="10" text-anchor="middle">Gunicorn + Uvicorn workers</text>
+
+  <!-- API Replica 2 -->
+  <rect x="520" y="345" width="220" height="100" rx="12" fill="#8b5cf6" fill-opacity="0.12" stroke="#8b5cf6" stroke-opacity="0.5" stroke-width="1.5"/>
+  <rect x="540" y="358" width="180" height="28" rx="6" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-opacity="0.4"/>
+  <text x="630" y="377" fill="#8b5cf6" font-size="13" font-weight="700" text-anchor="middle">API Replica 2</text>
+  <text x="630" y="405" fill="#f1f5f9" font-size="12" text-anchor="middle">bridgeai-api :8000</text>
+  <text x="630" y="425" fill="#94a3b8" font-size="10" text-anchor="middle">Gunicorn + Uvicorn workers</text>
+
+  <!-- Worker (Celery) -->
+  <rect x="780" y="345" width="220" height="100" rx="12" fill="#f59e0b" fill-opacity="0.12" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1.5"/>
+  <rect x="800" y="358" width="180" height="28" rx="6" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-opacity="0.4"/>
+  <text x="890" y="377" fill="#f59e0b" font-size="13" font-weight="700" text-anchor="middle">Worker</text>
+  <text x="890" y="405" fill="#f1f5f9" font-size="12" text-anchor="middle">Celery + Beat</text>
+  <text x="890" y="425" fill="#94a3b8" font-size="10" text-anchor="middle">异步任务 / 定时任务</text>
+
+  <!-- Data Layer -->
+  <!-- PostgreSQL -->
+  <rect x="100" y="510" width="230" height="140" rx="12" fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="1.5"/>
+  <rect x="120" y="525" width="190" height="30" rx="6" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-opacity="0.4"/>
+  <text x="215" y="545" fill="#3b82f6" font-size="14" font-weight="700" text-anchor="middle">PostgreSQL</text>
+  <text x="215" y="575" fill="#f1f5f9" font-size="12" text-anchor="middle">:5432</text>
+  <rect x="130" y="592" width="170" height="22" rx="4" fill="#111827" stroke="rgba(148,163,184,0.15)"/>
+  <text x="215" y="607" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="monospace">pgdata (persistent vol)</text>
+  <text x="215" y="635" fill="#94a3b8" font-size="10" text-anchor="middle">+ Milvus + backups</text>
+
+  <!-- Redis -->
+  <rect x="380" y="510" width="230" height="140" rx="12" fill="#ef4444" fill-opacity="0.1" stroke="#ef4444" stroke-opacity="0.4" stroke-width="1.5"/>
+  <rect x="400" y="525" width="190" height="30" rx="6" fill="#ef4444" fill-opacity="0.15" stroke="#ef4444" stroke-opacity="0.4"/>
+  <text x="495" y="545" fill="#ef4444" font-size="14" font-weight="700" text-anchor="middle">Redis</text>
+  <text x="495" y="575" fill="#f1f5f9" font-size="12" text-anchor="middle">:6379</text>
+  <rect x="410" y="592" width="170" height="22" rx="4" fill="#111827" stroke="rgba(148,163,184,0.15)"/>
+  <text x="495" y="607" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="monospace">redis_data (persistent)</text>
+  <text x="495" y="635" fill="#94a3b8" font-size="10" text-anchor="middle">Cache + Broker + Memory</text>
+
+  <!-- MinIO -->
+  <rect x="660" y="510" width="230" height="140" rx="12" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.5"/>
+  <rect x="680" y="525" width="190" height="30" rx="6" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-opacity="0.4"/>
+  <text x="775" y="545" fill="#f59e0b" font-size="14" font-weight="700" text-anchor="middle">MinIO</text>
+  <text x="775" y="575" fill="#f1f5f9" font-size="12" text-anchor="middle">:9000</text>
+  <rect x="690" y="592" width="170" height="22" rx="4" fill="#111827" stroke="rgba(148,163,184,0.15)"/>
+  <text x="775" y="607" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="monospace">minio_data (persistent)</text>
+  <text x="775" y="635" fill="#94a3b8" font-size="10" text-anchor="middle">文件 / 知识库存储</text>
+
+  <!-- SSL badge -->
+  <rect x="40" y="175" width="120" height="45" rx="8" fill="#22c55e" fill-opacity="0.1" stroke="#22c55e" stroke-opacity="0.4"/>
+  <text x="100" y="195" fill="#22c55e" font-size="11" font-weight="700" text-anchor="middle">SSL / TLS</text>
+  <text x="100" y="212" fill="#94a3b8" font-size="9" text-anchor="middle">Let's Encrypt</text>
+  <line x1="160" y1="197" x2="345" y2="197" stroke="#22c55e" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Connections: API -> Data -->
+  <path d="M390 445 L215 505" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <path d="M500 445 L495 505" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <path d="M630 445 L775 505" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <path d="M890 445 L495 510" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,3" fill="none"/>
+
+  <!-- Persistent volumes label -->
+  <rect x="940" y="560" width="210" height="60" rx="10" fill="#111827" stroke="rgba(148,163,184,0.15)"/>
+  <text x="1045" y="582" fill="#f1f5f9" font-size="12" font-weight="600" text-anchor="middle">Persistent Volumes</text>
+  <text x="1045" y="602" fill="#94a3b8" font-size="10" text-anchor="middle">pgdata | redis_data | minio_data</text>
+</svg>

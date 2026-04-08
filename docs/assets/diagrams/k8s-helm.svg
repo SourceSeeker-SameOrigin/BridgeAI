@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.4)"/></filter>
+    <marker id="arrowB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#3b82f6"/></marker>
+    <marker id="arrowP" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#6366f1"/></marker>
+    <marker id="arrowG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#22c55e"/></marker>
+  </defs>
+  <rect width="1200" height="700" fill="#0a0e1a"/>
+  <text x="600" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="22" font-weight="700">Kubernetes / Helm 部署架构</text>
+  <text x="600" y="55" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="12">K8s Cluster Topology</text>
+
+  <!-- K8s Cluster boundary -->
+  <rect x="30" y="70" width="1140" height="600" rx="16" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="8,4"/>
+  <text x="55" y="92" fill="#6366f1" font-family="system-ui" font-size="12" font-weight="600">K8s Cluster</text>
+
+  <!-- Ingress -->
+  <rect x="80" y="105" width="1040" height="80" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="120" y="135" fill="#3b82f6" font-family="system-ui" font-size="16" font-weight="700">Ingress Controller</text>
+  <text x="310" y="135" fill="#94a3b8" font-family="system-ui" font-size="11">(nginx-ingress)</text>
+  <!-- Route rules -->
+  <rect x="500" y="115" width="240" height="28" rx="6" fill="#0f1729" stroke="#3b82f6" stroke-width="1"/>
+  <text x="620" y="134" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">/api/* &#x2192; api-svc:8000</text>
+  <rect x="760" y="115" width="240" height="28" rx="6" fill="#0f1729" stroke="#3b82f6" stroke-width="1"/>
+  <text x="880" y="134" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="11" font-weight="600">/ &#x2192; web-svc:3000</text>
+  <!-- SSL badge -->
+  <rect x="100" y="152" width="80" height="20" rx="4" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="1"/>
+  <text x="140" y="166" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="9" font-weight="600">TLS/SSL</text>
+  <rect x="200" y="152" width="120" height="20" rx="4" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-width="1"/>
+  <text x="260" y="166" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="9" font-weight="600">Rate Limiting</text>
+
+  <!-- Arrow Ingress → Services -->
+  <line x1="350" y1="185" x2="350" y2="225" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowB)"/>
+  <line x1="850" y1="185" x2="850" y2="225" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowB)"/>
+
+  <!-- API Service -->
+  <rect x="80" y="230" width="500" height="65" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="110" y="258" fill="#6366f1" font-family="system-ui" font-size="14" font-weight="700">api-svc</text>
+  <text x="200" y="258" fill="#94a3b8" font-family="system-ui" font-size="11">ClusterIP :8000</text>
+  <rect x="380" y="243" width="80" height="22" rx="4" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="1"/>
+  <text x="420" y="258" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="9">liveness</text>
+  <rect x="470" y="243" width="90" height="22" rx="4" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-width="1"/>
+  <text x="515" y="258" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="9">readiness</text>
+  <text x="110" y="280" fill="#94a3b8" font-family="system-ui" font-size="10">GET /health  |  GET /ready</text>
+
+  <!-- Web Service -->
+  <rect x="620" y="230" width="500" height="65" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="650" y="258" fill="#6366f1" font-family="system-ui" font-size="14" font-weight="700">web-svc</text>
+  <text x="740" y="258" fill="#94a3b8" font-family="system-ui" font-size="11">ClusterIP :3000</text>
+  <rect x="920" y="243" width="80" height="22" rx="4" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="1"/>
+  <text x="960" y="258" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="9">liveness</text>
+  <rect x="1010" y="243" width="90" height="22" rx="4" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-width="1"/>
+  <text x="1055" y="258" text-anchor="middle" fill="#3b82f6" font-family="system-ui" font-size="9">readiness</text>
+
+  <!-- Arrows Service → Deployments -->
+  <line x1="330" y1="295" x2="330" y2="330" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowP)"/>
+  <line x1="870" y1="295" x2="870" y2="330" stroke="#6366f1" stroke-width="2" marker-end="url(#arrowP)"/>
+
+  <!-- API Deployment -->
+  <rect x="80" y="335" width="500" height="150" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="110" y="360" fill="#8b5cf6" font-family="system-ui" font-size="14" font-weight="700">Deployment: bridgeai-api</text>
+  <text x="380" y="360" fill="#94a3b8" font-family="system-ui" font-size="11">replicas: 2-10</text>
+  <!-- Pods -->
+  <rect x="100" y="375" width="70" height="40" rx="6" fill="#0f1729" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="135" y="400" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">Pod 1</text>
+  <rect x="180" y="375" width="70" height="40" rx="6" fill="#0f1729" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="215" y="400" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">Pod 2</text>
+  <rect x="260" y="375" width="70" height="40" rx="6" fill="#0f1729" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="295" y="400" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">Pod 3</text>
+  <text x="345" y="400" fill="#64748b" font-family="system-ui" font-size="14">...</text>
+  <rect x="370" y="375" width="70" height="40" rx="6" fill="#0f1729" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="405" y="400" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">Pod 10</text>
+  <!-- HPA -->
+  <rect x="100" y="425" width="200" height="28" rx="6" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-width="1"/>
+  <text x="200" y="444" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="10" font-weight="600">HPA: CPU 70% / Mem 80%</text>
+  <text x="100" y="475" fill="#94a3b8" font-family="system-ui" font-size="9">resources: 512Mi-2Gi RAM, 250m-1000m CPU</text>
+
+  <!-- Web Deployment -->
+  <rect x="620" y="335" width="500" height="150" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="650" y="360" fill="#8b5cf6" font-family="system-ui" font-size="14" font-weight="700">Deployment: bridgeai-web</text>
+  <text x="920" y="360" fill="#94a3b8" font-family="system-ui" font-size="11">replicas: 2-6</text>
+  <!-- Pods -->
+  <rect x="640" y="375" width="70" height="40" rx="6" fill="#0f1729" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="675" y="400" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">Pod 1</text>
+  <rect x="720" y="375" width="70" height="40" rx="6" fill="#0f1729" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="755" y="400" text-anchor="middle" fill="#8b5cf6" font-family="system-ui" font-size="10">Pod 2</text>
+  <rect x="800" y="375" width="70" height="40" rx="6" fill="#0f1729" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="835" y="400" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">Pod 3</text>
+  <text x="885" y="400" fill="#64748b" font-family="system-ui" font-size="14">...</text>
+  <rect x="910" y="375" width="70" height="40" rx="6" fill="#0f1729" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="945" y="400" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">Pod 6</text>
+  <!-- HPA -->
+  <rect x="640" y="425" width="200" height="28" rx="6" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-width="1"/>
+  <text x="740" y="444" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="10" font-weight="600">HPA: CPU 70% / Mem 80%</text>
+  <text x="640" y="475" fill="#94a3b8" font-family="system-ui" font-size="9">resources: 256Mi-1Gi RAM, 100m-500m CPU</text>
+
+  <!-- ConfigMap + Secret -->
+  <rect x="80" y="530" width="350" height="110" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <text x="110" y="558" fill="#22c55e" font-family="system-ui" font-size="14" font-weight="700">ConfigMap</text>
+  <text x="110" y="578" fill="#94a3b8" font-family="system-ui" font-size="10">DATABASE_URL, REDIS_URL</text>
+  <text x="110" y="594" fill="#94a3b8" font-family="system-ui" font-size="10">MINIO_ENDPOINT, LOG_LEVEL</text>
+  <text x="110" y="610" fill="#94a3b8" font-family="system-ui" font-size="10">CORS_ORIGINS, APP_ENV</text>
+  <text x="110" y="626" fill="#94a3b8" font-family="system-ui" font-size="10">MAX_TOKENS, RATE_LIMIT</text>
+
+  <rect x="470" y="530" width="350" height="110" rx="12" fill="#111827" stroke="#ef4444" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="558" fill="#ef4444" font-family="system-ui" font-size="14" font-weight="700">Secret</text>
+  <text x="500" y="578" fill="#94a3b8" font-family="system-ui" font-size="10">OPENAI_API_KEY</text>
+  <text x="500" y="594" fill="#94a3b8" font-family="system-ui" font-size="10">ANTHROPIC_API_KEY</text>
+  <text x="500" y="610" fill="#94a3b8" font-family="system-ui" font-size="10">JWT_SECRET, DB_PASSWORD</text>
+  <text x="500" y="626" fill="#94a3b8" font-family="system-ui" font-size="10">MINIO_ACCESS_KEY/SECRET_KEY</text>
+
+  <!-- Namespace -->
+  <rect x="860" y="530" width="260" height="110" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="890" y="558" fill="#6366f1" font-family="system-ui" font-size="14" font-weight="700">Helm Values</text>
+  <text x="890" y="580" fill="#94a3b8" font-family="system-ui" font-size="10">namespace: bridgeai</text>
+  <text x="890" y="596" fill="#94a3b8" font-family="system-ui" font-size="10">image: bridgeai/api:latest</text>
+  <text x="890" y="612" fill="#94a3b8" font-family="system-ui" font-size="10">ingress.tls: true</text>
+  <text x="890" y="628" fill="#94a3b8" font-family="system-ui" font-size="10">persistence.enabled: true</text>
+
+  <!-- Arrows ConfigMap/Secret → Deployments -->
+  <path d="M255,530 L255,485" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <polygon points="250,488 255,480 260,488" fill="#22c55e"/>
+  <path d="M645,530 L645,485 L400,485" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <polygon points="403,480 395,485 403,490" fill="#ef4444"/>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" width="360" height="120">
+  <defs>
+    <linearGradient id="bridgeGradT" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="50%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#a78bfa"/>
+    </linearGradient>
+    <filter id="glowT">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Icon section (same as logo.svg but scaled) -->
+  <g transform="translate(10, 10) scale(0.83)">
+    <circle cx="60" cy="60" r="56" fill="#0a0e1a" stroke="url(#bridgeGradT)" stroke-width="2.5"/>
+    <path d="M 22 72 Q 60 20 98 72" fill="none" stroke="url(#bridgeGradT)" stroke-width="4.5" stroke-linecap="round" filter="url(#glowT)"/>
+    <line x1="18" y1="72" x2="102" y2="72" stroke="url(#bridgeGradT)" stroke-width="3.5" stroke-linecap="round"/>
+    <rect x="34" y="56" width="4" height="16" rx="2" fill="#6366f1"/>
+    <rect x="82" y="56" width="4" height="16" rx="2" fill="#8b5cf6"/>
+    <circle cx="28" cy="82" r="8" fill="none" stroke="#6366f1" stroke-width="2.5"/>
+    <circle cx="28" cy="82" r="3.5" fill="#6366f1"/>
+    <circle cx="92" cy="82" r="8" fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
+    <circle cx="92" cy="82" r="3.5" fill="#8b5cf6"/>
+    <line x1="28" y1="74" x2="28" y2="72" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+    <line x1="92" y1="74" x2="92" y2="72" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="60" cy="38" r="5" fill="url(#bridgeGradT)" filter="url(#glowT)"/>
+    <circle cx="60" cy="38" r="2.5" fill="#ffffff" opacity="0.9"/>
+    <line x1="36" y1="62" x2="36" y2="72" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/>
+    <line x1="48" y1="48" x2="48" y2="72" stroke="#7c6ef5" stroke-width="1.5" opacity="0.6"/>
+    <line x1="60" y1="43" x2="60" y2="72" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+    <line x1="72" y1="48" x2="72" y2="72" stroke="#7c6ef5" stroke-width="1.5" opacity="0.6"/>
+    <line x1="84" y1="62" x2="84" y2="72" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  </g>
+  <!-- Text: BridgeAI -->
+  <text x="130" y="52" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="38" font-weight="700" fill="url(#textGrad)">Bridge</text>
+  <text x="268" y="52" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="38" font-weight="300" fill="#a78bfa">AI</text>
+  <!-- Tagline -->
+  <text x="130" y="78" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#94a3b8" letter-spacing="2">Enterprise AI Agent Platform</text>
+</svg>

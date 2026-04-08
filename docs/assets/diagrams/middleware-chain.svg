@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="mw-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="mw-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <marker id="mw-arrow" viewBox="0 0 10 8" refX="10" refY="4" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#6366f1"/>
+    </marker>
+    <marker id="mw-arrow-err" viewBox="0 0 10 8" refX="10" refY="4" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#mw-bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="35" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="700">请求中间件处理链</text>
+  <text x="600" y="55" text-anchor="middle" fill="#94a3b8" font-size="13">Middleware Chain - Request / Response Pipeline</text>
+
+  <!-- Request -->
+  <g transform="translate(20, 140)">
+    <rect width="90" height="50" rx="12" fill="#6366f1" filter="url(#mw-shadow)"/>
+    <text x="45" y="30" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Request</text>
+  </g>
+
+  <!-- Arrow -->
+  <line x1="115" y1="165" x2="145" y2="165" stroke="#6366f1" stroke-width="2" marker-end="url(#mw-arrow)"/>
+
+  <!-- SecurityHeaders -->
+  <g transform="translate(155, 105)">
+    <rect width="185" height="120" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1.5" filter="url(#mw-shadow)"/>
+    <rect x="0" y="0" width="185" height="32" rx="12" fill="#3b82f6" opacity="0.15"/>
+    <text x="93" y="22" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700">SecurityHeaders</text>
+    <text x="12" y="52" fill="#94a3b8" font-size="10.5">CORS / X-Frame / CSP</text>
+    <text x="12" y="68" fill="#94a3b8" font-size="10.5">注入安全响应头</text>
+    <text x="12" y="92" fill="#22c55e" font-size="10">skip: /health, /docs</text>
+  </g>
+
+  <line x1="345" y1="165" x2="375" y2="165" stroke="#6366f1" stroke-width="2" marker-end="url(#mw-arrow)"/>
+
+  <!-- TenantContext -->
+  <g transform="translate(385, 105)">
+    <rect width="185" height="120" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1.5" filter="url(#mw-shadow)"/>
+    <rect x="0" y="0" width="185" height="32" rx="12" fill="#8b5cf6" opacity="0.15"/>
+    <text x="93" y="22" text-anchor="middle" fill="#8b5cf6" font-size="13" font-weight="700">TenantContext</text>
+    <text x="12" y="52" fill="#94a3b8" font-size="10.5">解析 X-Tenant-ID</text>
+    <text x="12" y="68" fill="#94a3b8" font-size="10.5">注入租户上下文</text>
+    <text x="12" y="92" fill="#ef4444" font-size="10">缺失 → 400 Bad Request</text>
+  </g>
+
+  <line x1="575" y1="165" x2="605" y2="165" stroke="#6366f1" stroke-width="2" marker-end="url(#mw-arrow)"/>
+
+  <!-- RateLimit -->
+  <g transform="translate(615, 105)">
+    <rect width="185" height="120" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1.5" filter="url(#mw-shadow)"/>
+    <rect x="0" y="0" width="185" height="32" rx="12" fill="#f59e0b" opacity="0.15"/>
+    <text x="93" y="22" text-anchor="middle" fill="#f59e0b" font-size="13" font-weight="700">RateLimit</text>
+    <text x="12" y="52" fill="#94a3b8" font-size="10.5">Redis 滑动窗口计数</text>
+    <text x="12" y="68" fill="#94a3b8" font-size="10.5">按用户/租户限流</text>
+    <text x="12" y="92" fill="#ef4444" font-size="10">超限 → 429 Too Many</text>
+  </g>
+
+  <line x1="805" y1="165" x2="835" y2="165" stroke="#6366f1" stroke-width="2" marker-end="url(#mw-arrow)"/>
+
+  <!-- ContentFilter -->
+  <g transform="translate(845, 105)">
+    <rect width="185" height="120" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1.5" filter="url(#mw-shadow)"/>
+    <rect x="0" y="0" width="185" height="32" rx="12" fill="#22c55e" opacity="0.15"/>
+    <text x="93" y="22" text-anchor="middle" fill="#22c55e" font-size="13" font-weight="700">ContentFilter</text>
+    <text x="12" y="52" fill="#94a3b8" font-size="10.5">敏感词过滤</text>
+    <text x="12" y="68" fill="#94a3b8" font-size="10.5">Prompt 注入检测</text>
+    <text x="12" y="92" fill="#ef4444" font-size="10">违规 → 400 Blocked</text>
+  </g>
+
+  <!-- Arrow to Handler -->
+  <line x1="938" y1="225" x2="938" y2="270" stroke="#6366f1" stroke-width="2"/>
+  <polygon points="938,280 932,268 944,268" fill="#6366f1"/>
+
+  <!-- Handler -->
+  <rect x="868" y="285" width="140" height="45" rx="12" fill="#6366f1" opacity="0.2" stroke="#6366f1" stroke-width="1.5" filter="url(#mw-shadow)"/>
+  <text x="938" y="313" text-anchor="middle" fill="#6366f1" font-size="14" font-weight="700">Handler</text>
+
+  <!-- Response back -->
+  <path d="M868,308 L80,308 Q65,308 65,293 L65,195" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <polygon points="65,190 59,205 71,205" fill="#22c55e"/>
+  <rect x="20" y="275" width="90" height="50" rx="12" fill="#22c55e" opacity="0.15" stroke="#22c55e" stroke-width="1.5" filter="url(#mw-shadow)"/>
+  <text x="65" y="305" text-anchor="middle" fill="#22c55e" font-size="14" font-weight="700">Response</text>
+
+  <!-- Error paths (downward) -->
+  <line x1="478" y1="225" x2="478" y2="350" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#mw-arrow-err)"/>
+  <text x="478" y="375" text-anchor="middle" fill="#ef4444" font-size="11">400</text>
+
+  <line x1="708" y1="225" x2="708" y2="350" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#mw-arrow-err)"/>
+  <text x="708" y="375" text-anchor="middle" fill="#ef4444" font-size="11">429</text>
+
+  <line x1="938" y1="225" x2="960" y2="225" stroke="none"/>
+  <!-- ContentFilter error path already implied by the box text -->
+
+  <!-- Legend -->
+  <g transform="translate(20, 350)">
+    <line x1="0" y1="0" x2="30" y2="0" stroke="#6366f1" stroke-width="2"/>
+    <text x="38" y="4" fill="#94a3b8" font-size="11">请求方向</text>
+    <line x1="120" y1="0" x2="150" y2="0" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="158" y="4" fill="#94a3b8" font-size="11">响应方向</text>
+    <line x1="250" y1="0" x2="280" y2="0" stroke="#ef4444" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="288" y="4" fill="#94a3b8" font-size="11">错误中断</text>
+  </g>
+</svg>

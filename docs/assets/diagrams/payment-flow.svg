@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="pf-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <marker id="pf-arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6366f1"/>
+    </marker>
+    <marker id="pf-arr-g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#22c55e"/>
+    </marker>
+    <marker id="pf-arr-y" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f59e0b"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="600" fill="url(#pf-bg)"/>
+  <text x="600" y="40" fill="#f1f5f9" font-size="22" font-weight="700" text-anchor="middle">支付流程</text>
+  <text x="600" y="62" fill="#94a3b8" font-size="13" text-anchor="middle">Payment Flow with Multi-Provider Support</text>
+
+  <!-- Row 1: Create Order -->
+  <rect x="40" y="100" width="180" height="70" rx="12" fill="#6366f1" fill-opacity="0.2" stroke="#6366f1" stroke-opacity="0.5" stroke-width="1.5"/>
+  <text x="130" y="130" fill="#6366f1" font-size="14" font-weight="700" text-anchor="middle">Create Order</text>
+  <text x="130" y="150" fill="#94a3b8" font-size="10" text-anchor="middle">tenant_id + plan_id</text>
+
+  <path d="M220 135 L280 135" stroke="#6366f1" stroke-width="2" marker-end="url(#pf-arr)"/>
+
+  <!-- Decision: Check payment method -->
+  <polygon points="380,100 480,135 380,170 280,135" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1.5"/>
+  <text x="380" y="132" fill="#f59e0b" font-size="11" font-weight="600" text-anchor="middle">Check</text>
+  <text x="380" y="148" fill="#f59e0b" font-size="11" font-weight="600" text-anchor="middle">Payment</text>
+
+  <!-- Branch: WeChat -->
+  <path d="M380 100 L380 30 L620 30 L620 100" stroke="#22c55e" stroke-width="2" marker-end="url(#pf-arr-g)" fill="none"/>
+  <text x="500" y="24" fill="#22c55e" font-size="11" text-anchor="middle" font-weight="600">WeChat configured?</text>
+
+  <rect x="540" y="100" width="160" height="70" rx="12" fill="#22c55e" fill-opacity="0.12" stroke="#22c55e" stroke-opacity="0.4" stroke-width="1.5"/>
+  <text x="620" y="128" fill="#22c55e" font-size="13" font-weight="700" text-anchor="middle">wechat_pay()</text>
+  <text x="620" y="150" fill="#94a3b8" font-size="10" text-anchor="middle">WeChatPaySDK</text>
+
+  <path d="M700 135 L760 135" stroke="#22c55e" stroke-width="2" marker-end="url(#pf-arr-g)"/>
+
+  <rect x="770" y="105" width="160" height="60" rx="10" fill="#22c55e" fill-opacity="0.08" stroke="#22c55e" stroke-opacity="0.3"/>
+  <text x="850" y="130" fill="#22c55e" font-size="12" font-weight="600" text-anchor="middle">return code_url</text>
+  <text x="850" y="150" fill="#94a3b8" font-size="10" text-anchor="middle">二维码支付链接</text>
+
+  <!-- Branch: Alipay -->
+  <path d="M480 135 L540 215" stroke="#3b82f6" stroke-width="2" marker-end="url(#pf-arr)" fill="none"/>
+  <text x="530" y="180" fill="#3b82f6" font-size="11" text-anchor="middle" font-weight="600">Alipay?</text>
+
+  <rect x="540" y="200" width="160" height="70" rx="12" fill="#3b82f6" fill-opacity="0.12" stroke="#3b82f6" stroke-opacity="0.4" stroke-width="1.5"/>
+  <text x="620" y="228" fill="#3b82f6" font-size="13" font-weight="700" text-anchor="middle">alipay_pay()</text>
+  <text x="620" y="250" fill="#94a3b8" font-size="10" text-anchor="middle">AlipaySDK</text>
+
+  <path d="M700 235 L760 235" stroke="#3b82f6" stroke-width="2" marker-end="url(#pf-arr)"/>
+
+  <rect x="770" y="210" width="160" height="60" rx="10" fill="#3b82f6" fill-opacity="0.08" stroke="#3b82f6" stroke-opacity="0.3"/>
+  <text x="850" y="235" fill="#3b82f6" font-size="12" font-weight="600" text-anchor="middle">return payment_url</text>
+  <text x="850" y="255" fill="#94a3b8" font-size="10" text-anchor="middle">跳转支付页面</text>
+
+  <!-- Branch: Neither -> Simulate -->
+  <path d="M380 170 L380 315" stroke="#f59e0b" stroke-width="2" marker-end="url(#pf-arr-y)" fill="none"/>
+  <text x="395" y="250" fill="#f59e0b" font-size="11" text-anchor="start" font-weight="600">Neither?</text>
+
+  <rect x="300" y="320" width="160" height="60" rx="12" fill="#f59e0b" fill-opacity="0.12" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.5"/>
+  <text x="380" y="348" fill="#f59e0b" font-size="13" font-weight="700" text-anchor="middle">simulate_pay()</text>
+  <text x="380" y="366" fill="#94a3b8" font-size="10" text-anchor="middle">模拟支付 (开发环境)</text>
+
+  <!-- Callback flow (bottom section) -->
+  <rect x="40" y="430" width="1120" height="140" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+  <text x="600" y="458" fill="#f1f5f9" font-size="16" font-weight="700" text-anchor="middle">Callback Flow (支付回调)</text>
+
+  <!-- Callback steps -->
+  <rect x="70" y="475" width="160" height="65" rx="8" fill="#8b5cf6" fill-opacity="0.1" stroke="#8b5cf6" stroke-opacity="0.4"/>
+  <text x="150" y="500" fill="#8b5cf6" font-size="12" font-weight="600" text-anchor="middle">Platform Callback</text>
+  <text x="150" y="520" fill="#94a3b8" font-size="10" text-anchor="middle">微信/支付宝回调</text>
+  <text x="150" y="533" fill="#94a3b8" font-size="10" text-anchor="middle">/api/pay/callback</text>
+
+  <path d="M230 508 L280 508" stroke="#6366f1" stroke-width="2" marker-end="url(#pf-arr)"/>
+
+  <rect x="290" y="475" width="160" height="65" rx="8" fill="#ef4444" fill-opacity="0.1" stroke="#ef4444" stroke-opacity="0.4"/>
+  <text x="370" y="500" fill="#ef4444" font-size="12" font-weight="600" text-anchor="middle">Verify Signature</text>
+  <text x="370" y="520" fill="#94a3b8" font-size="10" text-anchor="middle">验证签名防伪造</text>
+  <text x="370" y="533" fill="#94a3b8" font-size="10" text-anchor="middle">HMAC-SHA256</text>
+
+  <path d="M450 508 L500 508" stroke="#6366f1" stroke-width="2" marker-end="url(#pf-arr)"/>
+
+  <rect x="510" y="475" width="160" height="65" rx="8" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-opacity="0.4"/>
+  <text x="590" y="500" fill="#f59e0b" font-size="12" font-weight="600" text-anchor="middle">Update Order</text>
+  <text x="590" y="520" fill="#94a3b8" font-size="10" text-anchor="middle">更新订单状态</text>
+  <text x="590" y="533" fill="#94a3b8" font-size="10" text-anchor="middle">status = paid</text>
+
+  <path d="M670 508 L720 508" stroke="#6366f1" stroke-width="2" marker-end="url(#pf-arr)"/>
+
+  <rect x="730" y="475" width="160" height="65" rx="8" fill="#22c55e" fill-opacity="0.1" stroke="#22c55e" stroke-opacity="0.4"/>
+  <text x="810" y="500" fill="#22c55e" font-size="12" font-weight="600" text-anchor="middle">Upgrade Plan</text>
+  <text x="810" y="520" fill="#94a3b8" font-size="10" text-anchor="middle">升级租户套餐</text>
+  <text x="810" y="533" fill="#94a3b8" font-size="10" text-anchor="middle">tenant.plan = pro</text>
+
+  <path d="M890 508 L940 508" stroke="#22c55e" stroke-width="2" marker-end="url(#pf-arr-g)"/>
+
+  <rect x="950" y="475" width="180" height="65" rx="8" fill="#6366f1" fill-opacity="0.1" stroke="#6366f1" stroke-opacity="0.4"/>
+  <text x="1040" y="500" fill="#6366f1" font-size="12" font-weight="600" text-anchor="middle">Notify User</text>
+  <text x="1040" y="520" fill="#94a3b8" font-size="10" text-anchor="middle">发送支付成功通知</text>
+  <text x="1040" y="533" fill="#94a3b8" font-size="10" text-anchor="middle">邮件 / 站内信</text>
+</svg>

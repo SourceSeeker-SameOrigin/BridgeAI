@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1"/><stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.3)"/></filter>
+  </defs>
+  <rect width="1000" height="500" fill="#0a0e1a"/>
+  <text x="500" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui" font-size="20" font-weight="700">Zustand Store 全景</text>
+
+  <!-- useAuthStore -->
+  <rect x="30" y="65" width="290" height="280" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="30" y="65" width="290" height="40" rx="12" fill="#22c55e" opacity="0.15"/>
+  <text x="175" y="90" text-anchor="middle" fill="#22c55e" font-family="system-ui" font-size="15" font-weight="700">useAuthStore</text>
+  <text x="175" y="108" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">stores/useAuthStore.ts</text>
+
+  <text x="50" y="135" fill="#94a3b8" font-family="system-ui" font-size="11" font-weight="600">State</text>
+  <text x="60" y="158" fill="#8b5cf6" font-family="system-ui" font-size="11">token</text><text x="160" y="158" fill="#64748b" font-family="system-ui" font-size="11">string | null</text>
+  <text x="60" y="178" fill="#8b5cf6" font-family="system-ui" font-size="11">user</text><text x="160" y="178" fill="#64748b" font-family="system-ui" font-size="11">User | null</text>
+  <text x="60" y="198" fill="#8b5cf6" font-family="system-ui" font-size="11">isAuthenticated</text><text x="200" y="198" fill="#64748b" font-family="system-ui" font-size="11">boolean</text>
+
+  <line x1="50" y1="212" x2="300" y2="212" stroke="#94a3b8" stroke-width="0.5" opacity="0.3"/>
+  <text x="50" y="232" fill="#94a3b8" font-family="system-ui" font-size="11" font-weight="600">Actions</text>
+  <text x="60" y="255" fill="#22c55e" font-family="system-ui" font-size="11">login(credentials)</text>
+  <text x="60" y="275" fill="#22c55e" font-family="system-ui" font-size="11">logout()</text>
+  <text x="60" y="295" fill="#22c55e" font-family="system-ui" font-size="11">checkAuth()</text>
+  <text x="60" y="315" fill="#22c55e" font-family="system-ui" font-size="11">updateUser(user)</text>
+
+  <rect x="50" y="330" width="250" height="10" rx="5" fill="#22c55e" opacity="0.2"/>
+  <text x="175" y="328" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="9">persist: localStorage</text>
+
+  <!-- useChatStore -->
+  <rect x="355" y="65" width="290" height="280" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="355" y="65" width="290" height="40" rx="12" fill="#6366f1" opacity="0.15"/>
+  <text x="500" y="90" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="15" font-weight="700">useChatStore</text>
+  <text x="500" y="108" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">stores/useChatStore.ts</text>
+
+  <text x="375" y="135" fill="#94a3b8" font-family="system-ui" font-size="11" font-weight="600">State</text>
+  <text x="385" y="158" fill="#8b5cf6" font-family="system-ui" font-size="11">conversations</text><text x="510" y="158" fill="#64748b" font-family="system-ui" font-size="11">Conversation[]</text>
+  <text x="385" y="178" fill="#8b5cf6" font-family="system-ui" font-size="11">messages</text><text x="510" y="178" fill="#64748b" font-family="system-ui" font-size="11">Message[]</text>
+  <text x="385" y="198" fill="#8b5cf6" font-family="system-ui" font-size="11">isStreaming</text><text x="510" y="198" fill="#64748b" font-family="system-ui" font-size="11">boolean</text>
+  <text x="385" y="218" fill="#8b5cf6" font-family="system-ui" font-size="11">activeConvId</text><text x="510" y="218" fill="#64748b" font-family="system-ui" font-size="11">string | null</text>
+
+  <line x1="375" y1="232" x2="625" y2="232" stroke="#94a3b8" stroke-width="0.5" opacity="0.3"/>
+  <text x="375" y="252" fill="#94a3b8" font-family="system-ui" font-size="11" font-weight="600">Actions</text>
+  <text x="385" y="275" fill="#6366f1" font-family="system-ui" font-size="11">loadConversations()</text>
+  <text x="385" y="295" fill="#6366f1" font-family="system-ui" font-size="11">loadMessages(convId)</text>
+  <text x="385" y="315" fill="#6366f1" font-family="system-ui" font-size="11">appendChunk(content)</text>
+  <text x="385" y="335" fill="#6366f1" font-family="system-ui" font-size="11">setStreaming(bool)</text>
+
+  <!-- useAgentStore -->
+  <rect x="680" y="65" width="290" height="280" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="680" y="65" width="290" height="40" rx="12" fill="#f59e0b" opacity="0.15"/>
+  <text x="825" y="90" text-anchor="middle" fill="#f59e0b" font-family="system-ui" font-size="15" font-weight="700">useAgentStore</text>
+  <text x="825" y="108" text-anchor="middle" fill="#64748b" font-family="system-ui" font-size="10">stores/useAgentStore.ts</text>
+
+  <text x="700" y="135" fill="#94a3b8" font-family="system-ui" font-size="11" font-weight="600">State</text>
+  <text x="710" y="158" fill="#8b5cf6" font-family="system-ui" font-size="11">agents</text><text x="830" y="158" fill="#64748b" font-family="system-ui" font-size="11">Agent[]</text>
+  <text x="710" y="178" fill="#8b5cf6" font-family="system-ui" font-size="11">selectedAgent</text><text x="830" y="178" fill="#64748b" font-family="system-ui" font-size="11">Agent | null</text>
+  <text x="710" y="198" fill="#8b5cf6" font-family="system-ui" font-size="11">loading</text><text x="830" y="198" fill="#64748b" font-family="system-ui" font-size="11">boolean</text>
+
+  <line x1="700" y1="212" x2="950" y2="212" stroke="#94a3b8" stroke-width="0.5" opacity="0.3"/>
+  <text x="700" y="232" fill="#94a3b8" font-family="system-ui" font-size="11" font-weight="600">Actions</text>
+  <text x="710" y="255" fill="#f59e0b" font-family="system-ui" font-size="11">loadAgents()</text>
+  <text x="710" y="275" fill="#f59e0b" font-family="system-ui" font-size="11">selectAgent(agent)</text>
+  <text x="710" y="295" fill="#f59e0b" font-family="system-ui" font-size="11">createAgent(data)</text>
+  <text x="710" y="315" fill="#f59e0b" font-family="system-ui" font-size="11">updateAgent(id, data)</text>
+  <text x="710" y="335" fill="#f59e0b" font-family="system-ui" font-size="11">deleteAgent(id)</text>
+
+  <!-- Note about Chat page -->
+  <rect x="100" y="390" width="800" height="90" rx="12" fill="#111827" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="6,3" filter="url(#shadow)"/>
+  <text x="500" y="418" text-anchor="middle" fill="#ef4444" font-family="system-ui" font-size="13" font-weight="600">Note: Chat 页面使用 local useState 而非全局 Store</text>
+  <text x="500" y="442" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="11">Chat 页面的 conversations、messages、isStreaming、realConvIdRef 等状态使用 React useState/useRef 本地管理</text>
+  <text x="500" y="462" text-anchor="middle" fill="#94a3b8" font-family="system-ui" font-size="11">原因: 流式数据频繁更新，本地状态避免不必要的全局 re-render，同时 useRef 用于 SSE 回调中获取最新会话 ID</text>
+</svg>

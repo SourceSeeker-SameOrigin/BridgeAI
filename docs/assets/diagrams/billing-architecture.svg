@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="ba-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#0d1225"/>
+    </linearGradient>
+    <filter id="ba-shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="ba-arr" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#94a3b8"/>
+    </marker>
+    <marker id="ba-arr-g" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#22c55e"/>
+    </marker>
+    <marker id="ba-arr-r" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="500" fill="url(#ba-bg)"/>
+
+  <text x="500" y="38" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="700">计费架构</text>
+  <text x="500" y="58" text-anchor="middle" fill="#94a3b8" font-size="13">BillingService - Usage Tracking &amp; Quota Enforcement</text>
+
+  <!-- 3 Usage Type Sources -->
+  <!-- Chat -->
+  <g transform="translate(100, 140)">
+    <rect x="-70" y="-35" width="140" height="70" rx="12" fill="#111827" stroke="#6366f1" stroke-width="2" filter="url(#ba-shadow)"/>
+    <text x="0" y="-10" text-anchor="middle" fill="#6366f1" font-size="14" font-weight="700">Chat</text>
+    <text x="0" y="10" text-anchor="middle" fill="#94a3b8" font-size="11">tokens consumed</text>
+    <text x="0" y="24" text-anchor="middle" fill="#6366f1" font-size="10">usage_type: "chat"</text>
+  </g>
+
+  <!-- MCP -->
+  <g transform="translate(280, 140)">
+    <rect x="-70" y="-35" width="140" height="70" rx="12" fill="#111827" stroke="#8b5cf6" stroke-width="2" filter="url(#ba-shadow)"/>
+    <text x="0" y="-10" text-anchor="middle" fill="#8b5cf6" font-size="14" font-weight="700">MCP</text>
+    <text x="0" y="10" text-anchor="middle" fill="#94a3b8" font-size="11">tool calls</text>
+    <text x="0" y="24" text-anchor="middle" fill="#8b5cf6" font-size="10">usage_type: "mcp"</text>
+  </g>
+
+  <!-- RAG -->
+  <g transform="translate(460, 140)">
+    <rect x="-70" y="-35" width="140" height="70" rx="12" fill="#111827" stroke="#3b82f6" stroke-width="2" filter="url(#ba-shadow)"/>
+    <text x="0" y="-10" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="700">RAG</text>
+    <text x="0" y="10" text-anchor="middle" fill="#94a3b8" font-size="11">search calls</text>
+    <text x="0" y="24" text-anchor="middle" fill="#3b82f6" font-size="10">usage_type: "rag"</text>
+  </g>
+
+  <!-- Arrows down to UsageRecord -->
+  <line x1="100" y1="178" x2="280" y2="230" stroke="#6366f1" stroke-width="1.5" opacity="0.6"/>
+  <line x1="280" y1="178" x2="310" y2="230" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+  <line x1="460" y1="178" x2="340" y2="230" stroke="#3b82f6" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- UsageRecord Table -->
+  <g transform="translate(310, 275)">
+    <rect x="-130" y="-42" width="260" height="84" rx="12" fill="#111827" stroke="#f59e0b" stroke-width="2" filter="url(#ba-shadow)"/>
+    <text x="0" y="-20" text-anchor="middle" fill="#f59e0b" font-size="14" font-weight="700">UsageRecord</text>
+    <line x1="-110" y1="-10" x2="110" y2="-10" stroke="rgba(148,163,184,0.15)"/>
+    <text x="-100" y="6" fill="#94a3b8" font-size="9" font-family="monospace">tenant_id | type | amount</text>
+    <text x="-100" y="20" fill="#94a3b8" font-size="9" font-family="monospace">model | timestamp | meta</text>
+    <text x="0" y="35" text-anchor="middle" fill="#64748b" font-size="9">PostgreSQL table</text>
+  </g>
+
+  <!-- Arrow to check_quota -->
+  <line x1="445" y1="275" x2="530" y2="275" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ba-arr)"/>
+  <text x="487" y="267" text-anchor="middle" fill="#94a3b8" font-size="10">query</text>
+
+  <!-- check_quota -->
+  <g transform="translate(680, 275)">
+    <rect x="-135" y="-42" width="270" height="84" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#ba-shadow)"/>
+    <text x="0" y="-20" text-anchor="middle" fill="#22c55e" font-size="14" font-weight="700">check_quota()</text>
+    <line x1="-115" y1="-10" x2="115" y2="-10" stroke="rgba(148,163,184,0.15)"/>
+    <text x="0" y="6" text-anchor="middle" fill="#f1f5f9" font-size="11">load plan limits</text>
+    <text x="0" y="22" text-anchor="middle" fill="#f1f5f9" font-size="11">compare monthly_usage vs limit</text>
+    <text x="0" y="36" text-anchor="middle" fill="#94a3b8" font-size="9">SUM(amount) WHERE month=current</text>
+  </g>
+
+  <!-- Plan limits table -->
+  <g transform="translate(680, 120)">
+    <rect x="-180" y="-42" width="360" height="84" rx="12" fill="#111827" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+    <text x="0" y="-22" text-anchor="middle" fill="#f1f5f9" font-size="13" font-weight="600">Plan Limits (Monthly)</text>
+    <line x1="-160" y1="-12" x2="160" y2="-12" stroke="rgba(148,163,184,0.15)"/>
+    <!-- Headers -->
+    <text x="-130" y="4" fill="#94a3b8" font-size="10" font-weight="600">Plan</text>
+    <text x="-30" y="4" fill="#94a3b8" font-size="10" font-weight="600">Calls</text>
+    <text x="80" y="4" fill="#94a3b8" font-size="10" font-weight="600">Tokens</text>
+    <!-- Free -->
+    <rect x="-155" y="10" width="50" height="16" rx="4" fill="#ef4444" fill-opacity="0.2"/>
+    <text x="-130" y="22" fill="#ef4444" font-size="10">Free</text>
+    <text x="-30" y="22" fill="#f1f5f9" font-size="10">100</text>
+    <text x="80" y="22" fill="#f1f5f9" font-size="10">50K</text>
+    <!-- Pro -->
+    <rect x="-155" y="28" width="50" height="16" rx="4" fill="#6366f1" fill-opacity="0.2"/>
+    <text x="-130" y="40" fill="#6366f1" font-size="10">Pro</text>
+    <text x="-30" y="40" fill="#f1f5f9" font-size="10">5,000</text>
+    <text x="80" y="40" fill="#f1f5f9" font-size="10">1M</text>
+    <!-- Enterprise -->
+    <rect x="-155" y="46" width="80" height="16" rx="4" fill="#22c55e" fill-opacity="0.2"/>
+    <text x="-115" y="58" fill="#22c55e" font-size="10">Enterprise</text>
+    <text x="-30" y="58" fill="#f1f5f9" font-size="10">50,000</text>
+    <text x="80" y="58" fill="#f1f5f9" font-size="10">10M</text>
+  </g>
+
+  <!-- Arrow from plan limits to check_quota -->
+  <line x1="680" y1="162" x2="680" y2="230" stroke="rgba(148,163,184,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- Allow / Deny outputs -->
+  <!-- Allow -->
+  <line x1="680" y1="320" x2="580" y2="380" stroke="#22c55e" stroke-width="1.5" marker-end="url(#ba-arr-g)"/>
+  <g transform="translate(520, 420)">
+    <rect x="-80" y="-30" width="160" height="60" rx="12" fill="#111827" stroke="#22c55e" stroke-width="2" filter="url(#ba-shadow)"/>
+    <text x="0" y="-8" text-anchor="middle" fill="#22c55e" font-size="16" font-weight="700">Allow</text>
+    <text x="0" y="12" text-anchor="middle" fill="#94a3b8" font-size="11">usage &lt; limit</text>
+    <text x="0" y="26" text-anchor="middle" fill="#22c55e" font-size="10">200 OK</text>
+  </g>
+
+  <!-- Deny -->
+  <line x1="680" y1="320" x2="780" y2="380" stroke="#ef4444" stroke-width="1.5" marker-end="url(#ba-arr-r)"/>
+  <g transform="translate(840, 420)">
+    <rect x="-80" y="-30" width="160" height="60" rx="12" fill="#111827" stroke="#ef4444" stroke-width="2" filter="url(#ba-shadow)"/>
+    <text x="0" y="-8" text-anchor="middle" fill="#ef4444" font-size="16" font-weight="700">Deny</text>
+    <text x="0" y="12" text-anchor="middle" fill="#94a3b8" font-size="11">usage >= limit</text>
+    <text x="0" y="26" text-anchor="middle" fill="#ef4444" font-size="10">429 Too Many Requests</text>
+  </g>
+
+  <!-- Labels on branches -->
+  <text x="610" y="365" fill="#22c55e" font-size="10">within quota</text>
+  <text x="740" y="365" fill="#ef4444" font-size="10">exceeded</text>
+</svg>

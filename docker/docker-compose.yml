@@ -1,0 +1,167 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: bridgeai-postgres
+    environment:
+      POSTGRES_DB: bridgeai
+      POSTGRES_USER: bridgeai
+      POSTGRES_PASSWORD: bridgeai_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bridgeai -d bridgeai"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: bridgeai-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:latest
+    container_name: bridgeai-minio
+    environment:
+      MINIO_ROOT_USER: bridgeai
+      MINIO_ROOT_PASSWORD: bridgeai_dev
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - miniodata:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  etcd:
+    container_name: bridgeai-etcd
+    image: quay.io/coreos/etcd:v3.5.18
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+      - ALLOW_NONE_AUTHENTICATION=yes
+    volumes:
+      - etcd_data:/etcd
+    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio-milvus:
+    container_name: bridgeai-minio-milvus
+    image: minio/minio:RELEASE.2023-03-20T20-16-18Z
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    volumes:
+      - milvus_minio_data:/minio_data
+    command: minio server /minio_data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  milvus:
+    container_name: bridgeai-milvus
+    image: milvusdb/milvus:v2.4.17
+    command: ["milvus", "run", "standalone"]
+    environment:
+      ETCD_ENDPOINTS: etcd:2379
+      MINIO_ADDRESS: minio-milvus:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    ports:
+      - "19530:19530"
+      - "9091:9091"
+    volumes:
+      - milvus_data:/var/lib/milvus
+    depends_on:
+      etcd:
+        condition: service_healthy
+      minio-milvus:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  bridgeai-api:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: bridgeai-api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://bridgeai:bridgeai_dev@postgres:5432/bridgeai
+      REDIS_URL: redis://redis:6379/0
+      MINIO_ENDPOINT: minio:9000
+      MINIO_ACCESS_KEY: bridgeai
+      MINIO_SECRET_KEY: bridgeai_dev
+      DEEPSEEK_API_KEY: sk-1acff979ec8d416999ab468b9ac3598b
+      JWT_SECRET: bridgeai_jwt_secret_dev
+      MILVUS_URI: http://milvus:19530
+      EMBEDDING_MODEL: bge-m3
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      HTTP_PROXY: http://host.docker.internal:1087
+      HTTPS_PROXY: http://host.docker.internal:1087
+      NO_PROXY: postgres,redis,minio,milvus,etcd,localhost,127.0.0.1
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      milvus:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/system/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    restart: unless-stopped
+
+  bridgeai-web:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: bridgeai-web
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_TARGET: http://bridgeai-api:8000
+    depends_on:
+      bridgeai-api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:
+  miniodata:
+  etcd_data:
+  milvus_data:
+  milvus_minio_data:
