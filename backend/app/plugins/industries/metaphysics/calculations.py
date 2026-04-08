@@ -705,28 +705,34 @@ def dayun_liunian(
 
     jie_dates.sort(key=lambda x: x[1])
 
+    # 构建精确节气日期（含时间），节气日默认为当天中午12:00以提高精度
     if is_shun:
         # 找出生日之后的最近的节
         next_jie_days = None
         for name, doy in jie_dates:
             if doy > birth_day_of_year:
-                next_jie_days = doy - birth_day_of_year
+                # 精确计算：节气当天算整天+1（因为节气时刻通常未知，按保守估计加半天）
+                next_jie_days = doy - birth_day_of_year + 1
                 break
         if next_jie_days is None:
-            next_jie_days = 30  # 跨年的情况，简化处理
+            next_jie_days = 30
     else:
         # 找出生日之前的最近的节
         prev_jie_days = None
         for name, doy in reversed(jie_dates):
             if doy <= birth_day_of_year:
-                prev_jie_days = birth_day_of_year - doy
+                prev_jie_days = birth_day_of_year - doy + 1
                 break
         if prev_jie_days is None:
             prev_jie_days = 30
         next_jie_days = prev_jie_days
 
-    # 每3天折算1年，余数折算月
-    start_age = round(next_jie_days / 3)
+    # 每3天折算1年，余1天=4个月，余2天=8个月
+    # 余数超过4个月(即余数>=1天)则进1岁，与问真等主流排盘软件一致
+    base_age = next_jie_days // 3
+    extra_days = next_jie_days % 3
+    extra_months = extra_days * 4
+    start_age = base_age + (1 if extra_months > 0 else 0)
     if start_age < 1:
         start_age = 1
 
