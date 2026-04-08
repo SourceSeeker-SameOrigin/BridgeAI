@@ -60,9 +60,20 @@ npm run dev
 
 ### 5. 验证
 
-- 后端 API 文档：http://localhost:8000/docs
-- 前端页面：http://localhost:5173
-- 健康检查：`curl http://localhost:8000/api/v1/system/health`
+| 服务 | 地址 | 说明 |
+|------|------|------|
+| 前端 | http://localhost:5173 | Web 界面 |
+| 后端 API | http://localhost:8000 | REST API |
+| API 文档 | http://localhost:8000/docs | Swagger 文档 |
+| MinIO | http://localhost:9001 | 对象存储控制台 |
+| Prometheus | http://localhost:9090 | 监控 |
+| Grafana | http://localhost:3001 | 监控大盘 |
+| Milvus | localhost:19530 | 向量数据库 |
+| PostgreSQL | localhost:5432 | 数据库 |
+| Redis | localhost:6379 | 缓存 |
+| Ollama | http://localhost:11434 | 本地模型 |
+
+健康检查：`curl http://localhost:8000/api/v1/system/health`
 
 ## 代码规范
 
