@@ -62,7 +62,20 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 cd frontend && npm install && npm run dev
 ```
 
-访问 http://localhost:5173 开始使用，API 文档：http://localhost:8000/docs
+### 服务访问地址
+
+| 服务 | 地址 | 说明 |
+|------|------|------|
+| **前端** | http://localhost:5173 | Web 管理界面 |
+| **后端 API** | http://localhost:8000 | REST API |
+| **API 文档** | http://localhost:8000/docs | Swagger 交互式文档 |
+| **MinIO Console** | http://localhost:9001 | 对象存储管理（bridgeai / bridgeai_dev） |
+| **Prometheus** | http://localhost:9090 | 监控指标 |
+| **Grafana** | http://localhost:3001 | 监控大盘（admin / bridgeai） |
+| **Milvus** | localhost:19530 | 向量数据库 |
+| **PostgreSQL** | localhost:5432 | 关系型数据库 |
+| **Redis** | localhost:6379 | 缓存 |
+| **Ollama** | http://localhost:11434 | 本地 LLM / Embedding |
 
 ## Screenshots
 
