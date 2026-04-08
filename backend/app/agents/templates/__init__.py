@@ -2,12 +2,14 @@
 
 from app.agents.templates.customer_service import CUSTOMER_SERVICE_TEMPLATE
 from app.agents.templates.data_analyst import DATA_ANALYST_TEMPLATE
+from app.agents.templates.metaphysics_assistant import METAPHYSICS_ASSISTANT_TEMPLATE
 from app.agents.templates.office_assistant import OFFICE_ASSISTANT_TEMPLATE
 
 ALL_TEMPLATES: list[dict] = [
     CUSTOMER_SERVICE_TEMPLATE,
     DATA_ANALYST_TEMPLATE,
     OFFICE_ASSISTANT_TEMPLATE,
+    METAPHYSICS_ASSISTANT_TEMPLATE,
 ]
 
 
