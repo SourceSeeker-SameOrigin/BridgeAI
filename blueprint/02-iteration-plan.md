@@ -25,7 +25,7 @@
 | 用户认证模块 | JWT 登录/注册 | 注册 → 登录 → 获取 Token → 访问受保护接口 |
 | API Key 管理 | 创建/吊销 API Key | 通过 API Key 访问接口成功 |
 | Docker Compose 开发环境 | 一键启动 | `docker compose up` 全部服务正常 |
-| React 项目初始化 | 可运行的前端骨架 | 访问 localhost:3000 看到页面 |
+| React 项目初始化 | 可运行的前端骨架 | 访问 localhost:5173 看到页面 |
 | 登录/注册页面 | 前端认证流程 | 能登录进入主界面 |
 
 ### Sprint 1.2（Week 2）：Agent 引擎 + MCP
