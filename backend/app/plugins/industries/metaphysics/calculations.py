@@ -3,7 +3,7 @@
 LLM 擅长解读但不擅长精确计算，因此本模块负责所有需要精确数值的运算，
 将结构化结果返回给 LLM 做解读。
 
-依赖: cnlunar, lunarcalendar, ephem
+依赖: lunar-python (寿星万年历), ephem
 """
 
 from __future__ import annotations
@@ -13,9 +13,8 @@ import math
 from dataclasses import dataclass, field
 from typing import Any
 
-import cnlunar
 import ephem
-from lunarcalendar import Converter, Lunar, Solar
+from lunar_python import EightChar, Lunar, Solar
 
 # ---------------------------------------------------------------------------
 # 常量表
@@ -117,6 +116,7 @@ CITY_COORDS: dict[str, tuple[float, float]] = {
     "呼和浩特": (40.8414, 111.7519), "银川": (38.4872, 106.2309),
     "西宁": (36.6171, 101.7782), "台北": (25.0330, 121.5654),
     "香港": (22.3193, 114.1694), "澳门": (22.1987, 113.5439),
+    "宝鸡": (34.3617, 107.2372),
 }
 
 # 星座分界 (月, 日, 星座名)
@@ -488,7 +488,10 @@ def bazi_paipan(
     gender: str,
     birth_place: str = "北京",
 ) -> dict[str, Any]:
-    """完整的八字排盘计算。"""
+    """完整的八字排盘计算。
+
+    使用 lunar-python (寿星万年历) 进行秒级精度的八字排盘。
+    """
     year, month, day = map(int, birth_date.split("-"))
     hour, minute = map(int, birth_time.split(":"))
 
@@ -497,43 +500,42 @@ def bazi_paipan(
     dt = datetime.datetime(year, month, day, hour, minute)
     true_solar_dt = calc_true_solar_time(dt, longitude)
 
-    # 使用 cnlunar 获取干支
-    lunar = cnlunar.Lunar(true_solar_dt)
+    # 使用 lunar-python 获取八字 (秒级精度)
+    solar = Solar.fromYmdHms(
+        true_solar_dt.year, true_solar_dt.month, true_solar_dt.day,
+        true_solar_dt.hour, true_solar_dt.minute, true_solar_dt.second,
+    )
+    lunar_date = solar.getLunar()
+    bazi = lunar_date.getEightChar()
 
-    year_gz = lunar.year8Char
-    month_gz = lunar.month8Char
-    day_gz = lunar.day8Char
-
-    # 时柱计算
-    hour_zhi_idx = hour_to_dizhi_index(true_solar_dt.hour, true_solar_dt.minute)
-    day_gan_idx = TIAN_GAN.index(day_gz[0])
-    hour_gan, hour_zhi = calc_hour_pillar(day_gan_idx, hour_zhi_idx)
-    hour_gz = hour_gan + hour_zhi
+    year_gz = bazi.getYear()
+    month_gz = bazi.getMonth()
+    day_gz = bazi.getDay()
+    hour_gz = bazi.getTime()
 
     # 四柱拆解
     pillars = {
         "年柱": {"天干": year_gz[0], "地支": year_gz[1]},
         "月柱": {"天干": month_gz[0], "地支": month_gz[1]},
         "日柱": {"天干": day_gz[0], "地支": day_gz[1]},
-        "时柱": {"天干": hour_gan, "地支": hour_zhi},
+        "时柱": {"天干": hour_gz[0], "地支": hour_gz[1]},
     }
 
     day_gan = day_gz[0]
     day_zhi = day_gz[1]
 
-    # 十神
-    for key, p in pillars.items():
-        if key == "日柱":
-            p["十神"] = "日主"
-        else:
-            p["十神"] = _get_shishen(day_gan, p["天干"])
+    # 十神 (使用 lunar-python 的十神)
+    shishen_gan = [bazi.getYearShiShenGan(), bazi.getMonthShiShenGan(),
+                   "日主", bazi.getTimeShiShenGan()]
+    shishen_zhi = [bazi.getYearShiShenZhi(), bazi.getMonthShiShenZhi(),
+                   bazi.getDayShiShenZhi(), bazi.getTimeShiShenZhi()]
 
-    # 藏干及藏干十神
-    for key, p in pillars.items():
+    for i, (key, p) in enumerate(pillars.items()):
+        p["十神"] = shishen_gan[i]
         zhi = p["地支"]
         cg_list = CANG_GAN.get(zhi, [])
         p["藏干"] = cg_list
-        p["藏干十神"] = [_get_shishen(day_gan, cg) for cg in cg_list]
+        p["藏干十神"] = shishen_zhi[i]
 
     # 纳音
     for key, p in pillars.items():
@@ -589,61 +591,100 @@ def lunar_convert(
     direction: str = "solar_to_lunar",
     leap: bool = False,
 ) -> dict[str, Any]:
-    """农历公历互转，并返回节气等信息。"""
+    """农历公历互转，并返回节气等信息。
+
+    使用 lunar-python 进行高精度转换。
+    """
     parts = list(map(int, date_str.split("-")))
     year, month, day = parts[0], parts[1], parts[2]
 
     if direction == "solar_to_lunar":
-        solar = Solar(year, month, day)
-        lunar_date = Converter.Solar2Lunar(solar)
-        result_date = f"{lunar_date.year}-{lunar_date.month:02d}-{lunar_date.day:02d}"
-        is_leap = lunar_date.isleap
+        solar_date = Solar.fromYmd(year, month, day)
+        lun = solar_date.getLunar()
 
-        # 使用 cnlunar 获取详细信息
-        dt = datetime.datetime(year, month, day, 12, 0)
-        lun = cnlunar.Lunar(dt)
+        result_date = f"{lun.getYear()}-{abs(lun.getMonth()):02d}-{lun.getDay():02d}"
+        is_leap = lun.getMonth() < 0  # 负数月份表示闰月
 
-        lunar_month_cn = lun.lunarMonthCn
-        lunar_day_cn = lun.lunarDayCn
+        # 当日节气
+        current_jieqi = lun.getCurrentJieQi()
+        jieqi_str = current_jieqi.getName() if current_jieqi else "非节气日"
+
+        # 下一节气
+        next_jie = lun.getNextJie()
+        next_qi = lun.getNextQi()
+        # 取最近的一个
+        if next_jie and next_qi:
+            nj_solar = next_jie.getSolar()
+            nq_solar = next_qi.getSolar()
+            nj_dt = datetime.date(nj_solar.getYear(), nj_solar.getMonth(), nj_solar.getDay())
+            nq_dt = datetime.date(nq_solar.getYear(), nq_solar.getMonth(), nq_solar.getDay())
+            if nj_dt <= nq_dt:
+                next_term_name = next_jie.getName()
+                next_term_solar = nj_solar
+            else:
+                next_term_name = next_qi.getName()
+                next_term_solar = nq_solar
+        elif next_jie:
+            next_term_name = next_jie.getName()
+            next_term_solar = next_jie.getSolar()
+        elif next_qi:
+            next_term_name = next_qi.getName()
+            next_term_solar = next_qi.getSolar()
+        else:
+            next_term_name = ""
+            next_term_solar = None
+
+        next_term_date = (
+            f"{next_term_solar.getYear()}-{next_term_solar.getMonth():02d}-{next_term_solar.getDay():02d}"
+            if next_term_solar else ""
+        )
+
+        weekday_map = {0: "日", 1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六"}
 
         return {
             "转换方向": "公历→农历",
             "公历日期": date_str,
             "农历日期": result_date,
-            "农历中文": f"{lun.lunarYearCn}年{lunar_month_cn}{lunar_day_cn}",
+            "农历中文": f"{lun.getYearInChinese()}年{lun.getMonthInChinese()}月{lun.getDayInChinese()}",
             "是否闰月": is_leap,
-            "当日节气": lun.todaySolarTerms if lun.todaySolarTerms != "无" else "非节气日",
-            "下一节气": lun.nextSolarTerm,
-            "下一节气日期": f"{year}-{lun.nextSolarTermDate[0]:02d}-{lun.nextSolarTermDate[1]:02d}",
-            "干支年": lun.year8Char,
-            "生肖": lun.chineseYearZodiac,
-            "干支月": lun.month8Char,
-            "干支日": lun.day8Char,
-            "星期": lun.weekDayCn,
-            "星座": lun.starZodiac,
+            "当日节气": jieqi_str,
+            "下一节气": next_term_name,
+            "下一节气日期": next_term_date,
+            "干支年": lun.getYearInGanZhi(),
+            "生肖": lun.getYearShengXiao(),
+            "干支月": lun.getMonthInGanZhi(),
+            "干支日": lun.getDayInGanZhi(),
+            "星期": f"星期{weekday_map.get(solar_date.getWeek(), '')}",
+            "星座": solar_date.getXingZuo(),
         }
     else:
-        # 农历转公历
-        lunar_date = Lunar(year, month, day, isleap=leap)
-        solar_date = Converter.Lunar2Solar(lunar_date)
-        solar_str = f"{solar_date.year}-{solar_date.month:02d}-{solar_date.day:02d}"
+        # 农历转公历: 闰月用负数月份
+        lunar_month = -month if leap else month
+        lun = Lunar.fromYmd(year, lunar_month, day)
+        solar_date = lun.getSolar()
+        solar_str = f"{solar_date.getYear()}-{solar_date.getMonth():02d}-{solar_date.getDay():02d}"
 
-        dt = datetime.datetime(solar_date.year, solar_date.month, solar_date.day, 12, 0)
-        lun = cnlunar.Lunar(dt)
+        current_jieqi = lun.getCurrentJieQi()
+        jieqi_str = current_jieqi.getName() if current_jieqi else "非节气日"
+
+        next_jie = lun.getNextJie()
+        next_term_name = next_jie.getName() if next_jie else ""
+
+        weekday_map = {0: "日", 1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六"}
 
         return {
             "转换方向": "农历→公历",
             "农历日期": date_str,
             "是否闰月": leap,
             "公历日期": solar_str,
-            "农历中文": f"{lun.lunarYearCn}年{lun.lunarMonthCn}{lun.lunarDayCn}",
-            "当日节气": lun.todaySolarTerms if lun.todaySolarTerms != "无" else "非节气日",
-            "下一节气": lun.nextSolarTerm,
-            "干支年": lun.year8Char,
-            "生肖": lun.chineseYearZodiac,
-            "干支月": lun.month8Char,
-            "干支日": lun.day8Char,
-            "星期": lun.weekDayCn,
+            "农历中文": f"{lun.getYearInChinese()}年{lun.getMonthInChinese()}月{lun.getDayInChinese()}",
+            "当日节气": jieqi_str,
+            "下一节气": next_term_name,
+            "干支年": lun.getYearInGanZhi(),
+            "生肖": lun.getYearShengXiao(),
+            "干支月": lun.getMonthInGanZhi(),
+            "干支日": lun.getDayInGanZhi(),
+            "星期": f"星期{weekday_map.get(solar_date.getWeek(), '')}",
         }
 
 
@@ -657,27 +698,36 @@ def dayun_liunian(
     gender: str,
     birth_place: str = "北京",
 ) -> dict[str, Any]:
-    """计算大运和流年。"""
+    """计算大运和流年。
+
+    使用 lunar-python 的 EightChar.getYun() 实现秒级精度的大运起运计算，
+    结果与问真八字等专业软件一致。
+    """
     year, month, day = map(int, birth_date.split("-"))
     hour, minute = map(int, birth_time.split(":"))
 
+    # 真太阳时修正
     longitude = get_longitude(birth_place)
     dt = datetime.datetime(year, month, day, hour, minute)
     true_solar_dt = calc_true_solar_time(dt, longitude)
 
-    lunar = cnlunar.Lunar(true_solar_dt)
-    year_gz = lunar.year8Char
-    month_gz = lunar.month8Char
+    # 使用 lunar-python 排八字
+    solar = Solar.fromYmdHms(
+        true_solar_dt.year, true_solar_dt.month, true_solar_dt.day,
+        true_solar_dt.hour, true_solar_dt.minute, true_solar_dt.second,
+    )
+    lunar_date = solar.getLunar()
+    bazi = lunar_date.getEightChar()
+
+    year_gz = bazi.getYear()
+    month_gz = bazi.getMonth()
 
     year_gan = year_gz[0]
     year_gan_idx = TIAN_GAN.index(year_gan)
 
     # 判断顺逆排
-    # 阳年: 甲丙戊庚壬 (index 0,2,4,6,8)
     is_yang_year = year_gan_idx % 2 == 0
     is_male = gender.lower() in ("male", "男")
-
-    # 阳年男/阴年女 → 顺排; 阳年女/阴年男 → 逆排
     is_shun = (is_yang_year and is_male) or (not is_yang_year and not is_male)
     direction = "顺排" if is_shun else "逆排"
     direction_explain = (
@@ -686,94 +736,92 @@ def dayun_liunian(
         f"→{direction}"
     )
 
-    # 起运岁数计算
-    # 顺排: 出生日到下一个节气的天数 / 3 = 起运岁数
-    # 逆排: 出生日到上一个节气的天数 / 3 = 起运岁数
-    solar_terms_dic = lunar.thisYearSolarTermsDic
-    birth_day_of_year = true_solar_dt.timetuple().tm_yday
+    # 使用 lunar-python 精确计算大运 (秒级精度)
+    yun = bazi.getYun(1 if is_male else 0)
 
-    # 收集该年所有节气日期并排序 (只取节: 立春、惊蛰、清明、立夏、芒种、小暑、立秋、白露、寒露、立冬、大雪、小寒)
-    jie_names = ["小寒", "立春", "惊蛰", "清明", "立夏", "芒种",
-                 "小暑", "立秋", "白露", "寒露", "立冬", "大雪"]
+    # 精确起运信息
+    qiyun_years = yun.getStartYear()
+    qiyun_months = yun.getStartMonth()
+    qiyun_days = yun.getStartDay()
+    qiyun_detail = f"{qiyun_years}年{qiyun_months}月{qiyun_days}天"
 
-    jie_dates: list[tuple[str, int]] = []
-    for name in jie_names:
-        if name in solar_terms_dic:
-            m, d = solar_terms_dic[name]
-            jie_dt = datetime.datetime(year, m, d)
-            jie_dates.append((name, jie_dt.timetuple().tm_yday))
+    # 交运日期 (lunar-python 精确计算)
+    start_solar = yun.getStartSolar()
+    jiaoyun_date_str = (
+        f"{start_solar.getYear()}-{start_solar.getMonth():02d}-{start_solar.getDay():02d}"
+    )
 
-    jie_dates.sort(key=lambda x: x[1])
+    # 交运所逢节气
+    jiaoyun_lunar = start_solar.getLunar()
+    jiaoyun_jieqi = jiaoyun_lunar.getCurrentJie()
+    jiaoyun_jie_name = jiaoyun_jieqi.getName() if jiaoyun_jieqi else ""
 
-    # 构建精确节气日期（含时间），节气日默认为当天中午12:00以提高精度
-    if is_shun:
-        # 找出生日之后的最近的节
-        next_jie_days = None
-        for name, doy in jie_dates:
-            if doy > birth_day_of_year:
-                # 精确计算：节气当天算整天+1（因为节气时刻通常未知，按保守估计加半天）
-                next_jie_days = doy - birth_day_of_year + 1
-                break
-        if next_jie_days is None:
-            next_jie_days = 30
-    else:
-        # 找出生日之前的最近的节
-        prev_jie_days = None
-        for name, doy in reversed(jie_dates):
-            if doy <= birth_day_of_year:
-                prev_jie_days = birth_day_of_year - doy + 1
-                break
-        if prev_jie_days is None:
-            prev_jie_days = 30
-        next_jie_days = prev_jie_days
+    # 交运干支年信息
+    jiaoyun_year_gan_idx = (start_solar.getYear() - 4) % 10
+    jiaoyun_year_gan = TIAN_GAN[jiaoyun_year_gan_idx]
 
-    # 每3天折算1年，余1天=4个月，余2天=8个月
-    # 余数超过4个月(即余数>=1天)则进1岁，与问真等主流排盘软件一致
-    base_age = next_jie_days // 3
-    extra_days = next_jie_days % 3
-    extra_months = extra_days * 4
-    start_age = base_age + (1 if extra_months > 0 else 0)
-    if start_age < 1:
-        start_age = 1
+    # 交运描述: "逢X年X节交运"
+    jiaoyun_desc = ""
+    if jiaoyun_jie_name:
+        jiaoyun_desc = f"逢{jiaoyun_year_gan}年{jiaoyun_jie_name}交运"
 
-    # 排大运
-    month_gan_idx = TIAN_GAN.index(month_gz[0])
-    month_zhi_idx = DI_ZHI.index(month_gz[1])
+    # 司令：月柱地支藏干中的本气
+    month_zhi = month_gz[1]
+    siling = CANG_GAN.get(month_zhi, [""])[0]
 
+    # 排大运 (使用 lunar-python 的 DaYun)
+    dayun_objs = yun.getDaYun()
     dayun_list: list[dict[str, Any]] = []
     current_year = datetime.datetime.now().year
     current_age = current_year - year
 
-    for i in range(1, 10):  # 排8-9步大运
-        if is_shun:
-            gan_idx = (month_gan_idx + i) % 10
-            zhi_idx = (month_zhi_idx + i) % 12
-        else:
-            gan_idx = (month_gan_idx - i) % 10
-            zhi_idx = (month_zhi_idx - i) % 12
+    for dy in dayun_objs:
+        idx = dy.getIndex()
+        if idx == 0:
+            # 第0步是起运前的阶段，跳过
+            continue
 
-        age_start = start_age + (i - 1) * 10
-        age_end = age_start + 9
-        gz = TIAN_GAN[gan_idx] + DI_ZHI[zhi_idx]
+        gz = dy.getGanZhi()
+        if not gz:
+            continue
+        age_start = dy.getStartAge()
+        age_end = dy.getEndAge()
+        start_yr = dy.getStartYear()
+
+        gan = gz[0]
+        zhi = gz[1]
 
         entry: dict[str, Any] = {
-            "序号": i,
+            "序号": idx,
             "年龄范围": f"{age_start}-{age_end}岁",
-            "起始年份": year + age_start,
+            "起始年份": start_yr,
             "干支": gz,
-            "天干": TIAN_GAN[gan_idx],
-            "地支": DI_ZHI[zhi_idx],
-            "五行": GAN_WUXING[TIAN_GAN[gan_idx]] + ZHI_WUXING[DI_ZHI[zhi_idx]],
+            "天干": gan,
+            "地支": zhi,
+            "五行": GAN_WUXING[gan] + ZHI_WUXING[zhi],
             "纳音": NAYIN_TABLE.get(gz, ""),
         }
         if age_start <= current_age <= age_end:
             entry["当前大运"] = True
+
+        # 每步大运内的流年
+        liunian_in_dayun: list[dict[str, Any]] = []
+        for ln in dy.getLiuNian():
+            ln_gz = ln.getGanZhi()
+            ln_gan_idx = (ln.getYear() - 4) % 10
+            ln_zhi_idx = (ln.getYear() - 4) % 12
+            liunian_in_dayun.append({
+                "年份": ln.getYear(),
+                "年龄": ln.getAge(),
+                "干支": ln_gz,
+            })
+        entry["流年"] = liunian_in_dayun
+
         dayun_list.append(entry)
 
-    # 近10年流年
+    # 近10年流年 (独立列表，方便查询)
     liunian_list: list[dict[str, Any]] = []
     for y in range(current_year - 2, current_year + 8):
-        # 计算该年干支
         gan_idx = (y - 4) % 10
         zhi_idx = (y - 4) % 12
         gz = TIAN_GAN[gan_idx] + DI_ZHI[zhi_idx]
@@ -792,8 +840,13 @@ def dayun_liunian(
     return {
         "排运方向": direction,
         "方向说明": direction_explain,
-        "起运岁数": start_age,
-        "起运说明": f"出生后距最近节气{next_jie_days}天，折合约{start_age}岁起运",
+        "起运岁数": qiyun_years + (1 if qiyun_months >= 6 else 0),
+        "精确起运": qiyun_detail,
+        "起运说明": f"出生后{qiyun_detail}起运",
+        "交运日期": jiaoyun_date_str,
+        "交运节气": jiaoyun_jie_name,
+        "交运描述": jiaoyun_desc,
+        "司令": siling,
         "年柱": year_gz,
         "月柱": month_gz,
         "大运列表": dayun_list,
@@ -842,11 +895,15 @@ def meihua_qigua(
     else:
         # 时间起卦
         now = datetime.datetime.now()
-        lunar = cnlunar.Lunar(now)
+        solar_now = Solar.fromYmdHms(
+            now.year, now.month, now.day, now.hour, now.minute, now.second,
+        )
+        lunar_now = solar_now.getLunar()
         # 年数+月数+日数 为上卦, 年数+月数+日数+时辰数 为下卦
-        year_num = DI_ZHI.index(lunar.year8Char[1]) + 1
-        month_num = lunar.lunarMonth
-        day_num = lunar.lunarDay
+        year_gz = lunar_now.getYearInGanZhi()
+        year_num = DI_ZHI.index(year_gz[1]) + 1
+        month_num = abs(lunar_now.getMonth())
+        day_num = lunar_now.getDay()
         hour_idx = hour_to_dizhi_index(now.hour, now.minute) + 1
 
         upper_num = year_num + month_num + day_num
@@ -1149,13 +1206,13 @@ def ziwei_paipan(
     year, month, day = map(int, birth_date.split("-"))
     hour, minute = map(int, birth_time.split(":"))
 
-    dt = datetime.datetime(year, month, day, hour, minute)
-    lunar = cnlunar.Lunar(dt)
+    solar_date = Solar.fromYmdHms(year, month, day, hour, minute, 0)
+    lunar_date = solar_date.getLunar()
 
-    lunar_year = lunar.lunarYear
-    lunar_month = lunar.lunarMonth
-    lunar_day = lunar.lunarDay
-    is_leap = lunar.isLunarLeapMonth
+    lunar_year = lunar_date.getYear()
+    lunar_month = abs(lunar_date.getMonth())
+    lunar_day = lunar_date.getDay()
+    is_leap = lunar_date.getMonth() < 0
 
     year_gan_idx = (lunar_year - 4) % 10
     hour_zhi_idx = hour_to_dizhi_index(hour, minute)
@@ -1288,26 +1345,23 @@ def _determine_yinyang_dun(dt: datetime.datetime) -> tuple[str, str, int]:
 
     返回: (阴遁/阳遁, 当前节气, 局数)
     """
-    lunar = cnlunar.Lunar(dt)
-    solar_terms = lunar.thisYearSolarTermsDic
+    solar_dt = Solar.fromYmdHms(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
+    lunar_dt = solar_dt.getLunar()
 
-    # 找到当前所处的节气
-    current_jieqi = ""
-    current_day = (dt.month, dt.day)
+    # 使用 lunar-python 获取当前所处的节(非气)
+    prev_jie = lunar_dt.getPrevJie()
+    current_jieqi_obj = lunar_dt.getCurrentJie()
 
-    # 按节气排序
-    sorted_terms = sorted(solar_terms.items(), key=lambda x: (x[1][0], x[1][1]))
-
-    for i, (name, (m, d)) in enumerate(sorted_terms):
-        if (m, d) <= current_day:
-            current_jieqi = name
-
-    if not current_jieqi:
+    if current_jieqi_obj:
+        current_jieqi = current_jieqi_obj.getName()
+    elif prev_jie:
+        current_jieqi = prev_jie.getName()
+    else:
         current_jieqi = "冬至"
 
     # 判断上中下三元
-    # 简化: 使用日干支的旬来判断
-    day_gz = lunar.day8Char
+    # 使用日干支的旬来判断
+    day_gz = lunar_dt.getDayInGanZhi()
     day_gan_idx = TIAN_GAN.index(day_gz[0])
     day_zhi_idx = DI_ZHI.index(day_gz[1])
 
@@ -1357,9 +1411,10 @@ def qimen_paipan(
 ) -> dict[str, Any]:
     """奇门遁甲排盘。"""
     dt = datetime.datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
-    lunar = cnlunar.Lunar(dt)
+    solar_dt = Solar.fromYmdHms(dt.year, dt.month, dt.day, dt.hour, dt.minute, 0)
+    lunar_dt = solar_dt.getLunar()
 
-    day_gz = lunar.day8Char
+    day_gz = lunar_dt.getDayInGanZhi()
     hour_zhi_idx = hour_to_dizhi_index(dt.hour, dt.minute)
     hour_gz = calc_hour_pillar(TIAN_GAN.index(day_gz[0]), hour_zhi_idx)
     hour_gz_str = hour_gz[0] + hour_gz[1]
@@ -1613,33 +1668,47 @@ def zeri_huangli(
     if date_str:
         # 模式1: 查询指定日期
         year, month, day = map(int, date_str.split("-"))
-        dt = datetime.datetime(year, month, day, 12, 0)
-        lunar = cnlunar.Lunar(dt)
+        solar_date = Solar.fromYmd(year, month, day)
+        lun = solar_date.getLunar()
 
         # 冲煞
-        clash = lunar.chineseZodiacClash
+        chong_shengxiao = lun.getDayChongShengXiao()
+        sha_dir = lun.getDaySha()
+        clash = f"冲{chong_shengxiao} 煞{sha_dir}"
 
         # 方位
-        lucky_dir = lunar.get_luckyGodsDirection()
+        lucky_dir = {
+            "喜神方位": lun.getDayPositionXiDesc(),
+            "财神方位": lun.getDayPositionCaiDesc(),
+            "福神方位": lun.getDayPositionFuDesc(),
+            "阳贵方位": lun.getDayPositionYangGuiDesc(),
+            "阴贵方位": lun.getDayPositionYinGuiDesc(),
+        }
+
+        # 节气
+        current_jieqi = lun.getCurrentJieQi()
+        jieqi_str = current_jieqi.getName() if current_jieqi else "非节气日"
+
+        weekday_map = {0: "日", 1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六"}
 
         return {
             "公历": date_str,
-            "农历": f"{lunar.lunarYearCn}年{lunar.lunarMonthCn}{lunar.lunarDayCn}",
-            "干支": f"{lunar.year8Char}年 {lunar.month8Char}月 {lunar.day8Char}日",
-            "星期": lunar.weekDayCn,
-            "生肖": lunar.chineseYearZodiac,
-            "节气": lunar.todaySolarTerms if lunar.todaySolarTerms != "无" else "非节气日",
-            "建除十二神": lunar.today12DayOfficer,
-            "十二神": lunar.today12DayGod,
-            "二十八宿": lunar.today28Star,
-            "纳音": lunar.get_nayin(),
-            "宜": lunar.goodThing,
-            "忌": lunar.badThing,
-            "吉神宜趋": lunar.goodGodName,
-            "凶神宜忌": lunar.badGodName,
+            "农历": f"{lun.getYearInChinese()}年{lun.getMonthInChinese()}月{lun.getDayInChinese()}",
+            "干支": f"{lun.getYearInGanZhi()}年 {lun.getMonthInGanZhi()}月 {lun.getDayInGanZhi()}日",
+            "星期": f"星期{weekday_map.get(solar_date.getWeek(), '')}",
+            "生肖": lun.getYearShengXiao(),
+            "节气": jieqi_str,
+            "建除十二神": lun.getZhiXing(),
+            "十二神": lun.getDayTianShen(),
+            "二十八宿": lun.getXiu(),
+            "纳音": lun.getDayNaYin(),
+            "宜": lun.getDayYi(),
+            "忌": lun.getDayJi(),
+            "吉神宜趋": lun.getDayJiShen(),
+            "凶神宜忌": lun.getDayXiongSha(),
             "冲煞": clash,
             "吉方": lucky_dir,
-            "日级别": lunar.todayLevelName,
+            "日级别": lun.getDayTianShenLuck(),
         }
     elif activity and start_date and end_date:
         # 模式2: 择日 - 在范围内找适合该活动的日子
@@ -1648,20 +1717,24 @@ def zeri_huangli(
         start = datetime.date(s_year, s_month, s_day)
         end = datetime.date(e_year, e_month, e_day)
 
+        weekday_map = {0: "日", 1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六"}
+
         good_days: list[dict[str, str]] = []
         current = start
         while current <= end:
-            dt = datetime.datetime(current.year, current.month, current.day, 12, 0)
-            lunar = cnlunar.Lunar(dt)
-            if activity in lunar.goodThing:
+            solar_d = Solar.fromYmd(current.year, current.month, current.day)
+            lun = solar_d.getLunar()
+            yi_list = lun.getDayYi()
+            if activity in yi_list:
+                ji_list = lun.getDayJi()
                 good_days.append({
                     "公历": current.strftime("%Y-%m-%d"),
-                    "农历": f"{lunar.lunarMonthCn}{lunar.lunarDayCn}",
-                    "干支日": lunar.day8Char,
-                    "星期": lunar.weekDayCn,
-                    "建除": lunar.today12DayOfficer,
-                    "宜": ", ".join(lunar.goodThing[:8]),
-                    "忌": ", ".join(lunar.badThing[:5]),
+                    "农历": f"{lun.getMonthInChinese()}月{lun.getDayInChinese()}",
+                    "干支日": lun.getDayInGanZhi(),
+                    "星期": f"星期{weekday_map.get(solar_d.getWeek(), '')}",
+                    "建除": lun.getZhiXing(),
+                    "宜": ", ".join(yi_list[:8]),
+                    "忌": ", ".join(ji_list[:5]),
                 })
             current += datetime.timedelta(days=1)
 
