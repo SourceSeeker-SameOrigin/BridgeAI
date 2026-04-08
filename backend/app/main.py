@@ -2,8 +2,11 @@ import logging
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.config import settings
@@ -62,7 +65,22 @@ app = FastAPI(
     version=settings.APP_VERSION,
     description="BridgeAI - Intelligent Agent Platform API",
     lifespan=lifespan,
+    docs_url=None,  # Disable default, use custom below
+    redoc_url="/redoc",
 )
+
+
+# Custom Swagger UI with offline CDN fallback
+from fastapi.openapi.docs import get_swagger_ui_html
+
+@app.get("/docs", include_in_schema=False)
+async def custom_swagger_ui():
+    return get_swagger_ui_html(
+        openapi_url=app.openapi_url or "/openapi.json",
+        title=f"{settings.APP_NAME} - API Docs",
+        swagger_js_url="/static/swagger-ui-bundle.js",
+        swagger_css_url="/static/swagger-ui.css",
+    )
 
 # --- CORS ---
 app.add_middleware(
@@ -72,6 +90,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# --- Static files (Swagger UI offline) ---
+_static_dir = Path(__file__).resolve().parent.parent / "static"
+if _static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(_static_dir)), name="static")
 
 # --- Security Headers Middleware ---
 app.add_middleware(SecurityHeadersMiddleware)
