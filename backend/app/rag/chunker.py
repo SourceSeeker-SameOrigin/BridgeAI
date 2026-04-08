@@ -25,6 +25,22 @@ def split_text(
     if not text or not text.strip():
         return []
 
+    # Detect QA format: lines with "问题 | 答案" or "xxx | xxx" pattern (e.g., Excel exports)
+    lines = text.strip().split("\n")
+    qa_lines = [l for l in lines if "|" in l and len(l.strip()) > 10]
+    if len(qa_lines) > len(lines) * 0.5:
+        # QA format detected — each line is a separate chunk for precise matching
+        chunks: list[TextChunk] = []
+        for i, line in enumerate(lines):
+            line = line.strip()
+            if not line or line.startswith("##"):  # skip headers
+                continue
+            # Skip header row (first row with column names)
+            if i == 0 and "|" in line and len(line) < 30:
+                continue
+            chunks.append(TextChunk(content=line, index=len(chunks)))
+        return chunks if chunks else []  # fallback to normal splitting if no chunks
+
     paragraphs = _split_paragraphs(text)
     # Further split paragraphs that exceed chunk_size into sentences
     segments: list[str] = []
