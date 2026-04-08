@@ -62,7 +62,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 cd frontend && npm install && npm run dev
 ```
 
-访问 http://localhost:3000 开始使用，API 文档：http://localhost:8000/docs
+访问 http://localhost:5173 开始使用，API 文档：http://localhost:8000/docs
 
 ## Screenshots
 
