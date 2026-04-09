@@ -52,7 +52,7 @@ _DEFAULT_FALLBACK_CHAIN: list[tuple[str, str]] = [
     ("anthropic", "claude-sonnet-4-20250514"),
 ]
 
-_MAX_TOOL_ROUNDS = 5
+_MAX_TOOL_ROUNDS = 10
 
 
 # ======================================================================
