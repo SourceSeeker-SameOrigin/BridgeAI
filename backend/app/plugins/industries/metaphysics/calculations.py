@@ -1746,3 +1746,85 @@ def zeri_huangli(
         }
     else:
         return {"error": "请提供 date 或 (activity + start_date + end_date) 参数"}
+
+
+# ---------------------------------------------------------------------------
+# 塔罗牌占卜
+# ---------------------------------------------------------------------------
+
+
+def tarot_draw(
+    spread_type: str = "single",
+    question: str | None = None,
+) -> dict[str, Any]:
+    """Draw tarot cards with specified spread.
+
+    Args:
+        spread_type: 牌阵类型 - single/three/love/choice/horseshoe/hexagram/celtic/life_tree
+        question: 用户的问题（用于上下文）
+    """
+    import random
+
+    from app.plugins.industries.metaphysics.tarot_data import (
+        MAJOR_ARCANA,
+        MINOR_ARCANA,
+        SPREADS,
+        SUITS,
+    )
+
+    # Build full 78-card deck
+    deck: list[dict[str, Any]] = []
+    for card in MAJOR_ARCANA:
+        deck.append({"type": "major", "suit": None, **card})
+    for suit_key, cards in MINOR_ARCANA.items():
+        suit_info = SUITS[suit_key]
+        for card in cards:
+            deck.append({
+                "type": "minor",
+                "suit": suit_key,
+                "suit_name": suit_info["name"],
+                **card,
+            })
+
+    # Get spread config
+    spread = SPREADS.get(spread_type, SPREADS["single"])
+    num_cards: int = spread["count"]
+
+    # Draw random cards (no duplicates)
+    drawn = random.sample(deck, num_cards)
+
+    # Assign upright/reversed (70% upright, 30% reversed)
+    result_cards: list[dict[str, Any]] = []
+    for i, card in enumerate(drawn):
+        is_reversed = random.random() < 0.3
+        position = (
+            spread["positions"][i]
+            if i < len(spread["positions"])
+            else f"第{i + 1}张"
+        )
+
+        result_cards.append({
+            "位置": position,
+            "牌名": card["name"],
+            "英文": card.get("name_en", ""),
+            "正逆": "逆位" if is_reversed else "正位",
+            "类型": (
+                "大阿卡纳"
+                if card["type"] == "major"
+                else f"小阿卡纳·{card.get('suit_name', '')}"
+            ),
+            "含义": card["reversed"] if is_reversed else card["upright"],
+            "关键词": card.get("keywords", []),
+            "元素": card.get(
+                "element",
+                SUITS.get(card.get("suit", ""), {}).get("element", ""),
+            ),
+        })
+
+    return {
+        "牌阵": spread["name"],
+        "牌阵说明": spread["description"],
+        "抽牌数": num_cards,
+        "问题": question or "未指定",
+        "牌面": result_cards,
+    }
