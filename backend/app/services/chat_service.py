@@ -180,6 +180,7 @@ async def _run_pipeline(
         )
 
     # ── Memory: retrieve relevant memories ────────────────────────────
+    # ── Memory: retrieve memories scoped to this conversation ──────────
     memory_context = ""
     memory_mgr: MemoryManager | None = None
     if agent and resolved_tenant_id:
@@ -193,6 +194,7 @@ async def _run_pipeline(
                 agent_id=str(agent.id),
                 query=user_content,
                 top_k=5,
+                conversation_id=conversation_id,
             )
             if memories:
                 memory_context = "\n\n[用户记忆]\n" + "\n".join(f"- {m}" for m in memories)
@@ -512,6 +514,7 @@ async def _execute_streaming(
                         agent_id=str(agent.id),
                         fact=fact.strip(),
                         importance=analysis.get("confidence", 0.5),
+                        conversation_id=conversation_id,
                     )
                 except Exception as e:
                     logger.warning("Memory store failed for fact: %s", e)
