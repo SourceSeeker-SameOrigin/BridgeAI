@@ -14,6 +14,7 @@ from app.plugins.industries.metaphysics.calculations import (
     lunar_convert,
     meihua_qigua,
     qimen_paipan,
+    tarot_draw,
     xingzuo_xingpan,
     zeri_huangli,
     ziwei_paipan,
@@ -33,7 +34,7 @@ class MetaphysicsPlugin(PluginBase):
     display_name = "玄学计算工具"
     description = (
         "精确的玄学计算工具集：八字排盘、农历转换、大运流年、"
-        "梅花易数、紫微斗数、奇门遁甲、星座星盘、择日黄历"
+        "梅花易数、紫微斗数、奇门遁甲、星座星盘、择日黄历、塔罗牌占卜"
     )
     version = "1.0.0"
     category = "metaphysics"
@@ -246,6 +247,37 @@ class MetaphysicsPlugin(PluginBase):
                     },
                 },
             ),
+            PluginTool(
+                name="tarot_draw",
+                description=(
+                    "塔罗牌占卜：支持单牌、三牌、爱情三角、二选一、"
+                    "马蹄铁、六芒星、凯尔特十字、生命之树等8种牌阵"
+                ),
+                parameters={
+                    "type": "object",
+                    "properties": {
+                        "spread_type": {
+                            "type": "string",
+                            "description": "牌阵类型",
+                            "enum": [
+                                "single",
+                                "three",
+                                "love",
+                                "choice",
+                                "horseshoe",
+                                "hexagram",
+                                "celtic",
+                                "life_tree",
+                            ],
+                            "default": "three",
+                        },
+                        "question": {
+                            "type": "string",
+                            "description": "用户的问题或想了解的事项",
+                        },
+                    },
+                },
+            ),
         ]
 
     def get_system_prompt_extension(self) -> str:
@@ -259,7 +291,8 @@ class MetaphysicsPlugin(PluginBase):
             "5. 紫微斗数(ziwei_paipan) - 命宫身宫、十四主星、四化飞星\n"
             "6. 奇门遁甲(qimen_paipan) - 九宫排布、三奇六仪、八门九星八神\n"
             "7. 星座星盘(xingzuo_xingpan) - 太阳/月亮/上升星座、行星位置、相位\n"
-            "8. 择日黄历(zeri_huangli) - 宜忌查询、吉日推荐\n\n"
+            "8. 择日黄历(zeri_huangli) - 宜忌查询、吉日推荐\n"
+            "9. 塔罗牌占卜(tarot_draw) - 韦特78张全牌、8种牌阵、正逆位解读\n\n"
             "【行为铁律 — 违反将产生完全错误的结果】\n"
             "1. 收到出生信息后，第一个动作必须是调用工具，禁止先输出任何排盘文字。\n"
             "2. 禁止在调用工具之前猜测或计算四柱、大运等数据。你的计算错误率超过70%。\n"
@@ -279,6 +312,7 @@ class MetaphysicsPlugin(PluginBase):
             "qimen_paipan": self._exec_qimen,
             "xingzuo_xingpan": self._exec_xingzuo,
             "zeri_huangli": self._exec_zeri,
+            "tarot_draw": self._exec_tarot,
         }
         handler = dispatch.get(tool_name)
         if handler is None:
@@ -346,4 +380,10 @@ class MetaphysicsPlugin(PluginBase):
             activity=args.get("activity"),
             start_date=args.get("start_date"),
             end_date=args.get("end_date"),
+        )
+
+    async def _exec_tarot(self, args: dict[str, Any]) -> dict:
+        return tarot_draw(
+            spread_type=args.get("spread_type", "three"),
+            question=args.get("question"),
         )
