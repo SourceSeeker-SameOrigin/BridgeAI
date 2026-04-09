@@ -45,9 +45,11 @@ class MemoryManager:
         agent_id: str,
         fact: str,
         importance: float = 0.5,
+        conversation_id: str | None = None,
     ) -> None:
         """Store a memory fact at appropriate level based on importance."""
-        key = f"{tenant_id}:{user_id}:{agent_id}"
+        # Use conversation_id for session-scoped isolation
+        key = f"{tenant_id}:{user_id}:{agent_id}:{conversation_id}" if conversation_id else f"{tenant_id}:{user_id}:{agent_id}"
         entry = {"fact": fact, "importance": importance}
 
         # Level 1: Working memory (current session)
@@ -104,14 +106,15 @@ class MemoryManager:
         agent_id: str,
         query: str | None = None,
         top_k: int = 5,
+        conversation_id: str | None = None,
     ) -> list[str]:
         """Retrieve relevant memories from all 3 levels, deduplicated.
 
-        When a query is provided, L3 uses Milvus cosine similarity for
-        semantic search instead of simple importance-based ordering.
+        Memories are scoped to conversation_id when provided, preventing
+        cross-session memory leakage.
         """
         results: list[str] = []
-        key = f"{tenant_id}:{user_id}:{agent_id}"
+        key = f"{tenant_id}:{user_id}:{agent_id}:{conversation_id}" if conversation_id else f"{tenant_id}:{user_id}:{agent_id}"
 
         # Level 1: Working memory (most recent 5)
         if key in self._working:
@@ -189,7 +192,7 @@ class MemoryManager:
 
         return results[:top_k]
 
-    def clear_working(self, tenant_id: str, user_id: str, agent_id: str) -> None:
+    def clear_working(self, tenant_id: str, user_id: str, agent_id: str, conversation_id: str | None = None) -> None:
         """Clear working memory for a given session key."""
-        key = f"{tenant_id}:{user_id}:{agent_id}"
+        key = f"{tenant_id}:{user_id}:{agent_id}:{conversation_id}" if conversation_id else f"{tenant_id}:{user_id}:{agent_id}"
         self._working.pop(key, None)
