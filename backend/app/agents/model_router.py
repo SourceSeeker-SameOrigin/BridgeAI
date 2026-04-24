@@ -22,8 +22,7 @@ MODEL_TIERS: dict[str, list[str]] = {
         "claude-opus-4-20250514",
     ],
     "deepseek": [
-        "deepseek-chat",
-        "deepseek-reasoner",
+        "deepseek-v4-pro",
     ],
     "qwen": [
         "qwen-turbo",
@@ -84,7 +83,7 @@ def resolve_provider_model(
     # Fallback: first available
     if not provider or not model:
         provider = "deepseek"
-        model = "deepseek-chat"
+        model = "deepseek-v4-pro"
 
     return provider, model
 
@@ -107,10 +106,10 @@ def _default_model_for_provider(provider: str) -> str:
     """Return a sensible default model for each provider."""
     defaults = {
         "anthropic": "claude-sonnet-4-20250514",
-        "deepseek": "deepseek-chat",
+        "deepseek": "deepseek-v4-pro",
         "qwen": "qwen-plus",
     }
-    return defaults.get(provider, "deepseek-chat")
+    return defaults.get(provider, "deepseek-v4-pro")
 
 
 def route_model(

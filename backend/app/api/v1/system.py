@@ -172,14 +172,14 @@ async def list_models() -> ApiResponse:
             "available": bool(settings.ANTHROPIC_API_KEY),
         },
         {
-            "id": "deepseek-chat",
-            "name": "DeepSeek Chat",
+            "id": "deepseek-v4-pro",
+            "name": "DeepSeek V4 Pro",
             "provider": "deepseek",
             "available": bool(settings.DEEPSEEK_API_KEY),
         },
         {
-            "id": "deepseek-reasoner",
-            "name": "DeepSeek Reasoner",
+            "id": "deepseek-v4-flash",
+            "name": "DeepSeek V4 Flash",
             "provider": "deepseek",
             "available": bool(settings.DEEPSEEK_API_KEY),
         },

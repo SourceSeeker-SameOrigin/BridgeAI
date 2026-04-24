@@ -16,7 +16,7 @@ DATA_ANALYST_TEMPLATE: dict = {
     ),
     "model_config": {
         "model_provider": "deepseek",
-        "model_name": "deepseek-chat",
+        "model_name": "deepseek-v4-pro",
         "temperature": 0.3,
         "max_tokens": 8192,
     },

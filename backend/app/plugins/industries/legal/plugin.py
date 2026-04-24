@@ -19,7 +19,7 @@ from app.providers.deepseek_provider import DeepSeekProvider
 
 logger = logging.getLogger(__name__)
 
-_DEFAULT_MODEL = "deepseek-chat"
+_DEFAULT_MODEL = "deepseek-v4-pro"
 
 
 class LegalPlugin(PluginBase):

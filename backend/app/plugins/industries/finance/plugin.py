@@ -20,7 +20,7 @@ from app.providers.deepseek_provider import DeepSeekProvider
 logger = logging.getLogger(__name__)
 
 # DeepSeek model used for finance tasks
-_DEFAULT_MODEL = "deepseek-chat"
+_DEFAULT_MODEL = "deepseek-v4-pro"
 
 
 class FinancePlugin(PluginBase):

@@ -47,7 +47,7 @@ logger = logging.getLogger(__name__)
 
 # Default fallback chain (provider, model) when primary model fails
 _DEFAULT_FALLBACK_CHAIN: list[tuple[str, str]] = [
-    ("deepseek", "deepseek-chat"),
+    ("deepseek", "deepseek-v4-pro"),
     ("qwen", "qwen-plus"),
     ("anthropic", "claude-sonnet-4-20250514"),
 ]

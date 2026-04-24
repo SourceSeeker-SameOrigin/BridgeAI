@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 # Preferred provider/model for education tasks
 _PREFERRED_PROVIDER = "deepseek"
-_PREFERRED_MODEL = "deepseek-chat"
+_PREFERRED_MODEL = "deepseek-v4-pro"
 
 
 class EducationPlugin(PluginBase):
@@ -185,7 +185,7 @@ class EducationPlugin(PluginBase):
             model = _PREFERRED_MODEL
         except ValueError:
             _provider_name, provider = registry.get_any_provider()
-            model = "deepseek-chat"
+            model = "deepseek-v4-pro"
 
         messages = [
             {"role": "system", "content": "你是一位资深的教育专家。请严格按照要求的 JSON 格式输出结果。"},

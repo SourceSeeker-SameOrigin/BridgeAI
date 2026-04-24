@@ -30,10 +30,10 @@ class TestResolveProviderModel:
 
     def test_agent_config_provider_and_model(self) -> None:
         provider, model = resolve_provider_model(
-            {"model_provider": "deepseek", "model_name": "deepseek-reasoner"},
+            {"model_provider": "deepseek", "model_name": "deepseek-v4-pro"},
         )
         assert provider == "deepseek"
-        assert model == "deepseek-reasoner"
+        assert model == "deepseek-v4-pro"
 
     def test_infer_provider_from_model_name(self) -> None:
         provider, model = resolve_provider_model({"model_name": "qwen-max"})
@@ -48,12 +48,12 @@ class TestResolveProviderModel:
     def test_fallback_when_empty_config(self) -> None:
         provider, model = resolve_provider_model(None)
         assert provider == "deepseek"
-        assert model == "deepseek-chat"
+        assert model == "deepseek-v4-pro"
 
     def test_fallback_when_no_provider_no_model(self) -> None:
         provider, model = resolve_provider_model({})
         assert provider == "deepseek"
-        assert model == "deepseek-chat"
+        assert model == "deepseek-v4-pro"
 
     def test_legacy_keys(self) -> None:
         provider, model = resolve_provider_model(
@@ -72,7 +72,7 @@ class TestInferProvider:
         "model_name,expected",
         [
             ("claude-sonnet-4-20250514", "anthropic"),
-            ("deepseek-chat", "deepseek"),
+            ("deepseek-v4-pro", "deepseek"),
             ("qwen-plus", "qwen"),
             ("gpt-4o", "openai"),
             ("o1-preview", "openai"),
@@ -101,7 +101,7 @@ class TestLayer1DefaultModel:
 
     def test_no_analysis_returns_default(self) -> None:
         result = route_model(
-            agent_config={"model_provider": "deepseek", "model_name": "deepseek-chat"},
+            agent_config={"model_provider": "deepseek", "model_name": "deepseek-v4-pro"},
             message_index=5,
             previous_analysis=None,
         )
@@ -168,14 +168,14 @@ class TestLayer2IntentAdjustment:
         )
         assert result.model_id == "claude-haiku-3-20240307"
 
-    def test_deepseek_intent_upgrade(self) -> None:
+    def test_deepseek_single_tier_stays_at_pro(self) -> None:
+        # DeepSeek tier contains only v4-pro; complex intent cannot upgrade further.
         result = route_model(
-            agent_config={"model_provider": "deepseek", "model_name": "deepseek-chat"},
+            agent_config={"model_provider": "deepseek", "model_name": "deepseek-v4-pro"},
             message_index=5,
             previous_analysis={"intent": "debugging", "confidence": 0.85, "complexity": "high"},
         )
-        assert result.model_id == "deepseek-reasoner"
-        assert "upgrade" in result.reason
+        assert result.model_id == "deepseek-v4-pro"
 
     def test_qwen_intent_downgrade(self) -> None:
         result = route_model(
@@ -194,7 +194,7 @@ class TestLayer2IntentAdjustment:
 class TestLayer3UserTier:
     def test_free_tier_does_not_crash(self) -> None:
         result = route_model(
-            agent_config={"model_provider": "deepseek", "model_name": "deepseek-chat"},
+            agent_config={"model_provider": "deepseek", "model_name": "deepseek-v4-pro"},
             message_index=2,
             previous_analysis={"intent": "general", "confidence": 0.5},
             user_tier="free",
@@ -203,7 +203,7 @@ class TestLayer3UserTier:
 
     def test_enterprise_tier_does_not_crash(self) -> None:
         result = route_model(
-            agent_config={"model_provider": "deepseek", "model_name": "deepseek-chat"},
+            agent_config={"model_provider": "deepseek", "model_name": "deepseek-v4-pro"},
             message_index=2,
             previous_analysis={"intent": "general", "confidence": 0.5},
             user_tier="enterprise",
@@ -314,9 +314,9 @@ class TestDefaultModelForProvider:
         "provider,expected",
         [
             ("anthropic", "claude-sonnet-4-20250514"),
-            ("deepseek", "deepseek-chat"),
+            ("deepseek", "deepseek-v4-pro"),
             ("qwen", "qwen-plus"),
-            ("unknown", "deepseek-chat"),
+            ("unknown", "deepseek-v4-pro"),
         ],
     )
     def test_defaults(self, provider: str, expected: str) -> None:

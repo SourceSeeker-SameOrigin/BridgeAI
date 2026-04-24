@@ -18,7 +18,7 @@ OFFICE_ASSISTANT_TEMPLATE: dict = {
     ),
     "model_config": {
         "model_provider": "deepseek",
-        "model_name": "deepseek-chat",
+        "model_name": "deepseek-v4-pro",
         "temperature": 0.7,
         "max_tokens": 4096,
     },

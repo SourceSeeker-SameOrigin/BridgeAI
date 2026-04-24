@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 # Preferred provider/model for ecommerce tasks
 _PREFERRED_PROVIDER = "deepseek"
-_PREFERRED_MODEL = "deepseek-chat"
+_PREFERRED_MODEL = "deepseek-v4-pro"
 
 
 class EcommercePlugin(PluginBase):
@@ -174,7 +174,7 @@ class EcommercePlugin(PluginBase):
             model = _PREFERRED_MODEL
         except ValueError:
             provider_name, provider = registry.get_any_provider()
-            model = "deepseek-chat"  # reasonable default
+            model = "deepseek-v4-pro"  # reasonable default
 
         messages = [
             {"role": "system", "content": "你是一位专业的跨境电商顾问。请严格按照要求的 JSON 格式输出结果。"},
