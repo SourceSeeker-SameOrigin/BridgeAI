@@ -81,6 +81,14 @@ export async function createKnowledgeBase(
   return mapKnowledgeBase(res.data)
 }
 
+export async function updateKnowledgeBase(
+  id: string,
+  data: Partial<{ name: string; description: string; chunk_size: number; chunk_overlap: number }>,
+): Promise<KnowledgeBase> {
+  const res = await client.put<BackendKnowledgeBase>(`/knowledge/${id}`, data)
+  return mapKnowledgeBase(res.data)
+}
+
 export async function deleteKnowledgeBase(id: string): Promise<void> {
   await client.delete(`/knowledge/${id}`)
 }

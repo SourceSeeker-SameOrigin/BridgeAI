@@ -6,6 +6,7 @@ import {
   UploadOutlined,
   FileTextOutlined,
   DeleteOutlined,
+  EditOutlined,
   FolderOpenOutlined,
   LoadingOutlined,
   SearchOutlined,
@@ -16,6 +17,7 @@ import type { KnowledgeBase, KnowledgeDocument } from '../../types/chat'
 import {
   getKnowledgeBases,
   createKnowledgeBase,
+  updateKnowledgeBase,
   deleteKnowledgeBase,
   getDocuments,
   uploadDocument,
@@ -35,6 +37,7 @@ export default function KnowledgePage() {
   const [loading, setLoading] = useState(false)
   const [docsLoading, setDocsLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [editingKb, setEditingKb] = useState<KnowledgeBase | null>(null)
   const [searchModalOpen, setSearchModalOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<Array<{ chunk_id: string; content: string; similarity: number; document_id?: string }>>([])
@@ -76,19 +79,43 @@ export default function KnowledgePage() {
     loadDocuments(kb.id)
   }, [loadDocuments])
 
-  const handleCreateKb = async () => {
+  const handleSubmitKb = async () => {
     try {
       const values = await form.validateFields()
-      const created = await createKnowledgeBase(values)
-      setKnowledgeBases((prev) => [...prev, created])
-      message.success(t('knowledge.createSuccess', { name: values.name }))
+      if (editingKb) {
+        const updated = await updateKnowledgeBase(editingKb.id, values)
+        setKnowledgeBases((prev) =>
+          prev.map((k) => (k.id === editingKb.id ? updated : k)),
+        )
+        if (selectedKb?.id === editingKb.id) setSelectedKb(updated)
+        message.success(t('common.updateSuccess'))
+      } else {
+        const created = await createKnowledgeBase(values)
+        setKnowledgeBases((prev) => [...prev, created])
+        message.success(t('knowledge.createSuccess', { name: values.name }))
+      }
       setModalOpen(false)
+      setEditingKb(null)
       form.resetFields()
     } catch (err) {
       if (err instanceof Error) {
-        message.error(`${t('common.createFailed')}: ${err.message}`)
+        message.error(
+          `${editingKb ? t('common.updateFailed') : t('common.createFailed')}: ${err.message}`,
+        )
       }
     }
+  }
+
+  const handleEditKb = (kb: KnowledgeBase) => {
+    setEditingKb(kb)
+    form.setFieldsValue({ name: kb.name, description: kb.description })
+    setModalOpen(true)
+  }
+
+  const handleOpenCreateModal = () => {
+    setEditingKb(null)
+    form.resetFields()
+    setModalOpen(true)
   }
 
   const handleDeleteKb = async (kb: KnowledgeBase) => {
@@ -190,7 +217,7 @@ export default function KnowledgePage() {
         <h2 style={{ fontSize: 22, fontWeight: 700, color: '#f1f5f9', margin: 0 }}>
           {t('knowledge.title')}
         </h2>
-        <Button type="primary" icon={<PlusOutlined />} onClick={() => setModalOpen(true)}>
+        <Button type="primary" icon={<PlusOutlined />} onClick={handleOpenCreateModal}>
           {t('knowledge.create')}
         </Button>
       </div>
@@ -224,6 +251,16 @@ export default function KnowledgePage() {
                   </div>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                     <StatusBadge status={kb.status} />
+                    <Button
+                      type="text"
+                      size="small"
+                      icon={<EditOutlined />}
+                      style={{ color: '#94a3b8' }}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleEditKb(kb)
+                      }}
+                    />
                     <Button
                       type="text"
                       size="small"
@@ -350,13 +387,16 @@ export default function KnowledgePage() {
         </GlassCard>
       )}
 
-      {/* Create Modal */}
+      {/* Create / Edit Modal */}
       <Modal
-        title={t('knowledge.createTitle')}
+        title={editingKb ? t('common.edit') : t('knowledge.createTitle')}
         open={modalOpen}
-        onOk={handleCreateKb}
-        onCancel={() => setModalOpen(false)}
-        okText={t('common.create')}
+        onOk={handleSubmitKb}
+        onCancel={() => {
+          setModalOpen(false)
+          setEditingKb(null)
+        }}
+        okText={editingKb ? t('common.save') : t('common.create')}
         cancelText={t('common.cancel')}
       >
         <Form form={form} layout="vertical" style={{ marginTop: 16 }}>

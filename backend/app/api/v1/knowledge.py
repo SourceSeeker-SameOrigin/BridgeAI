@@ -41,6 +41,7 @@ def _kb_to_response(
         chunk_size=kb.chunk_size,
         chunk_overlap=kb.chunk_overlap,
         status=kb.status,
+        config=kb.config or {},
         document_count=document_count,
         total_size=total_size,
         created_at=kb.created_at.isoformat(),
@@ -61,6 +62,29 @@ def _doc_to_response(doc: KnowledgeDocument) -> DocumentResponse:
         error_message=doc.error_message,
         created_at=doc.created_at.isoformat(),
     )
+
+
+async def _assert_kb_owned(
+    kb_id: str,
+    db: AsyncSession,
+    tenant_id,
+) -> None:
+    """Raise NotFoundException if kb_id is not owned by the given tenant.
+
+    Multi-tenant safety net for all /{kb_id}/... sub-routes — without this,
+    one tenant could enumerate or modify another tenant's documents by guessing
+    a KB UUID.
+    """
+    if tenant_id is None:
+        raise NotFoundException(message="Knowledge base not found")
+    result = await db.execute(
+        select(KnowledgeBase.id).where(
+            KnowledgeBase.id == kb_id,
+            KnowledgeBase.tenant_id == tenant_id,
+        )
+    )
+    if result.scalar_one_or_none() is None:
+        raise NotFoundException(message="Knowledge base not found")
 
 
 @router.post("", response_model=ApiResponse[KnowledgeBaseResponse])
@@ -177,6 +201,12 @@ async def update_knowledge_base(
         raise NotFoundException(message="Knowledge base not found")
 
     for field, value in request.dict(exclude_unset=True).items():
+        if field == "config":
+            # JSONB merge — preserve keys not in incoming update
+            merged = dict(kb.config or {})
+            merged.update(value or {})
+            kb.config = merged
+            continue
         setattr(kb, field, value)
 
     await db.flush()
@@ -337,6 +367,7 @@ async def list_documents(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ) -> ApiResponse:
+    await _assert_kb_owned(kb_id, db, current_user.tenant_id)
     query = select(KnowledgeDocument).where(KnowledgeDocument.knowledge_base_id == kb_id)
     count_q = select(func.count()).select_from(query.subquery())
     total = (await db.execute(count_q)).scalar() or 0
@@ -359,6 +390,7 @@ async def delete_document(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ) -> ApiResponse:
+    await _assert_kb_owned(kb_id, db, current_user.tenant_id)
     result = await db.execute(
         select(KnowledgeDocument).where(
             KnowledgeDocument.id == doc_id,
@@ -393,6 +425,7 @@ async def download_document(
     """Download the original document file from MinIO via presigned URL redirect."""
     from fastapi.responses import RedirectResponse
 
+    await _assert_kb_owned(kb_id, db, current_user.tenant_id)
     result = await db.execute(
         select(KnowledgeDocument).where(
             KnowledgeDocument.id == doc_id,

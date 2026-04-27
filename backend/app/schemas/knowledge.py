@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -9,6 +9,7 @@ class KnowledgeBaseCreate(BaseModel):
     embedding_model: str = "bge-m3"
     chunk_size: int = 512
     chunk_overlap: int = 64
+    config: Optional[Dict[str, Any]] = None
 
 
 class KnowledgeBaseUpdate(BaseModel):
@@ -17,6 +18,8 @@ class KnowledgeBaseUpdate(BaseModel):
     embedding_model: Optional[str] = None
     chunk_size: Optional[int] = None
     chunk_overlap: Optional[int] = None
+    status: Optional[str] = None
+    config: Optional[Dict[str, Any]] = None
 
 
 class KnowledgeBaseResponse(BaseModel):
@@ -27,6 +30,7 @@ class KnowledgeBaseResponse(BaseModel):
     chunk_size: int
     chunk_overlap: int
     status: str = "active"
+    config: Dict[str, Any] = {}
     document_count: int = 0
     total_size: int = 0
     created_at: str

@@ -30,6 +30,8 @@ class ConnectorResponse(BaseModel):
     description: Optional[str] = None
     connector_type: str
     endpoint_url: str
+    auth_config: Dict[str, Any] = {}
+    capabilities: List[Any] = []
     is_active: bool
     created_at: str
     updated_at: str

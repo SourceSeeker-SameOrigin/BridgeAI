@@ -26,6 +26,25 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/mcp", tags=["MCP Connectors"])
 
 
+def _redact_secrets(cfg: dict | None) -> dict:
+    """Mask sensitive fields in auth_config before returning to the frontend.
+
+    Without redaction the response would leak DB passwords / API tokens to anyone
+    who can read the connector — which includes anyone able to call GET /mcp/{id}.
+    """
+    if not cfg:
+        return {}
+    SENSITIVE = {"password", "secret", "token", "api_key", "apikey", "private_key", "access_key"}
+    out: dict = {}
+    for k, v in cfg.items():
+        lk = k.lower()
+        if any(s in lk for s in SENSITIVE) and isinstance(v, str) and v:
+            out[k] = "***"
+        else:
+            out[k] = v
+    return out
+
+
 def _connector_to_response(connector: McpConnector) -> ConnectorResponse:
     return ConnectorResponse(
         id=str(connector.id),
@@ -33,6 +52,8 @@ def _connector_to_response(connector: McpConnector) -> ConnectorResponse:
         description=connector.description,
         connector_type=connector.connector_type,
         endpoint_url=connector.endpoint_url,
+        auth_config=_redact_secrets(connector.auth_config),
+        capabilities=list(connector.capabilities or []),
         is_active=connector.is_active,
         created_at=connector.created_at.isoformat(),
         updated_at=connector.updated_at.isoformat(),

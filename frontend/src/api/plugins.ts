@@ -50,6 +50,14 @@ export async function uninstallPlugin(pluginId: string): Promise<void> {
   await client.delete(`/plugins/${pluginId}`)
 }
 
+export async function updateInstalledPlugin(
+  pluginId: string,
+  data: Partial<{ config: Record<string, unknown>; is_active: boolean }>,
+): Promise<InstalledPlugin> {
+  const res = await client.put<InstalledPlugin>(`/plugins/installed/${pluginId}`, data)
+  return res.data
+}
+
 export async function executePlugin(
   pluginName: string,
   data: { tool_name: string; arguments: Record<string, unknown> },

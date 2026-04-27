@@ -58,13 +58,20 @@ export async function createMcpConnector(
 
 export async function updateMcpConnector(
   id: string,
-  data: Partial<{ name: string; description: string; type: string; endpoint: string }>,
+  data: Partial<{
+    name: string
+    description: string
+    type: string
+    endpoint: string
+    config: Record<string, unknown>
+  }>,
 ): Promise<McpConnector> {
   const payload: Record<string, unknown> = {}
   if (data.name !== undefined) payload.name = data.name
   if (data.description !== undefined) payload.description = data.description
   if (data.type !== undefined) payload.connector_type = data.type
   if (data.endpoint !== undefined) payload.endpoint_url = data.endpoint
+  if (data.config !== undefined) payload.config = data.config
   const res = await client.put<BackendConnector>(`/mcp/${id}`, payload)
   return mapConnector(res.data)
 }

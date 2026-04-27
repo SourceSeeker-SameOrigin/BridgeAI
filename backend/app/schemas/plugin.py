@@ -9,6 +9,11 @@ class PluginInstallRequest(BaseModel):
     plugin_name: str
 
 
+class InstalledPluginUpdate(BaseModel):
+    config: Optional[Dict[str, Any]] = None
+    is_active: Optional[bool] = None
+
+
 class PluginExecuteRequest(BaseModel):
     tool_name: str
     arguments: Dict[str, Any] = {}
@@ -37,6 +42,7 @@ class InstalledPluginResponse(BaseModel):
     description: Optional[str] = None
     config: Dict[str, Any] = {}
     is_active: bool = True
+    installed_by: Optional[str] = None
     created_at: str
 
     class Config:

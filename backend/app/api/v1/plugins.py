@@ -15,6 +15,7 @@ from app.plugins.registry import get_plugin_registry
 from app.schemas.common import ApiResponse
 from app.schemas.plugin import (
     InstalledPluginResponse,
+    InstalledPluginUpdate,
     PluginExecuteRequest,
     PluginInstallRequest,
     PluginMetadataResponse,
@@ -63,6 +64,7 @@ async def list_installed(
             description=r.description,
             config=r.config or {},
             is_active=r.is_active,
+            installed_by=str(r.installed_by) if r.installed_by else None,
             created_at=r.created_at.isoformat() if r.created_at else "",
         )
         for r in rows
@@ -125,6 +127,53 @@ async def install_plugin(
     return ApiResponse.success(
         data={"id": str(installed.id), "plugin_name": installed.plugin_name},
         message="Plugin installed successfully",
+    )
+
+
+@router.put("/installed/{plugin_id}", response_model=ApiResponse)
+async def update_installed_plugin(
+    plugin_id: str,
+    request: InstalledPluginUpdate,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> ApiResponse:
+    """Update an installed plugin (config / is_active)."""
+    tenant_id = current_user.tenant_id
+    if tenant_id is None:
+        return ApiResponse.error(code=400, message="User has no tenant")
+
+    result = await db.execute(
+        select(InstalledPlugin).where(
+            InstalledPlugin.id == plugin_id,
+            InstalledPlugin.tenant_id == tenant_id,
+        )
+    )
+    row = result.scalar_one_or_none()
+    if row is None:
+        return ApiResponse.error(code=404, message="Installed plugin not found")
+
+    update_data = request.dict(exclude_unset=True)
+    if "config" in update_data:
+        # JSONB merge — preserve keys not in incoming update
+        merged = dict(row.config or {})
+        merged.update(update_data["config"] or {})
+        row.config = merged
+    if "is_active" in update_data:
+        row.is_active = update_data["is_active"]
+
+    await db.flush()
+    return ApiResponse.success(
+        data=InstalledPluginResponse(
+            id=str(row.id),
+            plugin_name=row.plugin_name,
+            plugin_version=row.plugin_version,
+            description=row.description,
+            config=row.config or {},
+            is_active=row.is_active,
+            installed_by=str(row.installed_by) if row.installed_by else None,
+            created_at=row.created_at.isoformat(),
+        ),
+        message="Plugin updated",
     )
 
 
