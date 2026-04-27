@@ -146,7 +146,7 @@ async def _run_pipeline(
     available_tools, mcp_connector_ids = await _resolve_mcp_tools(agent)
 
     # ── Resolve plugin tools for tenant ──────────────────────────────
-    plugin_tools, active_plugin_names = await _resolve_plugin_tools(db, resolved_tenant_id)
+    plugin_tools, active_plugin_names = await _resolve_plugin_tools(db, resolved_tenant_id, agent)
     if plugin_tools:
         available_tools = list(available_tools) + plugin_tools
 
@@ -358,6 +358,25 @@ async def _execute_streaming(
                 start_time, None, 0, 0, None,
                 response_id=response_id,
             )
+            # Audit the failure too — otherwise outages are invisible to operators
+            if tenant_id:
+                elapsed_ms = int((time.monotonic() - start_time) * 1000)
+                try:
+                    await audit_service.log_chat(
+                        db=db,
+                        tenant_id=tenant_id,
+                        user_id=user_id,
+                        agent_id=str(conversation.agent_id) if conversation.agent_id else None,
+                        conversation_id=conversation_id,
+                        model_used=used_model,
+                        tokens_in=0,
+                        tokens_out=0,
+                        duration_ms=elapsed_ms,
+                        status="error",
+                        error_message=str(e),
+                    )
+                except Exception as audit_err:
+                    logger.warning("Failed to record chat audit on error path: %s", audit_err)
             return
 
         # Consume stream — accumulate content and tool calls
@@ -495,7 +514,7 @@ async def _execute_streaming(
         for tr in tool_results:
             current_messages.append({
                 "role": "user",
-                "content": f"[Tool Result: {tr.get('tool_name', 'unknown')}]\n{json.dumps(tr.get('data', {}), ensure_ascii=False)}",
+                "content": _format_tool_result_for_llm(tr),
             })
 
     # ── Stage 6: Parse analysis & persist ────────────────────────────
@@ -708,7 +727,7 @@ async def _execute_sync(
         for tr in tool_results:
             current_messages.append({
                 "role": "user",
-                "content": f"[Tool Result: {tr.get('tool_name', 'unknown')}]\n{json.dumps(tr.get('data', {}), ensure_ascii=False)}",
+                "content": _format_tool_result_for_llm(tr),
             })
 
     # Exhausted tool rounds
@@ -944,8 +963,14 @@ async def _search_knowledge_base(
 async def _resolve_plugin_tools(
     db: AsyncSession,
     tenant_id: str | None,
+    agent: Agent | None = None,
 ) -> tuple[list[dict[str, Any]], list[str]]:
-    """Resolve installed plugin tools for a tenant.
+    """Resolve installed plugin tools for a tenant, optionally filtered by agent whitelist.
+
+    If agent.model_config_ contains ``allowed_plugins: [...]`` (non-None), only those
+    plugins are exposed to the LLM — preventing cross-domain tool leakage (e.g. the
+    metaphysics agent seeing ecommerce tools). When the key is absent, all installed
+    plugins are returned (legacy behavior).
 
     Returns (openai_format_tools, active_plugin_names).
     """
@@ -966,6 +991,17 @@ async def _resolve_plugin_tools(
 
     if not plugin_names:
         return [], []
+
+    allowed: list[str] | None = None
+    if agent and agent.model_config_:
+        raw = agent.model_config_.get("allowed_plugins")
+        if isinstance(raw, list):
+            allowed = [str(x) for x in raw]
+
+    if allowed is not None:
+        plugin_names = [p for p in plugin_names if p in allowed]
+        if not plugin_names:
+            return [], []
 
     plugin_registry = get_plugin_registry()
     tools = plugin_registry.get_tools_for_plugins(plugin_names)
@@ -1010,6 +1046,24 @@ async def _resolve_mcp_tools(
             logger.warning("Failed to list tools for connector %s: %s", connector_id, e)
 
     return all_tools, connector_ids
+
+
+def _format_tool_result_for_llm(tr: dict[str, Any]) -> str:
+    """Render a tool execution result so the LLM can clearly see success vs failure.
+
+    Without surfacing the success/error fields the model treats every call as
+    successful and may loop on a failing tool until the round budget is exhausted.
+    """
+    name = tr.get("tool_name", "unknown")
+    if tr.get("success"):
+        data_json = json.dumps(tr.get("data") or {}, ensure_ascii=False)
+        return f"[Tool Result: {name}] SUCCESS\n{data_json}"
+    err = tr.get("error") or "tool returned success=False with no error message"
+    return (
+        f"[Tool Result: {name}] FAILED\n"
+        f"error: {err}\n"
+        "Do NOT retry the same call with the same arguments — fix the input or pick another tool."
+    )
 
 
 async def _execute_tool_calls(
@@ -1079,23 +1133,44 @@ async def _execute_tool_calls(
         plugin_match = _match_plugin_tool(tool_name, active_plugin_names)
         if plugin_match and plugin_registry:
             pname, original_tool = plugin_match
+            plugin_started = time.time()
+            audit_status = "success"
+            audit_error: str | None = None
             try:
                 plugin = plugin_registry.get_plugin(pname)
                 result = await plugin.execute_tool(original_tool, arguments)
+                ok = bool(result.get("success", False))
                 results.append({
                     "tool_name": tool_name,
-                    "success": result.get("success", False),
+                    "success": ok,
                     "data": result.get("data"),
                     "error": result.get("error"),
                 })
+                if not ok:
+                    audit_status = "error"
+                    audit_error = str(result.get("error") or "tool returned success=False")
             except Exception as e:
                 logger.error("Plugin tool execution error for %s: %s", tool_name, e)
+                audit_status = "error"
+                audit_error = str(e)
                 results.append({
                     "tool_name": tool_name,
                     "success": False,
                     "error": str(e),
                     "data": None,
                 })
+            finally:
+                if tenant_id:
+                    await audit_service.log_plugin_call(
+                        db=db,
+                        tenant_id=tenant_id,
+                        user_id=user_id,
+                        plugin_name=pname,
+                        tool_name=original_tool,
+                        status=audit_status,
+                        duration_ms=int((time.time() - plugin_started) * 1000),
+                        error_message=audit_error,
+                    )
             continue
 
         # Find which MCP connector owns this tool (prefix-based)

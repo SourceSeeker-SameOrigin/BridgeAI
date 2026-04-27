@@ -47,21 +47,31 @@ async def create_workflow(
     return _workflow_to_response(wf)
 
 
-async def get_workflow(workflow_id: str, db: AsyncSession) -> WorkflowResponse:
-    result = await db.execute(
-        select(AgentWorkflow).where(AgentWorkflow.id == workflow_id)
-    )
+async def get_workflow(
+    workflow_id: str,
+    db: AsyncSession,
+    tenant_id: Optional[str] = None,
+) -> WorkflowResponse:
+    query = select(AgentWorkflow).where(AgentWorkflow.id == workflow_id)
+    if tenant_id:
+        query = query.where(AgentWorkflow.tenant_id == tenant_id)
+    result = await db.execute(query)
     wf = result.scalar_one_or_none()
     if wf is None:
         raise NotFoundException(message="Workflow not found")
     return _workflow_to_response(wf)
 
 
-async def get_workflow_model(workflow_id: str, db: AsyncSession) -> AgentWorkflow:
+async def get_workflow_model(
+    workflow_id: str,
+    db: AsyncSession,
+    tenant_id: Optional[str] = None,
+) -> AgentWorkflow:
     """Return raw ORM model for executor usage."""
-    result = await db.execute(
-        select(AgentWorkflow).where(AgentWorkflow.id == workflow_id)
-    )
+    query = select(AgentWorkflow).where(AgentWorkflow.id == workflow_id)
+    if tenant_id:
+        query = query.where(AgentWorkflow.tenant_id == tenant_id)
+    result = await db.execute(query)
     wf = result.scalar_one_or_none()
     if wf is None:
         raise NotFoundException(message="Workflow not found")
@@ -98,10 +108,12 @@ async def update_workflow(
     workflow_id: str,
     request: WorkflowUpdate,
     db: AsyncSession,
+    tenant_id: Optional[str] = None,
 ) -> WorkflowResponse:
-    result = await db.execute(
-        select(AgentWorkflow).where(AgentWorkflow.id == workflow_id)
-    )
+    query = select(AgentWorkflow).where(AgentWorkflow.id == workflow_id)
+    if tenant_id:
+        query = query.where(AgentWorkflow.tenant_id == tenant_id)
+    result = await db.execute(query)
     wf = result.scalar_one_or_none()
     if wf is None:
         raise NotFoundException(message="Workflow not found")
@@ -118,10 +130,15 @@ async def update_workflow(
     return _workflow_to_response(wf)
 
 
-async def delete_workflow(workflow_id: str, db: AsyncSession) -> None:
-    result = await db.execute(
-        select(AgentWorkflow).where(AgentWorkflow.id == workflow_id)
-    )
+async def delete_workflow(
+    workflow_id: str,
+    db: AsyncSession,
+    tenant_id: Optional[str] = None,
+) -> None:
+    query = select(AgentWorkflow).where(AgentWorkflow.id == workflow_id)
+    if tenant_id:
+        query = query.where(AgentWorkflow.tenant_id == tenant_id)
+    result = await db.execute(query)
     wf = result.scalar_one_or_none()
     if wf is None:
         raise NotFoundException(message="Workflow not found")

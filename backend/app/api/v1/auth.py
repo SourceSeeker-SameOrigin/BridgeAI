@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.config import settings
 from app.core.database import get_db
 from app.core.redis import get_redis
 from app.core.security import create_access_token, get_current_user, hash_password
@@ -122,7 +123,7 @@ async def wechat_callback(
             hashed_password=hash_password(uuid.uuid4().hex),
             wechat_openid=openid,
             wechat_unionid=unionid,
-            tenant_id="00000000-0000-0000-0000-000000000001",
+            tenant_id=settings.DEFAULT_TENANT_ID,
             is_active=True,
         )
         db.add(user)

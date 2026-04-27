@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.core.exceptions import BadRequestException, ForbiddenException, NotFoundException
-from app.core.security import get_current_user, hash_password
+from app.core.security import get_current_user, hash_password, verify_password
 from app.models.user import User
 from app.schemas.auth import UserResponse
 from app.schemas.common import ApiResponse
@@ -32,6 +32,11 @@ class InviteUserRequest(BaseModel):
 
 class ChangeRoleRequest(BaseModel):
     role: str
+
+
+class ChangePasswordRequest(BaseModel):
+    old_password: str
+    new_password: str
 
 
 # ------------------------------------------------------------------
@@ -58,6 +63,27 @@ def _user_to_response(user: User) -> UserResponse:
 # ------------------------------------------------------------------
 # Endpoints
 # ------------------------------------------------------------------
+
+@router.post("/me/password", response_model=ApiResponse)
+async def change_my_password(
+    request: ChangePasswordRequest,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -> ApiResponse:
+    """Change the authenticated user's own password (verifies old password)."""
+    if not verify_password(request.old_password, current_user.hashed_password):
+        raise BadRequestException(message="旧密码不正确")
+    if len(request.new_password) < 8:
+        raise BadRequestException(message="新密码至少 8 位")
+    if request.new_password == request.old_password:
+        raise BadRequestException(message="新密码不能与旧密码相同")
+
+    current_user.hashed_password = hash_password(request.new_password)
+    await db.flush()
+    await db.commit()
+    logger.info("User %s changed password", current_user.username)
+    return ApiResponse.success(message="密码已更新")
+
 
 @router.get("", response_model=ApiResponse[list[UserResponse]])
 async def list_users(

@@ -80,6 +80,10 @@ class Settings(BaseSettings):
     APP_VERSION: str = "0.1.0"
     DEBUG: bool = True
 
+    # Default tenant for self-registration channels (WeChat scan-login etc.)
+    # Override per environment to map external login to a specific tenant.
+    DEFAULT_TENANT_ID: str = "00000000-0000-0000-0000-000000000001"
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

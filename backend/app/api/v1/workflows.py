@@ -49,7 +49,8 @@ async def get_workflow(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ) -> ApiResponse:
-    wf = await workflow_service.get_workflow(workflow_id, db)
+    tenant_id = str(current_user.tenant_id) if current_user.tenant_id else None
+    wf = await workflow_service.get_workflow(workflow_id, db, tenant_id=tenant_id)
     return ApiResponse.success(data=wf)
 
 
@@ -60,7 +61,8 @@ async def update_workflow(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ) -> ApiResponse:
-    wf = await workflow_service.update_workflow(workflow_id, request, db)
+    tenant_id = str(current_user.tenant_id) if current_user.tenant_id else None
+    wf = await workflow_service.update_workflow(workflow_id, request, db, tenant_id=tenant_id)
     return ApiResponse.success(data=wf)
 
 
@@ -70,7 +72,8 @@ async def delete_workflow(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ) -> ApiResponse:
-    await workflow_service.delete_workflow(workflow_id, db)
+    tenant_id = str(current_user.tenant_id) if current_user.tenant_id else None
+    await workflow_service.delete_workflow(workflow_id, db, tenant_id=tenant_id)
     return ApiResponse.success(message="Workflow deleted")
 
 
@@ -81,7 +84,8 @@ async def execute_workflow_endpoint(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ) -> ApiResponse:
-    wf = await workflow_service.get_workflow_model(workflow_id, db)
+    tenant_id = str(current_user.tenant_id) if current_user.tenant_id else None
+    wf = await workflow_service.get_workflow_model(workflow_id, db, tenant_id=tenant_id)
     result = await execute_workflow(
         workflow_id=str(wf.id),
         nodes=wf.nodes or [],

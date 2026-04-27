@@ -65,11 +65,13 @@ class DingTalkChannel(ChannelBase):
         if not timestamp or not sign:
             return False
 
-        # Check timestamp within 1 hour
+        # Replay-attack window — DingTalk's official guidance is ≤1 hour, but a
+        # tighter 5-minute window is industry standard and dramatically narrows
+        # the attack surface for leaked signatures without breaking legitimate calls.
         try:
             ts = int(timestamp)
             now = int(time.time() * 1000)
-            if abs(now - ts) > 3600 * 1000:
+            if abs(now - ts) > 300 * 1000:
                 logger.warning("DingTalk signature timestamp expired")
                 return False
         except (ValueError, TypeError):
