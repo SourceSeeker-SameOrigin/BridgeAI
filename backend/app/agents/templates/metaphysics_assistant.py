@@ -10,5 +10,6 @@ METAPHYSICS_ASSISTANT_TEMPLATE: dict = {
         "model_name": "deepseek-v4-pro",
         "temperature": 0.7,
         "max_tokens": 8192,
+        "allowed_plugins": ["metaphysics"],
     },
 }

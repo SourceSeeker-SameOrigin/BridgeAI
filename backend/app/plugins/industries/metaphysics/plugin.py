@@ -10,11 +10,14 @@ from typing import Any
 from app.plugins.base import PluginBase, PluginTool
 from app.plugins.industries.metaphysics.calculations import (
     bazi_paipan,
+    daoyi_yangsheng,
     dayun_liunian,
+    fengshui_paipan,
     lunar_convert,
     meihua_qigua,
     qimen_paipan,
     tarot_draw,
+    tianxiang_query,
     xingzuo_xingpan,
     zeri_huangli,
     ziwei_paipan,
@@ -34,7 +37,8 @@ class MetaphysicsPlugin(PluginBase):
     display_name = "玄学计算工具"
     description = (
         "精确的玄学计算工具集：八字排盘、农历转换、大运流年、"
-        "梅花易数、紫微斗数、奇门遁甲、星座星盘、择日黄历、塔罗牌占卜"
+        "梅花易数、紫微斗数、奇门遁甲、星座星盘、择日黄历、塔罗牌占卜、"
+        "风水排盘(玄空+八宅)、道医养生、天象查询"
     )
     version = "1.0.0"
     category = "metaphysics"
@@ -278,6 +282,102 @@ class MetaphysicsPlugin(PluginBase):
                     },
                 },
             ),
+            PluginTool(
+                name="fengshui_paipan",
+                description=(
+                    "风水排盘：玄空飞星山向盘 + 八宅命卦。"
+                    "输入建造年份、坐山(24山之一)、可选向首与居住者生辰，"
+                    "返回元运/九宫飞星表/八宅吉凶方位"
+                ),
+                parameters={
+                    "type": "object",
+                    "properties": {
+                        "build_year": {
+                            "type": "integer",
+                            "description": "建造年份(用于定元运)，如 2010",
+                        },
+                        "sit_shan": {
+                            "type": "string",
+                            "description": "坐山，24山之一（壬子癸丑艮寅甲卯乙辰巽巳丙午丁未坤申庚酉辛戌乾亥）",
+                            "enum": [
+                                "壬", "子", "癸", "丑", "艮", "寅",
+                                "甲", "卯", "乙", "辰", "巽", "巳",
+                                "丙", "午", "丁", "未", "坤", "申",
+                                "庚", "酉", "辛", "戌", "乾", "亥",
+                            ],
+                        },
+                        "face_shan": {
+                            "type": "string",
+                            "description": "向首(可选，不传则按坐山对面自动推算)",
+                        },
+                        "person_birth_year": {
+                            "type": "integer",
+                            "description": "居住者出生年(可选，用于八宅命卦)",
+                        },
+                        "person_gender": {
+                            "type": "string",
+                            "description": "居住者性别(可选，配合 person_birth_year)",
+                            "enum": ["male", "female", "男", "女"],
+                        },
+                    },
+                    "required": ["build_year", "sit_shan"],
+                },
+            ),
+            PluginTool(
+                name="daoyi_yangsheng",
+                description=(
+                    "道医养生：基于八字日主五行判断体质，结合当前节气与时辰流注，"
+                    "给出脏腑/饮食/作息/经络建议"
+                ),
+                parameters={
+                    "type": "object",
+                    "properties": {
+                        "birth_date": {
+                            "type": "string",
+                            "description": "出生日期 YYYY-MM-DD",
+                        },
+                        "birth_time": {
+                            "type": "string",
+                            "description": "出生时间 HH:MM (可选)",
+                        },
+                        "birth_place": {
+                            "type": "string",
+                            "description": "出生地",
+                            "default": "北京",
+                        },
+                        "query_date": {
+                            "type": "string",
+                            "description": "查询日期 YYYY-MM-DD (默认今天，用于节气)",
+                        },
+                    },
+                    "required": ["birth_date"],
+                },
+            ),
+            PluginTool(
+                name="tianxiang_query",
+                description=(
+                    "天象查询：月相(朔/望/弦)、当日节气、七曜行星位置、日出日落"
+                ),
+                parameters={
+                    "type": "object",
+                    "properties": {
+                        "query_date": {
+                            "type": "string",
+                            "description": "查询日期 YYYY-MM-DD (默认今天)",
+                        },
+                        "query_time": {
+                            "type": "string",
+                            "description": "查询时间 HH:MM (默认 12:00)",
+                            "default": "12:00",
+                        },
+                        "location": {
+                            "type": "string",
+                            "description": "观测地点",
+                            "default": "北京",
+                        },
+                    },
+                },
+            ),
         ]
 
     def get_system_prompt_extension(self) -> str:
@@ -292,7 +392,13 @@ class MetaphysicsPlugin(PluginBase):
             "6. 奇门遁甲(qimen_paipan) - 九宫排布、三奇六仪、八门九星八神\n"
             "7. 星座星盘(xingzuo_xingpan) - 太阳/月亮/上升星座、行星位置、相位\n"
             "8. 择日黄历(zeri_huangli) - 宜忌查询、吉日推荐\n"
-            "9. 塔罗牌占卜(tarot_draw) - 韦特78张全牌、8种牌阵、正逆位解读\n\n"
+            "9. 塔罗牌占卜(tarot_draw) - 韦特78张全牌、8种牌阵、正逆位解读\n"
+            "10. 风水排盘(fengshui_paipan) - 玄空飞星山向盘、八宅命卦四吉四凶位\n"
+            "11. 道医养生(daoyi_yangsheng) - 体质判断、节气养生、子午流注\n"
+            "12. 天象查询(tianxiang_query) - 月相、节气、七曜行星位置、日出日落\n"
+            "\n"
+            "【面相手相】当前未提供精确测算工具——遇此类问题请明告用户「面相手相需要图像识别能力，"
+            "本平台暂不支持精确测算，仅可基于传统理论做文化解读」，避免编造具体相理细节。\n\n"
             "【行为铁律 — 违反将产生完全错误的结果】\n"
             "1. 收到出生信息后，第一个动作必须是调用工具，禁止先输出任何排盘文字。\n"
             "2. 禁止在调用工具之前猜测或计算四柱、大运等数据。你的计算错误率超过70%。\n"
@@ -313,6 +419,9 @@ class MetaphysicsPlugin(PluginBase):
             "xingzuo_xingpan": self._exec_xingzuo,
             "zeri_huangli": self._exec_zeri,
             "tarot_draw": self._exec_tarot,
+            "fengshui_paipan": self._exec_fengshui,
+            "daoyi_yangsheng": self._exec_daoyi,
+            "tianxiang_query": self._exec_tianxiang,
         }
         handler = dispatch.get(tool_name)
         if handler is None:
@@ -386,4 +495,28 @@ class MetaphysicsPlugin(PluginBase):
         return tarot_draw(
             spread_type=args.get("spread_type", "three"),
             question=args.get("question"),
+        )
+
+    async def _exec_fengshui(self, args: dict[str, Any]) -> dict:
+        return fengshui_paipan(
+            build_year=int(args["build_year"]),
+            sit_shan=args["sit_shan"],
+            face_shan=args.get("face_shan"),
+            person_birth_year=int(args["person_birth_year"]) if args.get("person_birth_year") else None,
+            person_gender=args.get("person_gender"),
+        )
+
+    async def _exec_daoyi(self, args: dict[str, Any]) -> dict:
+        return daoyi_yangsheng(
+            birth_date=args["birth_date"],
+            birth_time=args.get("birth_time"),
+            birth_place=args.get("birth_place", "北京"),
+            query_date=args.get("query_date"),
+        )
+
+    async def _exec_tianxiang(self, args: dict[str, Any]) -> dict:
+        return tianxiang_query(
+            query_date=args.get("query_date"),
+            query_time=args.get("query_time", "12:00"),
+            location=args.get("location", "北京"),
         )

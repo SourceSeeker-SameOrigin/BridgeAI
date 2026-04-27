@@ -30,10 +30,20 @@ def discover_plugin_classes() -> list[Type[PluginBase]]:
         if not is_pkg:
             continue
         module_path = f"{_INDUSTRIES_PKG}.{pkg_name}.plugin"
+        plugin_file = _INDUSTRIES_DIR / pkg_name / "plugin.py"
         try:
             module = importlib.import_module(module_path)
-        except ModuleNotFoundError:
-            logger.debug("No plugin.py in %s, skipping", pkg_name)
+        except ModuleNotFoundError as e:
+            # Distinguish "no plugin.py" from "plugin.py exists but its imports failed".
+            # ModuleNotFoundError can be raised either way; check the file presence to avoid
+            # silently skipping plugins whose dependencies are missing.
+            if not plugin_file.exists():
+                logger.debug("No plugin.py in %s, skipping", pkg_name)
+            else:
+                logger.error(
+                    "Plugin '%s' has unmet dependency: %s. Install via requirements.txt and rebuild.",
+                    pkg_name, e,
+                )
             continue
         except Exception as e:
             logger.warning("Failed to import %s: %s", module_path, e)

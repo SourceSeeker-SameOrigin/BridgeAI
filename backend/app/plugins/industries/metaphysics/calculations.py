@@ -602,8 +602,11 @@ def lunar_convert(
         solar_date = Solar.fromYmd(year, month, day)
         lun = solar_date.getLunar()
 
-        result_date = f"{lun.getYear()}-{abs(lun.getMonth()):02d}-{lun.getDay():02d}"
         is_leap = lun.getMonth() < 0  # 负数月份表示闰月
+        # 闰月日期带 'r' 标识，避免与平月同月日字符串重合
+        # 例: 2024 闰五月十五 = "2024-r05-15"，正常五月十五 = "2024-05-15"
+        month_str = f"r{abs(lun.getMonth()):02d}" if is_leap else f"{abs(lun.getMonth()):02d}"
+        result_date = f"{lun.getYear()}-{month_str}-{lun.getDay():02d}"
 
         # 当日节气
         current_jieqi = lun.getCurrentJieQi()
@@ -774,6 +777,7 @@ def dayun_liunian(
     dayun_list: list[dict[str, Any]] = []
     current_year = datetime.datetime.now().year
     current_age = current_year - year
+    current_dayun_entry: dict[str, Any] | None = None
 
     for dy in dayun_objs:
         idx = dy.getIndex()
@@ -787,6 +791,7 @@ def dayun_liunian(
         age_start = dy.getStartAge()
         age_end = dy.getEndAge()
         start_yr = dy.getStartYear()
+        end_yr = start_yr + (age_end - age_start)
 
         gan = gz[0]
         zhi = gz[1]
@@ -795,6 +800,8 @@ def dayun_liunian(
             "序号": idx,
             "年龄范围": f"{age_start}-{age_end}岁",
             "起始年份": start_yr,
+            "结束年份": end_yr,
+            "年份范围": f"{start_yr}-{end_yr}",
             "干支": gz,
             "天干": gan,
             "地支": zhi,
@@ -803,21 +810,21 @@ def dayun_liunian(
         }
         if age_start <= current_age <= age_end:
             entry["当前大运"] = True
-
-        # 每步大运内的流年
-        liunian_in_dayun: list[dict[str, Any]] = []
-        for ln in dy.getLiuNian():
-            ln_gz = ln.getGanZhi()
-            ln_gan_idx = (ln.getYear() - 4) % 10
-            ln_zhi_idx = (ln.getYear() - 4) % 12
-            liunian_in_dayun.append({
-                "年份": ln.getYear(),
-                "年龄": ln.getAge(),
-                "干支": ln_gz,
-            })
-        entry["流年"] = liunian_in_dayun
+            current_dayun_entry = entry
 
         dayun_list.append(entry)
+
+    # 预渲染大运 Markdown 表格（供 LLM 直接复制，避免从嵌套 JSON 自行拼装导致编造）
+    md_lines = [
+        "| 序号 | 干支 | 年份范围 | 年龄范围 | 五行 | 纳音 |",
+        "| --- | --- | --- | --- | --- | --- |",
+    ]
+    for e in dayun_list:
+        marker = " ←当前" if e.get("当前大运") else ""
+        md_lines.append(
+            f"| 第{e['序号']}步 | {e['干支']} | {e['年份范围']}{marker} | {e['年龄范围']} | {e['五行']} | {e['纳音']} |"
+        )
+    dayun_markdown = "\n".join(md_lines)
 
     # 近10年流年 (独立列表，方便查询)
     liunian_list: list[dict[str, Any]] = []
@@ -837,7 +844,18 @@ def dayun_liunian(
             "生肖": SHENGXIAO[zhi_idx],
         })
 
+    current_dayun_summary = ""
+    if current_dayun_entry:
+        current_dayun_summary = (
+            f"第{current_dayun_entry['序号']}步 {current_dayun_entry['干支']} "
+            f"（{current_dayun_entry['年份范围']}，{current_dayun_entry['年龄范围']}）"
+        )
+
     return {
+        "引用铁律": (
+            "报告中大运的干支/年份/年龄必须逐字复制『大运表格_Markdown』字段；"
+            "当前大运只能引用『当前大运摘要』字段；禁止从出生年自行推算。"
+        ),
         "排运方向": direction,
         "方向说明": direction_explain,
         "起运岁数": qiyun_years + (1 if qiyun_months >= 6 else 0),
@@ -849,6 +867,8 @@ def dayun_liunian(
         "司令": siling,
         "年柱": year_gz,
         "月柱": month_gz,
+        "当前大运摘要": current_dayun_summary,
+        "大运表格_Markdown": dayun_markdown,
         "大运列表": dayun_list,
         "近十年流年": liunian_list,
     }
@@ -926,14 +946,23 @@ def meihua_qigua(
     # 需要知道6爻组合
     # 上卦3爻 + 下卦3爻 = 6爻 (从下到上: 1,2,3为下卦; 4,5,6为上卦)
     def gua_to_yaos(gua_num: int) -> list[int]:
-        """获取三爻 (从下到上)。"""
-        # 乾=111, 兑=110, 离=101, 震=001, 巽=011, 坎=010, 艮=100, 坤=000
+        """获取三爻 (从下到上, 1=阳, 0=阴)。
+
+        梅花易数先天八卦数：乾1兑2离3震4巽5坎6艮7坤8。
+        八卦象（自下到上的爻位）：
+          乾☰=[阳阳阳], 兑☱=[阳阳阴], 离☲=[阳阴阳], 震☳=[阳阴阴],
+          巽☴=[阴阳阳], 坎☵=[阴阳阴], 艮☶=[阴阴阳], 坤☷=[阴阴阴]
+        """
         yao_map = {
-            1: [1, 1, 1], 2: [0, 1, 1], 3: [1, 0, 1], 4: [1, 0, 0],
-            5: [0, 1, 1], 6: [0, 1, 0], 7: [0, 0, 1], 8: [0, 0, 0],
+            1: [1, 1, 1],  # 乾
+            2: [1, 1, 0],  # 兑
+            3: [1, 0, 1],  # 离
+            4: [1, 0, 0],  # 震
+            5: [0, 1, 1],  # 巽
+            6: [0, 1, 0],  # 坎
+            7: [0, 0, 1],  # 艮
+            8: [0, 0, 0],  # 坤
         }
-        # 修正巽卦
-        yao_map[5] = [1, 1, 0]
         return yao_map.get(gua_num, [0, 0, 0])
 
     lower_yaos = gua_to_yaos(lower_gua)  # 1,2,3爻
@@ -946,10 +975,16 @@ def meihua_qigua(
     hu_upper_yaos = all_yaos[2:5]
 
     def yaos_to_gua(yaos: list[int]) -> int:
-        """三爻转卦数。"""
+        """三爻转卦数（先天八卦数 1-8）。"""
         yao_to_gua_map = {
-            (1, 1, 1): 1, (0, 1, 1): 2, (1, 0, 1): 3, (1, 0, 0): 4,
-            (1, 1, 0): 5, (0, 1, 0): 6, (0, 0, 1): 7, (0, 0, 0): 8,
+            (1, 1, 1): 1,  # 乾
+            (1, 1, 0): 2,  # 兑
+            (1, 0, 1): 3,  # 离
+            (1, 0, 0): 4,  # 震
+            (0, 1, 1): 5,  # 巽
+            (0, 1, 0): 6,  # 坎
+            (0, 0, 1): 7,  # 艮
+            (0, 0, 0): 8,  # 坤
         }
         return yao_to_gua_map.get(tuple(yaos), 8)
 
@@ -1267,13 +1302,17 @@ def ziwei_paipan(
     sihua = _calc_four_hua(year_gan_idx)
 
     # 当前大限 (每10年一个大限)
+    # 紫微大限顺逆：阳男阴女顺行，阴男阳女逆行
     current_year = datetime.datetime.now().year
     current_age = current_year - year
     daxian_start_ages = list(range(ju_num, 120, 10))
+    is_yang_year = year_gan_idx % 2 == 0  # 甲丙戊庚壬 = 阳干
+    is_male = gender in ("male", "男")
+    daxian_shun = (is_yang_year and is_male) or (not is_yang_year and not is_male)
     current_daxian = ""
     for i, start_age in enumerate(daxian_start_ages):
         if start_age <= current_age < start_age + 10:
-            daxian_idx = (ming_idx + i) % 12 if gender in ("male", "男") else (ming_idx - i) % 12
+            daxian_idx = (ming_idx + i) % 12 if daxian_shun else (ming_idx - i) % 12
             current_daxian = f"{PALACE_DIZHI[daxian_idx]}({start_age}-{start_age + 9}岁)"
             break
 
@@ -1308,15 +1347,30 @@ JIUGONG_NAMES = ["一宫(坎)", "二宫(坤)", "三宫(震)", "四宫(巽)",
 SANQI_LIUYI = ["戊", "己", "庚", "辛", "壬", "癸", "丁", "丙", "乙"]
 # 甲子戊, 甲戌己, 甲申庚, 甲午辛, 甲辰壬, 甲寅癸
 
-# 八门
-BA_MEN = ["休门", "死门", "伤门", "杜门", "中(无门)", "开门", "惊门", "生门", "景门"]
+# 八门按九宫地盘静态分布 (奇门遁甲固定对应关系)
+# 1坎-休, 2坤-死, 3震-伤, 4巽-杜, 5中-无门, 6乾-开, 7兑-惊, 8艮-生, 9离-景
+BA_MEN_DIPAN: dict[int, str] = {
+    1: "休门", 2: "死门", 3: "伤门", 4: "杜门",
+    6: "开门", 7: "惊门", 8: "生门", 9: "景门",
+    # 中5宫无门
+}
 
-# 九星
-JIU_XING = ["天蓬", "天芮", "天冲", "天辅", "天禽", "天心", "天柱", "天任", "天英"]
+# 九星按九宫地盘静态分布
+# 1坎-天蓬, 2坤-天芮, 3震-天冲, 4巽-天辅, 5中-天禽(寄坤2), 6乾-天心, 7兑-天柱, 8艮-天任, 9离-天英
+JIU_XING_DIPAN: dict[int, str] = {
+    1: "天蓬", 2: "天芮", 3: "天冲", 4: "天辅",
+    5: "天禽", 6: "天心", 7: "天柱", 8: "天任", 9: "天英",
+}
 
-# 八神 (阳遁)
-BA_SHEN_YANG = ["值符", "腾蛇", "太阴", "六合", "白虎", "玄武", "九地", "九天"]
-BA_SHEN_YIN = ["值符", "九天", "九地", "玄武", "白虎", "六合", "太阴", "腾蛇"]
+# 八神顺序：阳遁顺时针、阴遁逆时针，从值符宫起排
+BA_SHEN_LIST: list[str] = ["值符", "腾蛇", "太阴", "六合", "白虎", "玄武", "九地", "九天"]
+
+# 时柱旬首查表：60甲子按10干一旬，6 个旬首对应 6 仪
+# key = 时柱干支字符串 -> (旬首, 对应仪)
+_LIUYI_BY_XUN: dict[str, str] = {
+    "甲子": "戊", "甲戌": "己", "甲申": "庚",
+    "甲午": "辛", "甲辰": "壬", "甲寅": "癸",
+}
 
 # 24节气用于判断阴阳遁
 # 冬至后用阳遁，夏至后用阴遁
@@ -1385,107 +1439,130 @@ def _determine_yinyang_dun(dt: datetime.datetime) -> tuple[str, str, int]:
     return dun_type, current_jieqi, ju_num
 
 
-def _get_xunshou(day_gz: str) -> str:
-    """获取旬首 (日干支所在旬的甲X)。"""
-    gan_idx = TIAN_GAN.index(day_gz[0])
-    zhi_idx = DI_ZHI.index(day_gz[1])
-    # 旬首地支 = 当前地支 - 当前天干索引
+def _xunshou_of(gz: str) -> str:
+    """获取干支所在旬的旬首 (甲X)。"""
+    gan_idx = TIAN_GAN.index(gz[0])
+    zhi_idx = DI_ZHI.index(gz[1])
+    # 旬首地支 = 当前地支 - 当前天干索引（按 60 甲子顺序）
     xun_zhi_idx = (zhi_idx - gan_idx) % 12
     return "甲" + DI_ZHI[xun_zhi_idx]
 
 
-def _get_kongwang(day_gz: str) -> list[str]:
-    """获取空亡 (日干支所在旬的最后两个地支)。"""
-    gan_idx = TIAN_GAN.index(day_gz[0])
-    zhi_idx = DI_ZHI.index(day_gz[1])
+def _kongwang_of(gz: str) -> list[str]:
+    """获取干支所在旬的空亡 (该旬未用到的两个地支)。"""
+    gan_idx = TIAN_GAN.index(gz[0])
+    zhi_idx = DI_ZHI.index(gz[1])
     xun_zhi_idx = (zhi_idx - gan_idx) % 12
-    # 空亡 = 该旬未用到的两个地支
-    kong1 = DI_ZHI[(xun_zhi_idx + 10) % 12]
-    kong2 = DI_ZHI[(xun_zhi_idx + 11) % 12]
-    return [kong1, kong2]
+    return [DI_ZHI[(xun_zhi_idx + 10) % 12], DI_ZHI[(xun_zhi_idx + 11) % 12]]
+
+
+def _flying_palaces(start_gong: int, length: int, shun: bool) -> list[int]:
+    """从 start_gong (1-9) 起，按九宫数字顺/逆飞 length 步，返回经过的宫位序列。
+
+    顺飞: 1→2→3→4→5→6→7→8→9→1...
+    逆飞: 1→9→8→7→6→5→4→3→2→1...
+    """
+    seq: list[int] = []
+    for i in range(length):
+        if shun:
+            g = ((start_gong - 1 + i) % 9) + 1
+        else:
+            g = ((start_gong - 1 - i) % 9) + 1
+        seq.append(g)
+    return seq
+
+
+def _flying_palaces_skip5(start_gong: int, length: int, shun: bool) -> list[int]:
+    """从 start_gong (1-9，不能为 5) 起，飞 length 步，自动跳过中宫 5。
+
+    用于八神排布——中宫不放神，跳过后继续。
+    """
+    seq: list[int] = []
+    g = start_gong
+    while len(seq) < length:
+        if g != 5:
+            seq.append(g)
+        if shun:
+            g = (g % 9) + 1
+        else:
+            g = ((g - 2) % 9) + 1
+    return seq
 
 
 def qimen_paipan(
     datetime_str: str,
     qimen_type: str = "时家奇门",
 ) -> dict[str, Any]:
-    """奇门遁甲排盘。"""
+    """奇门遁甲排盘 (时家奇门，地盘静态显示 + 准确标注值符/值使/八神位置)。
+
+    实现要点:
+    1. 三奇六仪：按局数从对应宫起，阳遁顺九宫飞、阴遁逆九宫飞
+    2. 九星：按九宫地盘静态分布 (1坎天蓬 ... 9离天英，5中天禽寄坤2)
+    3. 八门：按九宫地盘静态分布 (中5宫无门)
+    4. 八神：以"值符宫"起排，阳遁顺、阴遁逆，跳过中宫 (5宫无神)
+    5. 值符值使：旬首 → 对应仪 → 该仪在地盘的宫位即"值符宫"
+    """
     dt = datetime.datetime.strptime(datetime_str, "%Y-%m-%d %H:%M")
     solar_dt = Solar.fromYmdHms(dt.year, dt.month, dt.day, dt.hour, dt.minute, 0)
     lunar_dt = solar_dt.getLunar()
 
     day_gz = lunar_dt.getDayInGanZhi()
     hour_zhi_idx = hour_to_dizhi_index(dt.hour, dt.minute)
-    hour_gz = calc_hour_pillar(TIAN_GAN.index(day_gz[0]), hour_zhi_idx)
-    hour_gz_str = hour_gz[0] + hour_gz[1]
+    hour_gan, hour_zhi = calc_hour_pillar(TIAN_GAN.index(day_gz[0]), hour_zhi_idx)
+    hour_gz_str = hour_gan + hour_zhi
 
     dun_type, jieqi, ju_num = _determine_yinyang_dun(dt)
-    xunshou = _get_xunshou(day_gz)
-    kongwang = _get_kongwang(day_gz)
-
     is_yang = dun_type == "阳遁"
 
-    # 排九宫 (简化版)
-    # 洛书九宫: 4 9 2 / 3 5 7 / 8 1 6
-    luoshu = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-    # 三奇六仪排布 (根据局数)
+    # ── 1. 三奇六仪排九宫 (按局数) ─────────────────────────
+    # 阳遁三局 → 戊起3宫顺飞: 戊3, 己4, 庚5, 辛6, 壬7, 癸8, 丁9, 丙1, 乙2
     sanqi_positions: dict[int, str] = {}
-    if is_yang:
-        for i in range(9):
-            pos = (ju_num - 1 + i) % 9
-            sanqi_positions[pos + 1] = SANQI_LIUYI[i]
-    else:
-        for i in range(9):
-            pos = (ju_num - 1 - i) % 9
-            sanqi_positions[pos + 1] = SANQI_LIUYI[i]
+    flight = _flying_palaces(start_gong=ju_num, length=9, shun=is_yang)
+    for i, gong in enumerate(flight):
+        sanqi_positions[gong] = SANQI_LIUYI[i]
 
-    # 八门排布 (根据值使所在宫位)
-    # 简化: 休门从值使宫起排
-    men_positions: dict[int, str] = {}
-    for i in range(9):
-        if is_yang:
-            pos = (ju_num - 1 + i) % 9
-        else:
-            pos = (ju_num - 1 - i) % 9
-        men_positions[pos + 1] = BA_MEN[i]
+    # 反查：每仪在哪个宫
+    yi_to_gong: dict[str, int] = {y: g for g, y in sanqi_positions.items()}
 
-    # 九星排布
-    xing_positions: dict[int, str] = {}
-    for i in range(9):
-        if is_yang:
-            pos = (ju_num - 1 + i) % 9
-        else:
-            pos = (ju_num - 1 - i) % 9
-        xing_positions[pos + 1] = JIU_XING[i]
+    # ── 2. 旬首、值符宫 ────────────────────────────────
+    hour_xunshou = _xunshou_of(hour_gz_str)              # 时柱旬首 (甲X)
+    hour_kongwang = _kongwang_of(hour_gz_str)            # 时柱空亡
+    day_xunshou = _xunshou_of(day_gz)
+    day_kongwang = _kongwang_of(day_gz)
 
-    # 八神排布
-    shen_list = BA_SHEN_YANG if is_yang else BA_SHEN_YIN
+    # 旬首对应的仪 (戊/己/庚/...)
+    zhifu_yi = _LIUYI_BY_XUN.get(hour_xunshou, "戊")
+    zhifu_gong = yi_to_gong.get(zhifu_yi, ju_num)        # 值符所在地盘宫
+    # 值符 = 该宫地盘的星; 值使 = 该宫地盘的门
+    zhifu_xing = JIU_XING_DIPAN.get(zhifu_gong, "")
+    zhishi_men = BA_MEN_DIPAN.get(zhifu_gong, "(中宫无门)")
+
+    # ── 3. 八神排布 (从值符宫起，阳顺阴逆，跳过中宫) ────────
     shen_positions: dict[int, str] = {}
-    # 八神从值符宫起排
-    for i, shen in enumerate(shen_list):
-        pos = (ju_num - 1 + i) % 9
-        if pos + 1 == 5:
-            continue  # 跳过中宫
-        shen_positions[pos + 1] = shen
+    if zhifu_gong == 5:
+        # 值符落中宫 → 寄坤2宫起排 (传统处理)
+        start = 2
+    else:
+        start = zhifu_gong
+    shen_flight = _flying_palaces_skip5(start_gong=start, length=8, shun=is_yang)
+    for i, gong in enumerate(shen_flight):
+        shen_positions[gong] = BA_SHEN_LIST[i]
 
-    # 组装九宫信息
-    nine_palaces: list[dict[str, str]] = []
+    # ── 4. 组装九宫布局 ───────────────────────────────
+    nine_palaces: list[dict[str, Any]] = []
     for gong_num in range(1, 10):
-        palace: dict[str, str] = {
+        palace: dict[str, Any] = {
             "宫位": JIUGONG_NAMES[gong_num - 1],
+            "地盘奇仪": sanqi_positions.get(gong_num, ""),
+            "九星": JIU_XING_DIPAN.get(gong_num, ""),
+            "八门": BA_MEN_DIPAN.get(gong_num, "(无门)"),
+            "八神": shen_positions.get(gong_num, "(无神)") if gong_num != 5 else "(中宫无神)",
         }
-        if gong_num in sanqi_positions:
-            palace["天盘奇仪"] = sanqi_positions[gong_num]
-        if gong_num in men_positions:
-            palace["八门"] = men_positions[gong_num]
-        if gong_num in xing_positions:
-            palace["九星"] = xing_positions[gong_num]
-        if gong_num in shen_positions:
-            palace["八神"] = shen_positions[gong_num]
+        if gong_num == zhifu_gong:
+            palace["标记"] = "值符宫"
         nine_palaces.append(palace)
 
-    # 马星 (根据日支)
+    # ── 5. 马星 (按日支三合) ──────────────────────────
     day_zhi = day_gz[1]
     yima_map = {
         "申": "寅", "子": "寅", "辰": "寅",
@@ -1503,12 +1580,15 @@ def qimen_paipan(
         "所在节气": jieqi,
         "日干支": day_gz,
         "时干支": hour_gz_str,
-        "旬首": xunshou,
-        "空亡": kongwang,
+        "时柱旬首": hour_xunshou,
+        "时柱空亡": hour_kongwang,
+        "日柱旬首": day_xunshou,
+        "日柱空亡": day_kongwang,
+        "值符": zhifu_xing,
+        "值使": zhishi_men,
+        "值符宫": JIUGONG_NAMES[zhifu_gong - 1],
         "九宫布局": nine_palaces,
         "马星": ma_xing,
-        "值符": xing_positions.get(ju_num, ""),
-        "值使": men_positions.get(ju_num, ""),
     }
 
 
@@ -1593,9 +1673,12 @@ def xingzuo_xingpan(
 
     lat, lon = get_coords(birth_place)
 
-    # 转UTC (中国时间-8)
+    # 当地时间 → UTC：按经度估算时区偏移（每 15° 经度 = 1 小时）。
+    # 这比硬编码 UTC+8 更通用 —— 海外出生地（纽约 -74°→UTC-5、东京 139°→UTC+9）也能算对。
+    # 政治时区/夏令时偏差最多 1 小时，对星座/行星位置影响通常 < 1°。
+    tz_offset_hours = round(lon / 15)
     dt_local = datetime.datetime(year, month, day, hour, minute)
-    dt_utc = dt_local - datetime.timedelta(hours=8)
+    dt_utc = dt_local - datetime.timedelta(hours=tz_offset_hours)
 
     obs = ephem.Observer()
     obs.lat = str(lat)
@@ -1719,13 +1802,22 @@ def zeri_huangli(
 
         weekday_map = {0: "日", 1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六"}
 
+        # 模糊匹配：黄历 yi_list 项可能是组合词（"订婚/结婚"、"嫁娶"），
+        # 用户传 activity="结婚" 应当能命中。规则：activity 是 yi 任一项的子串，
+        # 或 yi 任一项是 activity 的子串（覆盖"结婚"vs"嫁娶"这类同义场景）。
+        def _yi_match(act: str, yi_items: list[str]) -> bool:
+            for yi in yi_items:
+                if act in yi or yi in act:
+                    return True
+            return False
+
         good_days: list[dict[str, str]] = []
         current = start
         while current <= end:
             solar_d = Solar.fromYmd(current.year, current.month, current.day)
             lun = solar_d.getLunar()
             yi_list = lun.getDayYi()
-            if activity in yi_list:
+            if _yi_match(activity, yi_list):
                 ji_list = lun.getDayJi()
                 good_days.append({
                     "公历": current.strftime("%Y-%m-%d"),
@@ -1827,4 +1919,505 @@ def tarot_draw(
         "抽牌数": num_cards,
         "问题": question or "未指定",
         "牌面": result_cards,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Tool 10: 风水排盘 (玄空飞星 + 八宅)
+# ---------------------------------------------------------------------------
+
+# 三元九运 (每运 20 年)
+JIUYUN_TABLE: list[tuple[int, int, int, str]] = [
+    # (运数, 起始年, 结束年, 当令星色)
+    (1, 1864, 1883, "一白贪狼"),
+    (2, 1884, 1903, "二黑巨门"),
+    (3, 1904, 1923, "三碧禄存"),
+    (4, 1924, 1943, "四绿文曲"),
+    (5, 1944, 1963, "五黄廉贞"),
+    (6, 1964, 1983, "六白武曲"),
+    (7, 1984, 2003, "七赤破军"),
+    (8, 2004, 2023, "八白左辅"),
+    (9, 2024, 2043, "九紫右弼"),
+    # 下元开始循环
+    (1, 2044, 2063, "一白贪狼"),
+    (2, 2064, 2083, "二黑巨门"),
+]
+
+# 紫白九星名 (洛书九宫对应)
+ZIBAI_NAMES = ["", "一白", "二黑", "三碧", "四绿", "五黄", "六白", "七赤", "八白", "九紫"]
+ZIBAI_NATURE = ["", "吉(智慧)", "凶(病符)", "凶(口舌)", "吉(文曲)", "凶(灾祸)",
+                 "吉(权威)", "凶(劫盗)", "吉(财富)", "吉(喜庆)"]
+
+# 24 山方位 (每卦 3 山，从北开始顺时针)
+SHAN_24: list[tuple[str, int, int]] = [
+    # (山名, 起始角度, 八卦索引 0-7)
+    ("壬", 337, 0), ("子", 352, 0), ("癸", 7, 0),         # 坎北
+    ("丑", 22, 7), ("艮", 37, 7), ("寅", 52, 7),         # 艮东北
+    ("甲", 67, 2), ("卯", 82, 2), ("乙", 97, 2),         # 震东
+    ("辰", 112, 3), ("巽", 127, 3), ("巳", 142, 3),       # 巽东南
+    ("丙", 157, 8), ("午", 172, 8), ("丁", 187, 8),       # 离南 (8=离)
+    ("未", 202, 1), ("坤", 217, 1), ("申", 232, 1),       # 坤西南
+    ("庚", 247, 6), ("酉", 262, 6), ("辛", 277, 6),       # 兑西
+    ("戌", 292, 5), ("乾", 307, 5), ("亥", 322, 5),       # 乾西北
+]
+
+
+def _get_yun(year: int) -> tuple[int, str]:
+    """根据年份返回所属运 (1-9) 和当令星名。"""
+    for yun, start, end, name in JIUYUN_TABLE:
+        if start <= year <= end:
+            return yun, name
+    return 9, "九紫右弼"  # default
+
+
+def _shan_to_palace(shan: str) -> int:
+    """24 山名 → 后天八卦九宫数 (1坎2坤3震4巽6乾7兑8艮9离, 5中无山)。"""
+    # 卦 → 九宫数映射 (后天位置)
+    bagua_to_gong = {0: 1, 1: 2, 2: 3, 3: 4, 5: 6, 6: 7, 7: 8, 8: 9}
+    # 注：上面 SHAN_24 用 8=离的标记区别 0=坎，避免冲突
+    for s, _, ba_idx in SHAN_24:
+        if s == shan:
+            return bagua_to_gong.get(ba_idx, 5)
+    raise ValueError(f"未知山向: {shan}")
+
+
+def _is_yin_shan(shan: str) -> bool:
+    """24 山阴阳判定 (用于飞星顺逆)。
+
+    简化规则：天干戊己除外，地支寅申巳亥 = 阳；其他地支 = 阴；
+    八卦干支按各自传统：乾坤艮巽 = 阳，其他山按"父母三般卦"判定。
+    本实现用最常见的 24 山阴阳口诀。
+    """
+    yang_shan = {"壬", "甲", "丙", "庚",  # 四阳天干
+                  "寅", "申", "巳", "亥",   # 四长生
+                  "乾", "坤", "艮", "巽"}   # 四隅卦本身
+    return shan not in yang_shan
+
+
+def _flying_stars_grid(start_star: int, shun: bool) -> dict[int, int]:
+    """从 start_star 入中宫起，按洛书飞星顺序填九宫。
+
+    洛书飞行轨迹：5(中) → 6(乾) → 7(兑) → 8(艮) → 9(离) → 1(坎) → 2(坤) → 3(震) → 4(巽)
+    顺飞: 星数 +1 落到下一宫；逆飞: 星数 -1
+    """
+    # 洛书飞星顺序 (从中宫出发的"九宫飞星"标准轨迹)
+    flight_order = [5, 6, 7, 8, 9, 1, 2, 3, 4]
+    grid: dict[int, int] = {}
+    for i, gong in enumerate(flight_order):
+        if shun:
+            star = ((start_star - 1 + i) % 9) + 1
+        else:
+            star = ((start_star - 1 - i) % 9) + 1
+        grid[gong] = star
+    return grid
+
+
+def fengshui_paipan(
+    build_year: int,
+    sit_shan: str,
+    face_shan: str | None = None,
+    person_birth_year: int | None = None,
+    person_gender: str | None = None,
+) -> dict[str, Any]:
+    """风水排盘 (玄空飞星 + 可选八宅)。
+
+    Args:
+        build_year: 建造年份 (用于定元运)
+        sit_shan: 坐山 (24山名之一，如"子"、"乾")
+        face_shan: 向首 (可选；不传则按坐山对面推算)
+        person_birth_year: 居住者出生年 (用于八宅命卦，可选)
+        person_gender: 居住者性别 male/female 或 男/女 (用于八宅，可选)
+    """
+    # === 玄空飞星 ===
+    yun_num, yun_name = _get_yun(build_year)
+    # 元运盘：当令星入中宫顺飞
+    yuanyun_grid = _flying_stars_grid(start_star=yun_num, shun=True)
+
+    sit_gong = _shan_to_palace(sit_shan)
+    # 山星 = 元运盘上"坐山宫位"上的星
+    mountain_star = yuanyun_grid[sit_gong]
+    # 山星阴阳定顺逆 (山星跟坐山阴阳)
+    mountain_shun = not _is_yin_shan(sit_shan)
+    # 山星入中宫飞布
+    mountain_grid = _flying_stars_grid(start_star=mountain_star, shun=mountain_shun)
+
+    # 向首
+    if not face_shan:
+        # 坐山对面=向首 (24山按角度+180°)
+        for s, deg, _ in SHAN_24:
+            if s == sit_shan:
+                face_deg = (deg + 180) % 360
+                # 找最接近的山
+                best = min(SHAN_24, key=lambda x: min(abs(x[1] - face_deg), 360 - abs(x[1] - face_deg)))
+                face_shan = best[0]
+                break
+    face_gong = _shan_to_palace(face_shan)
+    facing_star = yuanyun_grid[face_gong]
+    facing_shun = not _is_yin_shan(face_shan)
+    facing_grid = _flying_stars_grid(start_star=facing_star, shun=facing_shun)
+
+    # 组装九宫飞星表
+    nine_palaces: list[dict[str, Any]] = []
+    palace_names = {1: "坎北", 2: "坤西南", 3: "震东", 4: "巽东南", 5: "中宫",
+                     6: "乾西北", 7: "兑西", 8: "艮东北", 9: "离南"}
+    for gong in range(1, 10):
+        ms = mountain_grid[gong]
+        fs = facing_grid[gong]
+        yy = yuanyun_grid[gong]
+        nine_palaces.append({
+            "宫位": palace_names[gong],
+            "山星": f"{ms}-{ZIBAI_NAMES[ms]}",
+            "向星": f"{fs}-{ZIBAI_NAMES[fs]}",
+            "运星": f"{yy}-{ZIBAI_NAMES[yy]}",
+            "山星吉凶": ZIBAI_NATURE[ms],
+            "向星吉凶": ZIBAI_NATURE[fs],
+        })
+
+    result: dict[str, Any] = {
+        "建造年份": build_year,
+        "所属元运": f"{yun_num}运 ({yun_name})",
+        "坐山": sit_shan,
+        "向首": face_shan,
+        "山星入中": ZIBAI_NAMES[mountain_star],
+        "向星入中": ZIBAI_NAMES[facing_star],
+        "九宫飞星表": nine_palaces,
+    }
+
+    # === 八宅 (可选) ===
+    if person_birth_year and person_gender:
+        # 命卦计算 (简化版本：基于年支)
+        # 男命：(100 - 年份末两位) / 9 余数 → 命卦
+        # 女命：(年份末两位 - 4) / 9 余数 → 命卦
+        # 实际应基于上中下元，这里简化
+        is_male = person_gender in ("male", "男")
+        last_two = person_birth_year % 100
+        if is_male:
+            mod = (100 - last_two) % 9 or 9
+        else:
+            mod = (last_two - 4) % 9 or 9
+        # 命卦索引: 1坎 2坤 3震 4巽 5(寄2/8) 6乾 7兑 8艮 9离
+        ming_gua_map = {1: "坎", 2: "坤", 3: "震", 4: "巽",
+                         5: ("坤" if is_male else "艮"),  # 寄宫
+                         6: "乾", 7: "兑", 8: "艮", 9: "离"}
+        ming_gua = ming_gua_map[mod]
+        east_four = {"坎", "离", "震", "巽"}
+        category = "东四命" if ming_gua in east_four else "西四命"
+
+        # 八宅吉凶方位 (按本命卦的伏位飞游九星)
+        # 简化：东四命四吉位为坎离震巽、四凶位为乾坤艮兑；西四命相反
+        if category == "东四命":
+            ji_dirs = ["坎(北)", "离(南)", "震(东)", "巽(东南)"]
+            xiong_dirs = ["乾(西北)", "坤(西南)", "艮(东北)", "兑(西)"]
+        else:
+            ji_dirs = ["乾(西北)", "坤(西南)", "艮(东北)", "兑(西)"]
+            xiong_dirs = ["坎(北)", "离(南)", "震(东)", "巽(东南)"]
+
+        result["八宅"] = {
+            "出生年": person_birth_year,
+            "性别": person_gender,
+            "本命卦": ming_gua,
+            "命属": category,
+            "四吉位": ji_dirs,
+            "四凶位": xiong_dirs,
+            "建议": f"卧室、书房、办公位宜在{ji_dirs[0]}、{ji_dirs[1]}方位；卫生间、储物间宜在{xiong_dirs[0]}、{xiong_dirs[1]}方位以化煞。",
+        }
+
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Tool 11: 道医养生
+# ---------------------------------------------------------------------------
+
+# 五行体质对应的脏腑、易病、宜养
+WUXING_TIZHI: dict[str, dict[str, Any]] = {
+    "木": {"脏腑": "肝胆", "易病": ["头痛", "情志郁结", "目疾", "筋脉不舒"],
+           "宜": ["疏肝理气", "酸味食物（适量）", "舒展运动如太极、八段锦"],
+           "忌": ["大怒伤肝", "熬夜（子丑时养肝）", "辛辣过度耗气"]},
+    "火": {"脏腑": "心小肠", "易病": ["心悸", "失眠多梦", "口疮", "血脉问题"],
+           "宜": ["养心安神", "苦味食物（莲子、苦瓜）", "静坐冥想"],
+           "忌": ["大喜伤心", "过劳", "辛辣助火"]},
+    "土": {"脏腑": "脾胃", "易病": ["消化不良", "湿气重", "肌肉乏力", "肥胖/瘦弱"],
+           "宜": ["健脾化湿", "甘味食物（山药、红枣）", "饮食规律"],
+           "忌": ["思虑过度", "生冷甜腻", "久坐不动"]},
+    "金": {"脏腑": "肺大肠", "易病": ["呼吸道疾病", "皮肤干燥", "便秘", "悲忧伤肺"],
+           "宜": ["润肺养金", "辛味食物（适量葱姜）", "深呼吸/腹式呼吸"],
+           "忌": ["悲忧过度", "干燥环境", "吸烟"]},
+    "水": {"脏腑": "肾膀胱", "易病": ["腰膝酸软", "畏寒", "耳鸣", "泌尿生殖问题"],
+           "宜": ["温肾固精", "咸味食物（适量黑色食物如黑豆、黑芝麻）", "早睡早起"],
+           "忌": ["惊恐伤肾", "纵欲", "过咸"]},
+}
+
+# 24 节气养生重点
+JIEQI_YANGSHENG: dict[str, str] = {
+    "立春": "春养肝。少酸增甘以养脾，避大风寒，宜舒展。",
+    "雨水": "脾胃为要。少食生冷，宜温润食物，防春季湿气。",
+    "惊蛰": "阳气升发。宜疏肝理气，多食时令蔬菜（韭菜、菠菜）。",
+    "春分": "阴阳平衡。饮食宜清淡，作息规律，多走动晒背。",
+    "清明": "踏青养肝。情志宜舒展，可饮菊花茶清肝明目。",
+    "谷雨": "祛湿健脾。少食油腻，可食薏米、赤小豆。",
+    "立夏": "夏养心。早睡早起，宜静心，少食辛辣。",
+    "小满": "防湿热。多食苦瓜、绿豆，避免冷饮直入。",
+    "芒种": "湿热当令。养心安神，可饮酸梅汤生津。",
+    "夏至": "心阳最盛。宜适度午睡，避烈日，多饮温水。",
+    "小暑": "暑热伤气。宜清补，如莲子、百合。",
+    "大暑": "防中暑。宜清淡饮食，常食西瓜、冬瓜。",
+    "立秋": "秋养肺。宜润肺，食梨、百合、银耳。",
+    "处暑": "暑去秋来。宜早睡早起，少辛多酸。",
+    "白露": "秋燥渐起。多饮水，食滋阴润燥之品。",
+    "秋分": "阴阳再平衡。情志宜收敛，避悲忧。",
+    "寒露": "天气转凉。宜温补，注意足部保暖。",
+    "霜降": "肺燥脾虚。宜健脾润肺，食山药、白萝卜。",
+    "立冬": "冬养肾。宜进补，食黑色食物（黑芝麻、黑豆）。",
+    "小雪": "藏阳气。早睡晚起，避寒就温。",
+    "大雪": "封藏精气。宜温补不上火，可食羊肉、桂圆（适量）。",
+    "冬至": "一阳初生。宜艾灸关元、命门补阳。",
+    "小寒": "极寒养肾。多食温性食物，避免大汗淋漓。",
+    "大寒": "冬末待春。宜舒缓运动准备春季升发。",
+}
+
+# 子午流注：12 时辰对应的经络/脏腑
+ZIWU_LIUZHU: list[tuple[str, str, str, str]] = [
+    # (时辰, 时段, 当令经络, 养生提示)
+    ("子时", "23:00-1:00", "胆经", "宜熟睡，胆经当令藏血解毒"),
+    ("丑时", "1:00-3:00", "肝经", "深度睡眠，肝藏血排毒"),
+    ("寅时", "3:00-5:00", "肺经", "深睡，肺主宣发肃降"),
+    ("卯时", "5:00-7:00", "大肠经", "起床排便、饮温水"),
+    ("辰时", "7:00-9:00", "胃经", "早餐宜营养丰富"),
+    ("巳时", "9:00-11:00", "脾经", "脾运化最盛，宜专注工作学习"),
+    ("午时", "11:00-13:00", "心经", "午餐 + 短午休 15-30 分钟养心"),
+    ("未时", "13:00-15:00", "小肠经", "饮水助小肠分清别浊"),
+    ("申时", "15:00-17:00", "膀胱经", "活动、饮水排毒"),
+    ("酉时", "17:00-19:00", "肾经", "宜温补、晚餐宜少"),
+    ("戌时", "19:00-21:00", "心包经", "心情舒畅、避免剧烈运动"),
+    ("亥时", "21:00-23:00", "三焦经", "准备休息，三焦通畅"),
+]
+
+
+def daoyi_yangsheng(
+    birth_date: str,
+    birth_time: str | None = None,
+    birth_place: str = "北京",
+    query_date: str | None = None,
+) -> dict[str, Any]:
+    """道医养生建议。
+
+    基于八字日主五行判断体质，结合当前节气和当前时辰给出养生建议。
+
+    Args:
+        birth_date: 出生日期 YYYY-MM-DD (用于日主五行)
+        birth_time: 出生时间 HH:MM (可选，仅用于流注建议)
+        birth_place: 出生地 (用于真太阳时)
+        query_date: 查询日期 (默认今天，用于节气)
+    """
+    year, month, day = map(int, birth_date.split("-"))
+    bt_hour, bt_minute = (0, 0)
+    if birth_time:
+        bt_hour, bt_minute = map(int, birth_time.split(":"))
+
+    # === 1. 体质判断 (基于日主五行 + 月令) ===
+    longitude = get_longitude(birth_place)
+    dt = datetime.datetime(year, month, day, bt_hour, bt_minute)
+    true_solar_dt = calc_true_solar_time(dt, longitude)
+    solar = Solar.fromYmdHms(true_solar_dt.year, true_solar_dt.month, true_solar_dt.day,
+                              true_solar_dt.hour, true_solar_dt.minute, true_solar_dt.second)
+    bazi = solar.getLunar().getEightChar()
+    day_gz = bazi.getDay()
+    month_gz = bazi.getMonth()
+    day_gan = day_gz[0]
+    day_wuxing = GAN_WUXING[day_gan]
+
+    # 基于月令判断身强弱
+    month_zhi = month_gz[1]
+    # 简化版：月令藏干本气与日主同 = 偏强
+    month_qi = CANG_GAN.get(month_zhi, [""])[0]
+    if month_qi and GAN_WUXING.get(month_qi) == day_wuxing:
+        strength_hint = "偏强"
+    else:
+        strength_hint = "偏弱/中和"
+
+    tizhi = WUXING_TIZHI[day_wuxing]
+    tizhi_summary = {
+        "日主五行": day_wuxing,
+        "强弱倾向": strength_hint,
+        "对应脏腑": tizhi["脏腑"],
+        "易感问题": tizhi["易病"],
+        "调养原则": tizhi["宜"],
+        "需避免": tizhi["忌"],
+    }
+
+    # === 2. 节气养生 ===
+    qd = query_date or datetime.date.today().isoformat()
+    qy, qm, qday = map(int, qd.split("-"))
+    qsolar = Solar.fromYmd(qy, qm, qday)
+    qlunar = qsolar.getLunar()
+    cur_jq = qlunar.getCurrentJieQi()
+    if cur_jq:
+        jq_name = cur_jq.getName()
+    else:
+        # 取上一个节气
+        prev = qlunar.getPrevJieQi()
+        jq_name = prev.getName() if prev else "立春"
+    jieqi_advice = {
+        "查询日期": qd,
+        "当前节气": jq_name,
+        "节气养生重点": JIEQI_YANGSHENG.get(jq_name, "顺应节气阴阳变化"),
+    }
+
+    # === 3. 当前时辰流注 ===
+    now = datetime.datetime.now()
+    cur_zhi_idx = hour_to_dizhi_index(now.hour, now.minute)
+    cur_zhi = DI_ZHI[cur_zhi_idx]
+    cur_liuzhu = next((entry for entry in ZIWU_LIUZHU if entry[0].startswith(cur_zhi)), ZIWU_LIUZHU[0])
+    liuzhu_now = {
+        "当前时辰": cur_liuzhu[0],
+        "时段": cur_liuzhu[1],
+        "当令经络": cur_liuzhu[2],
+        "建议": cur_liuzhu[3],
+    }
+
+    return {
+        "体质分析": tizhi_summary,
+        "节气养生": jieqi_advice,
+        "当下流注": liuzhu_now,
+        "全日流注表": [
+            {"时辰": z[0], "时段": z[1], "经络": z[2], "建议": z[3]}
+            for z in ZIWU_LIUZHU
+        ],
+        "声明": "本建议基于传统养生文化，不能替代专业医疗诊断与治疗。如有不适请及时就医。",
+    }
+
+
+# ---------------------------------------------------------------------------
+# Tool 12: 天象查询 (月相 + 节气 + 行星 + 日出日落)
+# ---------------------------------------------------------------------------
+
+def _moon_phase_name(phase_age_days: float) -> str:
+    """月龄 (0-29.53) → 月相名。"""
+    if phase_age_days < 1.84566:
+        return "新月（朔）"
+    elif phase_age_days < 5.53699:
+        return "蛾眉月"
+    elif phase_age_days < 9.22831:
+        return "上弦月"
+    elif phase_age_days < 12.91963:
+        return "盈凸月"
+    elif phase_age_days < 16.61096:
+        return "满月（望）"
+    elif phase_age_days < 20.30228:
+        return "亏凸月"
+    elif phase_age_days < 23.99361:
+        return "下弦月"
+    elif phase_age_days < 27.68493:
+        return "残月"
+    return "新月（朔）"
+
+
+def tianxiang_query(
+    query_date: str | None = None,
+    query_time: str = "12:00",
+    location: str = "北京",
+) -> dict[str, Any]:
+    """天象查询：月相、节气、七曜行星位置、日出日落。
+
+    Args:
+        query_date: 查询日期 YYYY-MM-DD，默认今天
+        query_time: 查询时间 HH:MM，默认正午
+        location: 观测地点，默认北京
+    """
+    qd = query_date or datetime.date.today().isoformat()
+    y, m, d = map(int, qd.split("-"))
+    h, mi = map(int, query_time.split(":"))
+
+    lat, lon = get_coords(location)
+    tz_offset = round(lon / 15)
+
+    # === 月相 ===
+    dt_local = datetime.datetime(y, m, d, h, mi)
+    dt_utc = dt_local - datetime.timedelta(hours=tz_offset)
+    obs = ephem.Observer()
+    obs.lat = str(lat)
+    obs.lon = str(lon)
+    obs.date = ephem.Date(dt_utc)
+
+    moon = ephem.Moon(obs)
+    prev_new = ephem.previous_new_moon(obs.date)
+    moon_age = float(obs.date - prev_new)  # days since new moon
+    moon_illum = float(moon.phase)  # 0-100% illuminated
+    next_new = ephem.next_new_moon(obs.date)
+    next_full = ephem.next_full_moon(obs.date)
+
+    moon_info = {
+        "月相名称": _moon_phase_name(moon_age),
+        "月龄": f"{moon_age:.1f} 天",
+        "亮面比例": f"{moon_illum:.1f}%",
+        "下次朔（新月）": ephem.localtime(next_new).strftime("%Y-%m-%d %H:%M"),
+        "下次望（满月）": ephem.localtime(next_full).strftime("%Y-%m-%d %H:%M"),
+    }
+
+    # === 节气 ===
+    qsolar = Solar.fromYmd(y, m, d)
+    qlunar = qsolar.getLunar()
+    cur_jq = qlunar.getCurrentJieQi()
+    next_jq = qlunar.getNextJieQi()
+    jieqi_info = {
+        "当日节气": cur_jq.getName() if cur_jq else "非节气日",
+        "下一节气": next_jq.getName() if next_jq else "",
+        "下一节气日期": (
+            f"{next_jq.getSolar().getYear()}-{next_jq.getSolar().getMonth():02d}-{next_jq.getSolar().getDay():02d}"
+            if next_jq else ""
+        ),
+    }
+
+    # === 七曜行星位置 (太阳/月/水/金/火/木/土) ===
+    bodies = {
+        "太阳": ephem.Sun(obs),
+        "月亮": ephem.Moon(obs),
+        "水星": ephem.Mercury(obs),
+        "金星": ephem.Venus(obs),
+        "火星": ephem.Mars(obs),
+        "木星": ephem.Jupiter(obs),
+        "土星": ephem.Saturn(obs),
+    }
+    planets: list[dict[str, Any]] = []
+    for name, body in bodies.items():
+        body.compute(obs)
+        ra_deg = math.degrees(float(body.ra))
+        dec_deg = math.degrees(float(body.dec))
+        # 黄经 → 星座
+        ecl = ephem.Ecliptic(body)
+        ecl_lon = math.degrees(float(ecl.lon))
+        sign, deg_in = _ecliptic_lon_to_sign(ecl_lon)
+        planets.append({
+            "天体": name,
+            "赤经": f"{ra_deg:.2f}°",
+            "赤纬": f"{dec_deg:.2f}°",
+            "所在星座": sign,
+            "黄经": f"{ecl_lon:.2f}°",
+            "高度角": f"{math.degrees(float(body.alt)):.1f}°",  # 当时是否在地平线上
+            "可见": "可见" if math.degrees(float(body.alt)) > 0 else "地平线下",
+        })
+
+    # === 日出日落 ===
+    obs_dawn = ephem.Observer()
+    obs_dawn.lat = str(lat)
+    obs_dawn.lon = str(lon)
+    # 设为查询日的当地午夜 UTC
+    obs_dawn.date = ephem.Date(datetime.datetime(y, m, d, 0, 0) - datetime.timedelta(hours=tz_offset))
+    sun = ephem.Sun()
+    try:
+        sunrise = ephem.localtime(obs_dawn.next_rising(sun)).strftime("%H:%M")
+        sunset = ephem.localtime(obs_dawn.next_setting(sun)).strftime("%H:%M")
+    except (ephem.AlwaysUpError, ephem.NeverUpError):
+        sunrise = sunset = "极昼/极夜"
+
+    return {
+        "查询日期": qd,
+        "查询时间": query_time,
+        "观测地点": location,
+        "月相": moon_info,
+        "节气": jieqi_info,
+        "日出": sunrise,
+        "日落": sunset,
+        "七曜位置": planets,
     }
