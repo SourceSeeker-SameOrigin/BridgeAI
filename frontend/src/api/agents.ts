@@ -40,17 +40,19 @@ interface BackendAgent {
 
 /** Map backend response to frontend Agent type */
 function mapAgent(b: BackendAgent): Agent {
+  const cfg = b.model_config_data || {}
   return {
     id: b.id,
     name: b.name,
     description: b.description || '',
-    model: (b.model_config_data?.model as string) || (b.model_config_data?.model_name as string) || 'unknown',
+    model: (cfg.model_name as string) || (cfg.model as string) || 'unknown',
     systemPrompt: b.system_prompt || '',
-    temperature: (b.model_config_data?.temperature as number) ?? 0.7,
-    maxTokens: (b.model_config_data?.max_tokens as number) ?? 4096,
+    temperature: (cfg.temperature as number) ?? 0.7,
+    maxTokens: (cfg.max_tokens as number) ?? 4096,
     tools: (b.tools as string[]) || [],
-    mcpConnectors: [],
-    knowledgeBases: b.knowledge_base_id ? [b.knowledge_base_id] : [],
+    plugins: (cfg.allowed_plugins as string[]) || [],
+    knowledgeBaseId: b.knowledge_base_id,
+    parentAgentId: b.parent_agent_id,
     status: b.is_active ? 'active' : 'inactive',
     createdAt: b.created_at,
     updatedAt: b.updated_at,
@@ -70,20 +72,21 @@ export async function getAgent(id: string): Promise<Agent> {
 }
 
 export async function createAgent(data: AgentCreate): Promise<Agent> {
+  const modelConfig: Record<string, unknown> = {
+    model_name: data.model,
+    temperature: data.temperature ?? 0.7,
+    max_tokens: data.maxTokens ?? 4096,
+  }
+  if (data.plugins !== undefined) modelConfig.allowed_plugins = data.plugins
   const payload: Record<string, unknown> = {
     name: data.name,
     description: data.description,
     system_prompt: data.systemPrompt,
-    model_config_data: {
-      model: data.model,
-      temperature: data.temperature ?? 0.7,
-      max_tokens: data.maxTokens ?? 4096,
-    },
+    model_config_data: modelConfig,
     tools: data.tools || [],
   }
-  if (data.knowledgeBaseId) {
-    payload.knowledge_base_id = data.knowledgeBaseId
-  }
+  if (data.knowledgeBaseId) payload.knowledge_base_id = data.knowledgeBaseId
+  if (data.parentAgentId) payload.parent_agent_id = data.parentAgentId
   const res = await client.post<BackendAgent>('/agents', payload)
   return mapAgent(res.data)
 }
@@ -94,15 +97,21 @@ export async function updateAgent(data: AgentUpdate): Promise<Agent> {
   if (rest.name !== undefined) payload.name = rest.name
   if (rest.description !== undefined) payload.description = rest.description
   if (rest.systemPrompt !== undefined) payload.system_prompt = rest.systemPrompt
-  if (rest.model !== undefined || rest.temperature !== undefined || rest.maxTokens !== undefined) {
-    payload.model_config_data = {
-      model: rest.model,
-      temperature: rest.temperature ?? 0.7,
-      max_tokens: rest.maxTokens ?? 4096,
-    }
-  }
+
+  // model_config_data is JSONB-merged on the backend, so we only need to send the
+  // keys we actually want to change. Sending all four every time would still work
+  // (merge is upsert), but only including changed keys is cleaner and avoids
+  // accidentally pinning a default value the user never touched.
+  const cfgPatch: Record<string, unknown> = {}
+  if (rest.model !== undefined) cfgPatch.model_name = rest.model
+  if (rest.temperature !== undefined) cfgPatch.temperature = rest.temperature
+  if (rest.maxTokens !== undefined) cfgPatch.max_tokens = rest.maxTokens
+  if (rest.plugins !== undefined) cfgPatch.allowed_plugins = rest.plugins
+  if (Object.keys(cfgPatch).length > 0) payload.model_config_data = cfgPatch
+
   if (rest.tools !== undefined) payload.tools = rest.tools
   if (rest.knowledgeBaseId !== undefined) payload.knowledge_base_id = rest.knowledgeBaseId || null
+  if (rest.parentAgentId !== undefined) payload.parent_agent_id = rest.parentAgentId || null
   if (rest.status !== undefined) payload.is_active = rest.status === 'active'
 
   const res = await client.put<BackendAgent>(`/agents/${id}`, payload)

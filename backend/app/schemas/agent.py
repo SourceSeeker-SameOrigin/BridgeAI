@@ -32,6 +32,7 @@ class AgentCreate(BaseModel):
 class AgentUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
+    parent_agent_id: Optional[str] = None
     task_key: Optional[str] = None
     system_prompt: Optional[str] = None
     model_config_data: Optional[Dict[str, Any]] = None

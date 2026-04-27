@@ -101,6 +101,13 @@ async def update_agent(
     }
 
     for field, value in update_data.items():
+        if field == "model_config_data":
+            # JSONB merge — preserve keys not in incoming update
+            # (e.g. allowed_plugins, model_provider set by templates).
+            merged = dict(agent.model_config_ or {})
+            merged.update(value or {})
+            agent.model_config_ = merged
+            continue
         orm_field = field_mapping.get(field, field)
         setattr(agent, orm_field, value)
 

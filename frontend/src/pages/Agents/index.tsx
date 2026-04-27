@@ -79,8 +79,10 @@ export default function AgentsPage() {
           temperature: values.temperature,
           maxTokens: values.maxTokens,
           tools: values.tools,
+          plugins: values.plugins,
           status: values.status,
           knowledgeBaseId: values.knowledgeBaseId,
+          parentAgentId: values.parentAgentId,
         })
         setAgents((prev) =>
           prev.map((a) => (a.id === editingAgent.id ? updated : a)),
@@ -90,12 +92,14 @@ export default function AgentsPage() {
         const created = await createAgent({
           name: values.name || '',
           description: values.description || '',
-          model: values.model || 'deepseek-chat',
+          model: values.model || 'deepseek-v4-pro',
           systemPrompt: values.systemPrompt || '',
           temperature: values.temperature,
           maxTokens: values.maxTokens,
           tools: values.tools,
+          plugins: values.plugins,
           knowledgeBaseId: values.knowledgeBaseId,
+          parentAgentId: values.parentAgentId,
         })
         setAgents((prev) => [...prev, created])
         message.success(t('common.createSuccess'))

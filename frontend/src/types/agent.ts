@@ -8,8 +8,8 @@ export interface Agent {
   temperature: number
   maxTokens: number
   tools: string[]
-  mcpConnectors: string[]
-  knowledgeBases: string[]
+  plugins: string[]
+  knowledgeBaseId?: string
   parentAgentId?: string
   status: 'active' | 'inactive' | 'draft'
   createdAt: string
@@ -24,8 +24,7 @@ export interface AgentCreate {
   temperature?: number
   maxTokens?: number
   tools?: string[]
-  mcpConnectors?: string[]
-  knowledgeBases?: string[]
+  plugins?: string[]
   knowledgeBaseId?: string
   parentAgentId?: string
 }

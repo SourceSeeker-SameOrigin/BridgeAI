@@ -23,8 +23,8 @@ interface AgentEditorProps {
 }
 
 const FALLBACK_MODELS = [
-  { label: 'DeepSeek Chat', value: 'deepseek-chat' },
-  { label: 'DeepSeek Reasoner', value: 'deepseek-reasoner' },
+  { label: 'DeepSeek V4 Pro', value: 'deepseek-v4-pro' },
+  { label: 'DeepSeek V4 Flash', value: 'deepseek-v4-flash' },
   { label: 'Qwen Plus', value: 'qwen-plus' },
   { label: 'Qwen Max', value: 'qwen-max' },
 ]
@@ -194,7 +194,7 @@ export default function AgentEditor({ open, agent, onClose, onSave }: AgentEdito
         name: tpl.name,
         description: tpl.description,
         systemPrompt: tpl.system_prompt,
-        model: tpl.model_config?.model_name || 'deepseek-chat',
+        model: tpl.model_config?.model_name || 'deepseek-v4-pro',
         temperature: tpl.model_config?.temperature ?? 0.7,
         maxTokens: tpl.model_config?.max_tokens ?? 4096,
       })
@@ -232,7 +232,7 @@ export default function AgentEditor({ open, agent, onClose, onSave }: AgentEdito
         initialValues={{
           temperature: 0.7,
           maxTokens: 4096,
-          model: 'deepseek-chat',
+          model: 'deepseek-v4-pro',
         }}
       >
         {!agent && agentTemplates.length > 0 && (
